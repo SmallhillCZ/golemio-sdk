@@ -1,5 +1,7 @@
 # Golemio SDK
 
+[![NPM Version](https://img.shields.io/npm/v/golemio-sdk)](https://www.npmjs.com/package/golemio-sdk) [![GitHub License](https://img.shields.io/github/license/smallhillcz/golemio-sdk)](./LICENSE)
+
 This is an **unofficial** TypeScript/Javascript SDK for the [API of the Prague data platform Golemio](https://api.golemio.cz/docs/openapi/). It is automatically generated from the OpenAPI specification at [https://api.golemio.cz/docs/static/output-gateway/openapi.json](https://api.golemio.cz/docs/static/output-gateway/openapi.json) using [OpenAPI Generator](https://openapi-generator.tech/).
 
 ## Installation
@@ -11,7 +13,7 @@ npm install golemio-sdk
 ## Usage
 
 ```typescript
-import { GolemioClient } from 'golemio-sdk';
+import { GolemioClient } from "golemio-sdk";
 
 const client = new GolemioClient("YOUR GOLEMIO TOKEN", { environment: "main" });
 
@@ -24,6 +26,6 @@ const wasteContainers = await client.WasteCollectionV2Api.getWCStations().then((
 
 ## Options
 
-| Option | Description |
-| --- | --- |
-|`environment`| The environment to use. Possible values are `main` (uses [api.golemio.cz](https://api.golemio.cz)) and `test` (uses [rabin.golemio.cz](https://rabin.golemio.cz)).<br><br>Default is `main`.|
+| Option        | Description                                                                                                                                                                                  |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `environment` | The environment to use. Possible values are `main` (uses [api.golemio.cz](https://api.golemio.cz)) and `test` (uses [rabin.golemio.cz](https://rabin.golemio.cz)).<br><br>Default is `main`. |

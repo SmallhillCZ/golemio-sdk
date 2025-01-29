@@ -1,13 +1,10 @@
 import { SDK } from "./sdk";
 
-export enum GolemioEnvironment {
-    MAIN = 'main',
-    TEST = 'test'
-}
+export type GolemioEnvironment = 'main' | 'test';
 
 export const GolemioServers: Record<GolemioEnvironment, string> = {
-    [GolemioEnvironment.MAIN]: 'https://api.golemio.cz',
-    [GolemioEnvironment.TEST]: 'https://rabin.golemio.cz'
+    ["main"]: 'https://api.golemio.cz',
+    ["test"]: 'https://rabin.golemio.cz'
 }
 
 export interface GolemioClientOptions {
@@ -17,7 +14,7 @@ export interface GolemioClientOptions {
 export class GolemioClient extends SDK {
     constructor(token: string,options: GolemioClientOptions = {}) {
         super({
-            basePath: GolemioServers[options.environment || GolemioEnvironment.MAIN],
+            basePath: GolemioServers[options.environment || "main"],
             apiKey: token
         });
     }

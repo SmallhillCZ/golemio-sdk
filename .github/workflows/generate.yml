@@ -7,7 +7,10 @@ on:
 
 jobs:
   generate:
+    name: Generate SDK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -42,6 +45,5 @@ jobs:
           git config --local user.email "martin.kopecek@smallhill.cz"
           git config --local user.name "Martin Kopeček"
           git add .
-          git commit -m "feat(sdk): update generated code"
-          npm version patch -m "chore(release): %s"
-          git push
+          git commit -m "feat(sdk): update generated SDK"
+          npm run release:patch

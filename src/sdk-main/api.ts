@@ -6120,8 +6120,8 @@ export const ParkingPeriodsOfTimeDayInWeekEnum = {
 
 export type ParkingPeriodsOfTimeDayInWeekEnum = typeof ParkingPeriodsOfTimeDayInWeekEnum[keyof typeof ParkingPeriodsOfTimeDayInWeekEnum];
 export const ParkingPeriodsOfTimePhEnum = {
-    Only: 'PH_only',
-    Off: 'PH_off'
+    PhOnly: 'PH_only',
+    PhOff: 'PH_off'
 } as const;
 
 export type ParkingPeriodsOfTimePhEnum = typeof ParkingPeriodsOfTimePhEnum[keyof typeof ParkingPeriodsOfTimePhEnum];
@@ -6182,8 +6182,8 @@ export const ParkingPeriodsOfTimeWithDurationDayInWeekEnum = {
 
 export type ParkingPeriodsOfTimeWithDurationDayInWeekEnum = typeof ParkingPeriodsOfTimeWithDurationDayInWeekEnum[keyof typeof ParkingPeriodsOfTimeWithDurationDayInWeekEnum];
 export const ParkingPeriodsOfTimeWithDurationPhEnum = {
-    Only: 'PH_only',
-    Off: 'PH_off'
+    PhOnly: 'PH_only',
+    PhOff: 'PH_off'
 } as const;
 
 export type ParkingPeriodsOfTimeWithDurationPhEnum = typeof ParkingPeriodsOfTimeWithDurationPhEnum[keyof typeof ParkingPeriodsOfTimeWithDurationPhEnum];
@@ -6394,8 +6394,7 @@ export const ParkingPropertiesParkingPolicyEnum = {
     Commercial: 'commercial',
     Zone: 'zone',
     ParkSharing: 'park_sharing',
-    CustomerOnly: 'customer_only',
-    Null: 'null'
+    CustomerOnly: 'customer_only'
 } as const;
 
 export type ParkingPropertiesParkingPolicyEnum = typeof ParkingPropertiesParkingPolicyEnum[keyof typeof ParkingPropertiesParkingPolicyEnum];
@@ -6818,8 +6817,7 @@ export const ParkingSpaceFeaturePropertiesZoneTypeEnum = {
     ZoneMixed: 'zone_mixed',
     ZoneVisitors: 'zone_visitors',
     ZoneOther: 'zone_other',
-    ZoneFree: 'zone_free',
-    Null: 'null'
+    ZoneFree: 'zone_free'
 } as const;
 
 export type ParkingSpaceFeaturePropertiesZoneTypeEnum = typeof ParkingSpaceFeaturePropertiesZoneTypeEnum[keyof typeof ParkingSpaceFeaturePropertiesZoneTypeEnum];

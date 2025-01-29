@@ -7,7 +7,9 @@
     "default": "./dist/esm/index.js"
   },
   "scripts": {
-    "generate": "openapi-sdk -i https://api.golemio.cz/docs/static/output-gateway/openapi.json -o src/sdk",
+    "generate": "npm run generate:main && npm run generate:vp",
+    "generate:main": "openapi-sdk -i https://api.golemio.cz/docs/static/output-gateway/openapi.json -o src/sdk-main",
+    "generate:vp": "openapi-sdk -i https://api.golemio.cz/docs/static/vp-output-gateway/openapi.json -o src/sdk-vp",
     "build": "rm -fr ./dist && npm run build:commonjs && npm run build:esm",
     "build:commonjs": "tsc",
     "build:esm": "tsc -p tsconfig.esm.json",

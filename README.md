@@ -14,6 +14,8 @@ npm install golemio-sdk
 
 ## Usage
 
+#### Main API client
+
 ```typescript
 import { GolemioClient } from "golemio-sdk";
 
@@ -27,6 +29,20 @@ const wasteContainers = await client.WasteCollectionV2Api.getWCStations().then((
 
 // response is type AxiosResponse<WasteCollectionStationFeatureCollection>
 const response = await client.WasteCollectionV2Api.getWCStations();
+```
+
+#### Public Transport API client
+
+```typescript
+import { GolemioPublicTransportClient } from "golemio-sdk";
+
+// Public Transport API client
+const client = new GolemioPublicTransportClient({ token: "YOUR GOLEMIO TOKEN" });
+
+const departureBoard = await client.PIDDepartureBoardsV2Api.v2PidDepartureboardsGet({
+	airCondition: true,
+	names: "Karlovo náměstí",
+});
 ```
 
 ## Options

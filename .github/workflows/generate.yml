@@ -47,4 +47,5 @@ jobs:
           touch test.txt
           git add .
           git commit -m "feat(sdk): update generated SDK"
+          git push
           

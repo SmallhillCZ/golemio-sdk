@@ -1,0 +1,27 @@
+{
+  "name": "golemio-sdk",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "email": "martin.kopecek@smallhill.cz",
+    "name": "Martin Kopeček"
+  },
+  "license": "MIT",
+  "description": "TypeScript SDK for api.golemio.cz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SmallhillCZ/golemio-sdk.git"
+  },
+  "keywords": [
+    "golemio",
+    "prague",
+    "api"
+  ],
+  "bugs": {
+    "url": "https://github.com/SmallhillCZ/golemio-sdk/issues"
+  },
+  "homepage": "https://github.com/SmallhillCZ/golemio-sdk#readme"
+}

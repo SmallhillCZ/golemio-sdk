@@ -44,8 +44,6 @@ jobs:
         run: |
           git config --local user.email "martin.kopecek@smallhill.cz"
           git config --local user.name "Martin Kopeček"
-          touch test.txt
           git add .
           git commit -m "feat(sdk): update generated SDK"
-          git push
-          
+          npm run release:patch          

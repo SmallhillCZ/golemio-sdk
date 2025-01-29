@@ -17,7 +17,7 @@ npm install golemio-sdk
 ```typescript
 import { GolemioClient } from "golemio-sdk";
 
-const client = new GolemioClient("YOUR GOLEMIO TOKEN", { environment: "main" });
+const client = new GolemioClient({ token: "YOUR GOLEMIO TOKEN" });
 
 // airQualityStations is type FeaturePoint[] (as defined in the Golemio API specification)
 const airQualityStations = await client.AirQualityV2Api.v2AirqualitystationsGet().then((res) => res.data);
@@ -28,6 +28,7 @@ const wasteContainers = await client.WasteCollectionV2Api.getWCStations().then((
 
 ## Options
 
-| Option        | Description                                                                                                                                                                                  |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `environment` | The environment to use. Possible values are `main` (uses [api.golemio.cz](https://api.golemio.cz)) and `test` (uses [rabin.golemio.cz](https://rabin.golemio.cz)).<br><br>Default is `main`. |
+| Option   |          | Description                                                                                               |
+| -------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| `token`  | required | The Golemio API token. Generate your token at [api.golemio.cz/api-keys](https://api.golemio.cz/api-keys). |
+| `server` |          | The API server to use. Default value is `https://api.golemio.cz`.                                         |

@@ -21,8 +21,8 @@ const client = new GolemioClient({
 	token: "YOUR GOLEMIO TOKEN",
 });
 
-const response = await client.WasteCollectionV2Api.getWCStations();
-// response is of type AxiosResponse<GolemioApi.WasteCollectionStationFeatureCollection>
+const wasteContainers = await client.WasteCollectionV2Api.getWCStations();
+// wasteContainers is of type AxiosResponse<GolemioApi.WasteCollectionStationFeatureCollection>
 
 const departureBoard = await client.PublicTransport.PIDDepartureBoardsV2Api.v2PidDepartureboardsGet({
 	airCondition: true,

@@ -54,7 +54,7 @@ jobs:
         run: npm run build
 
       - name: Publish to NPM
-          run: npm publish
-          if: steps.git-check.outputs.changes == 'true'
-          env:
-            NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+        if: steps.git-check.outputs.changes == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

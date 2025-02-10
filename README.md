@@ -15,31 +15,20 @@ npm install golemio-sdk
 ## Usage
 
 ```typescript
-import { GolemioApi, GolemioPublicTransportApi } from "golemio-sdk";
+import { GolemioClient } from "golemio-sdk";
 
-const options: GolemioClientOptions = {
+const client = new GolemioClient({
 	token: "YOUR GOLEMIO TOKEN",
-};
+});
 
-const client = new GolemioClient(options);
+const response = await client.WasteCollectionV2Api.getWCStations();
+// response is of type AxiosResponse<GolemioApi.WasteCollectionStationFeatureCollection>
 
-// types are inferred automatically here just to show them
-const airQualityStations: GolemioApi.FeaturePoint[] = await client.AirQualityV2Api.v2AirqualitystationsGet().then(
-	(res) => res.data
-);
-
-const wasteContainers: GolemioApi.WasteCollectionStationFeatureCollection =
-	await client.WasteCollectionV2Api.getWCStations().then((res) => res.data);
-
-const response: AxiosResponse<GolemioApi.WasteCollectionStationFeatureCollection> =
-	await client.WasteCollectionV2Api.getWCStations();
-
-// The public transport APIs are behing a PublicTransport property and GolemioPublicTransportApi namespace
-const departureBoard: GolemioPublicTransportApi.PIDDepartureBoard =
-	await client.PublicTransport.PIDDepartureBoardsV2Api.v2PidDepartureboardsGet({
-		airCondition: true,
-		names: "Karlovo náměstí",
-	}).then((res) => res.data);
+const departureBoard = await client.PublicTransport.PIDDepartureBoardsV2Api.v2PidDepartureboardsGet({
+	airCondition: true,
+	names: "Karlovo náměstí",
+});
+// departureBoard is of type AxiosResponse<GolemioPublicTransportApi.PIDDepartureBoard>
 ```
 
 ## Options

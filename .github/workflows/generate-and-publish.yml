@@ -7,7 +7,7 @@ on:
 
 jobs:
   generate:
-    name: Generate SDK
+    name: Update code and publish
     runs-on: ubuntu-latest
     permissions:
       contents: write

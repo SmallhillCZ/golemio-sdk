@@ -1,4 +1,4 @@
-name: Generate Code
+name: Update code and publish
 
 on:
   workflow_dispatch:

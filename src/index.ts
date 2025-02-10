@@ -1,26 +1,24 @@
-import * as GolemioApi from "./sdk-main";
-import * as GolemioPublicTransportApi from "./sdk-vp";
+import { GolemioApi } from "./sdk-main";
+import { GolemioPublicTransportApi } from "./sdk-vp";
 
-export * as GolemioApi from "./sdk-main";
-export * as GolemioPublicTransportApi from "./sdk-vp";
+export type { GolemioApi } from "./sdk-main";
+export type { GolemioPublicTransportApi } from "./sdk-vp";
 
 export interface GolemioClientOptions {
 	token: string;
 	server?: string;
 }
 
-export class GolemioClient extends GolemioApi.SDK {
+export class GolemioClient extends GolemioApi {
+	PublicTransport: GolemioPublicTransportApi;
+
 	constructor(options: GolemioClientOptions) {
 		super({
 			basePath: options.server || "https://api.golemio.cz",
 			apiKey: options.token,
 		});
-	}
-}
 
-export class GolemioPublicTransportClient extends GolemioPublicTransportApi.SDK {
-	constructor(options: GolemioClientOptions) {
-		super({
+		this.PublicTransport = new GolemioPublicTransportApi({
 			basePath: options.server || "https://api.golemio.cz",
 			apiKey: options.token,
 		});

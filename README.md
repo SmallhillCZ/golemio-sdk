@@ -14,35 +14,32 @@ npm install golemio-sdk
 
 ## Usage
 
-#### Main API client
-
 ```typescript
-import { GolemioClient } from "golemio-sdk";
+import { GolemioApi, GolemioPublicTransportApi } from "golemio-sdk";
 
-const client = new GolemioClient({ token: "YOUR GOLEMIO TOKEN" });
+const options: GolemioClientOptions = {
+	token: "YOUR GOLEMIO TOKEN",
+};
 
-// airQualityStations is type FeaturePoint[] (as defined in the Golemio API specification)
-const airQualityStations = await client.AirQualityV2Api.v2AirqualitystationsGet().then((res) => res.data);
+const client = new GolemioClient(options);
 
-// wasteContainers is type WasteCollectionStationFeatureCollection (as defined in the Golemio API specification)
-const wasteContainers = await client.WasteCollectionV2Api.getWCStations().then((res) => res.data);
+// types are inferred automatically here just to show them
+const airQualityStations: GolemioApi.FeaturePoint[] = await client.AirQualityV2Api.v2AirqualitystationsGet().then(
+	(res) => res.data
+);
 
-// response is type AxiosResponse<WasteCollectionStationFeatureCollection>
-const response = await client.WasteCollectionV2Api.getWCStations();
-```
+const wasteContainers: GolemioApi.WasteCollectionStationFeatureCollection =
+	await client.WasteCollectionV2Api.getWCStations().then((res) => res.data);
 
-#### Public Transport API client
+const response: AxiosResponse<GolemioApi.WasteCollectionStationFeatureCollection> =
+	await client.WasteCollectionV2Api.getWCStations();
 
-```typescript
-import { GolemioPublicTransportClient } from "golemio-sdk";
-
-// Public Transport API client
-const client = new GolemioPublicTransportClient({ token: "YOUR GOLEMIO TOKEN" });
-
-const departureBoard = await client.PIDDepartureBoardsV2Api.v2PidDepartureboardsGet({
-	airCondition: true,
-	names: "Karlovo náměstí",
-});
+// The public transport APIs are behing a PublicTransport property and GolemioPublicTransportApi namespace
+const departureBoard: GolemioPublicTransportApi.PIDDepartureBoard =
+	await client.PublicTransport.PIDDepartureBoardsV2Api.v2PidDepartureboardsGet({
+		airCondition: true,
+		names: "Karlovo náměstí",
+	}).then((res) => res.data);
 ```
 
 ## Options

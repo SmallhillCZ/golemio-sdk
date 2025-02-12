@@ -2695,6 +2695,12 @@ export namespace GolemioApi {
          */
         'vehicle_type_id'?: string;
         /**
+         * 
+         * @type {GBFSFreeBikeStatusJsonBikesInnerVahicleType}
+         * @memberof GBFSFreeBikeStatusJsonBikesInner
+         */
+        'vahicle_type'?: GBFSFreeBikeStatusJsonBikesInnerVahicleType;
+        /**
          * The last time this vehicle reported its status to the operator\'s backend in POSIX time (added in v2.1-RC).
          * @type {number}
          * @memberof GBFSFreeBikeStatusJsonBikesInner
@@ -2788,6 +2794,44 @@ export namespace GolemioApi {
          * @memberof GBFSFreeBikeStatusJsonBikesInnerRentalUris
          */
         'web'?: string;
+    }
+    
+        /**
+     * Type specs of this vehicle.
+     * @export
+     * @interface GBFSFreeBikeStatusJsonBikesInnerVahicleType
+     */
+    export interface GBFSFreeBikeStatusJsonBikesInnerVahicleType {
+        /**
+         * 
+         * @type {string}
+         * @memberof GBFSFreeBikeStatusJsonBikesInnerVahicleType
+         */
+        'id'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof GBFSFreeBikeStatusJsonBikesInnerVahicleType
+         */
+        'form_factor'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof GBFSFreeBikeStatusJsonBikesInnerVahicleType
+         */
+        'propulsion_type'?: string | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof GBFSFreeBikeStatusJsonBikesInnerVahicleType
+         */
+        'max_range_meters'?: number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof GBFSFreeBikeStatusJsonBikesInnerVahicleType
+         */
+        'name'?: string | null;
     }
     
         /**

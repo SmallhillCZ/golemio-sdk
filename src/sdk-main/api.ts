@@ -16774,7 +16774,7 @@ export namespace GolemioApi {
         }
     
         /**
-         * **Trash type**<br /> | 1 | Barevné sklo | Tinted glass |<br /> | 2 | Elektrozařízení | Electric waste |<br /> | 3 | Kovy | Metals |<br /> | 4 | Nápojové kartóny | Beverage cartons |<br /> | 5 | Papír | Paper |<br /> | 6 | Plast | Plastics |<br /> | 7 | Čiré sklo | Clear glass |<br /> | 8 | Jedlé tuky a oleje | Edible fats and oils |<br /> | 9 | Multikomoditní sběr | Multicommodity |<br /> <br /> **Cleaning Frequency**<br /> | Value | 1st digit - period duration | 2nd digit - frequency |<br /> Example<br /> | `13` | `1` | `3` | 3 times per 1 week |<br /> | `61` | `6` | `1` | Once per 6 weeks |<br />
+         * **Trash type**<br /> | 1 | Barevné sklo | Tinted glass |<br /> | 2 | Elektrozařízení | Electric waste |<br /> | 3 | Kovy | Metals |<br /> | 4 | Nápojové kartóny | Beverage cartons |<br /> | 5 | Papír | Paper |<br /> | 6 | Plast | Plastics |<br /> | 7 | Čiré sklo | Clear glass |<br /> | 8 | Jedlé tuky a oleje | Edible fats and oils |<br /> | 9 | Multikomoditní sběr | Multicommodity |<br /> <br /> **Cleaning Frequency**<br /> | Value | 1st digit - period duration | 2nd digit - frequency |<br /> Example:<br /> | `13` | `1` | `3` | 3 times per 1 week |<br /> | `61` | `6` | `1` | Once per 6 weeks |<br /> Code `99` stands for dynamic frequency.<br />
          * @summary GET All Waste Collection Stations
     
          * @param {WasteCollectionV2ApiGetWCStationsQueryParams} queryParams Query parameters.

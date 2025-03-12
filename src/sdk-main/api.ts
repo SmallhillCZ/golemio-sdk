@@ -9182,13 +9182,13 @@ export namespace GolemioApi {
          * @type {string}
          * @memberof WasteCollectionStation
          */
-        'district'?: string;
+        'district'?: string | null;
         /**
          * station id
-         * @type {string}
+         * @type {number}
          * @memberof WasteCollectionStation
          */
-        'id': string;
+        'id': number;
         /**
          * 
          * @type {string}
@@ -9291,10 +9291,10 @@ export namespace GolemioApi {
         'ksnko_id'?: number;
         /**
          * 
-         * @type {string}
+         * @type {number}
          * @memberof WasteCollectionStationContainer
          */
-        'container_id'?: string;
+        'container_id'?: number;
         /**
          * 
          * @type {string}
@@ -9332,19 +9332,19 @@ export namespace GolemioApi {
          * @type {number}
          * @memberof WasteCollectionStationContainerCleaningFrequency
          */
-        'id'?: number;
+        'id'?: number | null;
         /**
          * 
          * @type {string}
          * @memberof WasteCollectionStationContainerCleaningFrequency
          */
-        'duration'?: string;
+        'duration'?: string | null;
         /**
          * 
          * @type {number}
          * @memberof WasteCollectionStationContainerCleaningFrequency
          */
-        'frequency'?: number;
+        'frequency'?: number | null;
         /**
          * 
          * @type {string}
@@ -9382,7 +9382,7 @@ export namespace GolemioApi {
          * @type {string}
          * @memberof WasteCollectionStationContainerLastMeasurement
          */
-        'prediction_utc'?: string;
+        'prediction_utc'?: string | null;
     }
     
         /**

@@ -14628,6 +14628,14 @@ export namespace GolemioApi {
          */
         validFrom?: string
     
+        //activeOnly
+        /**
+         * If true, filter out parking machines that did not appear in latest source data.
+         * @type {boolean}
+         * @memberof ParkingV3ApiV3ParkingMachinesGet
+         */
+        activeOnly?: boolean
+    
         //limit
         /**
          * Number of results to return
@@ -15004,6 +15012,10 @@ export namespace GolemioApi {
                 requestQueryParameter['validFrom'] = (queryParams.validFrom as any instanceof Date) ?
                     (queryParams.validFrom as any).toISOString() :
                     queryParams.validFrom;
+            }
+    
+            if (queryParams.activeOnly !== undefined) {
+                requestQueryParameter['activeOnly'] = queryParams.activeOnly;
             }
     
             if (queryParams.limit !== undefined) {

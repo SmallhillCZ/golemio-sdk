@@ -28,6 +28,7 @@ export class GolemioPublicTransportApi {
         GTFSStaticV2Api: GolemioPublicTransportApi.GTFSStaticV2Api;
         PIDDepartureBoardsV2Api: GolemioPublicTransportApi.PIDDepartureBoardsV2Api;
         PIDDepartureBoardsV3Api: GolemioPublicTransportApi.PIDDepartureBoardsV3Api;
+        PIDDepartureBoardsV3InternalApi: GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi;
         PIDRealtimePositionsV2Api: GolemioPublicTransportApi.PIDRealtimePositionsV2Api;
         PublicDeparturesV2Api: GolemioPublicTransportApi.PublicDeparturesV2Api;
         PublicGTFSStaticLookupV2Api: GolemioPublicTransportApi.PublicGTFSStaticLookupV2Api;
@@ -42,6 +43,7 @@ export class GolemioPublicTransportApi {
             this.GTFSStaticV2Api = new GolemioPublicTransportApi.GTFSStaticV2Api(configuration, axios!);
             this.PIDDepartureBoardsV2Api = new GolemioPublicTransportApi.PIDDepartureBoardsV2Api(configuration, axios!);
             this.PIDDepartureBoardsV3Api = new GolemioPublicTransportApi.PIDDepartureBoardsV3Api(configuration, axios!);
+            this.PIDDepartureBoardsV3InternalApi = new GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi(configuration, axios!);
             this.PIDRealtimePositionsV2Api = new GolemioPublicTransportApi.PIDRealtimePositionsV2Api(configuration, axios!);
             this.PublicDeparturesV2Api = new GolemioPublicTransportApi.PublicDeparturesV2Api(configuration, axios!);
             this.PublicGTFSStaticLookupV2Api = new GolemioPublicTransportApi.PublicGTFSStaticLookupV2Api(configuration, axios!);
@@ -2361,6 +2363,38 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
+     * @interface V3PidDeparturepresetsGet200ResponseInner
+     */
+    export interface V3PidDeparturepresetsGet200ResponseInner {
+        /**
+         * 
+         * @type {string}
+         * @memberof V3PidDeparturepresetsGet200ResponseInner
+         */
+        'note'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof V3PidDeparturepresetsGet200ResponseInner
+         */
+        'route_name'?: string;
+        /**
+         * 
+         * @type {boolean}
+         * @memberof V3PidDeparturepresetsGet200ResponseInner
+         */
+        'is_testing'?: boolean;
+        /**
+         * 
+         * @type {Array<string>}
+         * @memberof V3PidDeparturepresetsGet200ResponseInner
+         */
+        'stops'?: Array<string>;
+    }
+    
+        /**
+     * 
+     * @export
      * @interface V3PidInfotextsGet200ResponseInner
      */
     export interface V3PidInfotextsGet200ResponseInner {
@@ -4632,6 +4666,66 @@ export namespace GolemioPublicTransportApi {
             axiosRequestConfig["baseURL"] = this.configuration.basePath;
             
             return this.axios.request<V3PidTransferboardsGet200Response>(axiosRequestConfig);
+        }
+    }
+    
+        
+        
+    
+    
+    
+    
+    
+    /**
+     * PIDDepartureBoardsV3InternalApi - object-oriented interface
+     * @export
+     * @class PIDDepartureBoardsV3InternalApi
+     * @extends {BaseAPI}
+     */
+    export class PIDDepartureBoardsV3InternalApi extends BaseAPI {
+    
+        constructor(protected override configuration: GolemioPublicTransportApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
+            super(configuration, configuration.basePath, axios);
+        }
+    
+        /**
+         * 
+         * @summary Get ROPID departures presets linked with gtfs stops
+    
+         * @param {AxiosRequestConfig} [options] Override http request option.
+         * @throws {RequiredError}
+         * @memberof PIDDepartureBoardsV3InternalApi
+         */
+        
+        public async v3PidDeparturepresetsGet(
+            options: AxiosRequestConfig = {}
+        ) {
+    
+            const localVarPath = `/v3/pid/departurepresets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (this.configuration) {
+                baseOptions = this.configuration.baseOptions;
+            }
+    
+            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const requestHeaderParameter = {} as any;
+            const requestQueryParameter = {} as any;
+    
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+    
+    
+    
+            setSearchParams(requestUrlObj, requestQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+    
+            axiosRequestConfig["url"] = toPathString(requestUrlObj);
+            axiosRequestConfig["baseURL"] = this.configuration.basePath;
+            
+            return this.axios.request<Array<V3PidDeparturepresetsGet200ResponseInner>>(axiosRequestConfig);
         }
     }
     

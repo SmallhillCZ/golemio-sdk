@@ -3674,6 +3674,46 @@ export namespace GolemioApi {
     }
     
         /**
+     * Region information.
+     * @export
+     * @interface GBFSSystemRegionsJson
+     */
+    export interface GBFSSystemRegionsJson {
+        /**
+         * Array of regions in the system.
+         * @type {Array<GBFSSystemRegionsJsonRegionsInner>}
+         * @memberof GBFSSystemRegionsJson
+         */
+        'regions'?: Array<GBFSSystemRegionsJsonRegionsInner>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface GBFSSystemRegionsJsonRegionsInner
+     */
+    export interface GBFSSystemRegionsJsonRegionsInner {
+        /**
+         * Unique identifier of the region.
+         * @type {string}
+         * @memberof GBFSSystemRegionsJsonRegionsInner
+         */
+        'id'?: string;
+        /**
+         * Name of the region.
+         * @type {string}
+         * @memberof GBFSSystemRegionsJsonRegionsInner
+         */
+        'region_name'?: string;
+        /**
+         * Identifier of the system associated with the region.
+         * @type {string}
+         * @memberof GBFSSystemRegionsJsonRegionsInner
+         */
+        'system_id'?: string;
+    }
+    
+        /**
      * List of all Systems
      * @export
      * @interface GBFSSystemsList
@@ -11405,6 +11445,10 @@ export namespace GolemioApi {
     
     
     
+    
+    
+    
+    
     /**
      * GBFSV2Api - object-oriented interface
      * @export
@@ -11844,6 +11888,52 @@ export namespace GolemioApi {
             assertParamExists('gETGBFSVersions', 'systemId', systemId)
             
             const localVarPath = `/v2/vehiclesharing/gbfs/{system_id}/gbfs_versions`
+                .replace(`{${"system_id"}}`, encodeURIComponent(String(systemId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (this.configuration) {
+                baseOptions = this.configuration.baseOptions;
+            }
+    
+            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const requestHeaderParameter = {} as any;
+            const requestQueryParameter = {} as any;
+    
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+    
+    
+    
+            setSearchParams(requestUrlObj, requestQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+    
+            axiosRequestConfig["url"] = toPathString(requestUrlObj);
+            axiosRequestConfig["baseURL"] = this.configuration.basePath;
+            
+            return this.axios.request<GBFSWrapper>(axiosRequestConfig);
+        }
+    
+        /**
+         * 
+         * @summary GET System regions
+    
+         * @param {string} systemId Identifier of the system.
+         * @param {AxiosRequestConfig} [options] Override http request option.
+         * @throws {RequiredError}
+         * @memberof GBFSV2Api
+         */
+        
+        public async gETSYSTEMregions(
+            systemId: string,
+            options: AxiosRequestConfig = {}
+        ) {
+    
+            // verify required parameter 'systemId' is not null or undefined
+            assertParamExists('gETSYSTEMregions', 'systemId', systemId)
+            
+            const localVarPath = `/v2/vehiclesharing/gbfs/{system_id}/system_regions`
                 .replace(`{${"system_id"}}`, encodeURIComponent(String(systemId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);

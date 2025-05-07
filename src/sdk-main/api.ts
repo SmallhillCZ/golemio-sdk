@@ -7235,6 +7235,12 @@ export namespace GolemioApi {
          * @memberof ParkingSpaceProperties
          */
         'address'?: ParkingAddress;
+        /**
+         * 
+         * @type {ParkingSpaceFeaturePropertiesCentroid}
+         * @memberof ParkingSpaceProperties
+         */
+        'centroid'?: ParkingSpaceFeaturePropertiesCentroid;
     }
     
     export const ParkingSpacePropertiesAccessDedicatedToEnum = {

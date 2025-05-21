@@ -7,11 +7,11 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** | direction_id | [optional] [default to undefined]
 **value** | **number** |  | [optional] [default to undefined]
-**value_pedestrians** | **number** |  | [optional] [default to undefined]
+**value_pedestrians** | **string** |  | [optional] [default to undefined]
 **locations_id** | **string** |  | [optional] [default to undefined]
 **measured_from** | **string** |  | [optional] [default to undefined]
 **measured_to** | **string** |  | [optional] [default to undefined]
-**measurement_count** | **number** |  | [optional] [default to undefined]
+**measurement_count** | **string** |  | [optional] [default to undefined]
 
 ## Example
 

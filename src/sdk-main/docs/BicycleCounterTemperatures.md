@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **value** | **number** |  | [optional] [default to undefined]
 **measured_from** | **string** |  | [optional] [default to undefined]
 **measured_to** | **string** |  | [optional] [default to undefined]
-**measurement_count** | **number** |  | [optional] [default to undefined]
+**measurement_count** | **string** |  | [optional] [default to undefined]
 
 ## Example
 

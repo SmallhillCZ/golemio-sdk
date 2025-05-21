@@ -569,10 +569,10 @@ export namespace GolemioApi {
         'value'?: number;
         /**
          * 
-         * @type {number}
+         * @type {string}
          * @memberof BicycleCounterDetections
          */
-        'value_pedestrians'?: number;
+        'value_pedestrians'?: string;
         /**
          * 
          * @type {string}
@@ -593,10 +593,10 @@ export namespace GolemioApi {
         'measured_to'?: string;
         /**
          * 
-         * @type {number}
+         * @type {string}
          * @memberof BicycleCounterDetections
          */
-        'measurement_count'?: number;
+        'measurement_count'?: string;
     }
     
         /**
@@ -651,10 +651,10 @@ export namespace GolemioApi {
         'measured_to'?: string;
         /**
          * 
-         * @type {number}
+         * @type {string}
          * @memberof BicycleCounterTemperatures
          */
-        'measurement_count'?: number;
+        'measurement_count'?: string;
     }
     
         /**

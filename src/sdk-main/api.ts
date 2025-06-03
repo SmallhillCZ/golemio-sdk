@@ -31,6 +31,7 @@ export class GolemioApi {
         FloatingCarDataV2Api: GolemioApi.FloatingCarDataV2Api;
         GBFSV2Api: GolemioApi.GBFSV2Api;
         GardensV2Api: GolemioApi.GardensV2Api;
+        MVTMapsV2Api: GolemioApi.MVTMapsV2Api;
         MVTSApi: GolemioApi.MVTSApi;
         MedicalInstitutionsV2Api: GolemioApi.MedicalInstitutionsV2Api;
         MicroclimateV2Api: GolemioApi.MicroclimateV2Api;
@@ -65,6 +66,7 @@ export class GolemioApi {
             this.FloatingCarDataV2Api = new GolemioApi.FloatingCarDataV2Api(configuration, axios!);
             this.GBFSV2Api = new GolemioApi.GBFSV2Api(configuration, axios!);
             this.GardensV2Api = new GolemioApi.GardensV2Api(configuration, axios!);
+            this.MVTMapsV2Api = new GolemioApi.MVTMapsV2Api(configuration, axios!);
             this.MVTSApi = new GolemioApi.MVTSApi(configuration, axios!);
             this.MedicalInstitutionsV2Api = new GolemioApi.MedicalInstitutionsV2Api(configuration, axios!);
             this.MicroclimateV2Api = new GolemioApi.MicroclimateV2Api(configuration, axios!);
@@ -7141,7 +7143,8 @@ export namespace GolemioApi {
         OnStreet: 'on_street',
         ParkSharing: 'park_sharing',
         DisabledParking: 'disabled_parking',
-        Underground: 'underground'
+        Underground: 'underground',
+        Other: 'other'
     } as const;
     
     export type ParkingSpaceFeaturePropertiesParkingTypeEnum = typeof ParkingSpaceFeaturePropertiesParkingTypeEnum[keyof typeof ParkingSpaceFeaturePropertiesParkingTypeEnum];
@@ -7468,10 +7471,10 @@ export namespace GolemioApi {
     export interface PedestriansDirection {
         /**
          * 
-         * @type {number}
+         * @type {string}
          * @memberof PedestriansDirection
          */
-        'id': number;
+        'id': string;
         /**
          * 
          * @type {string}
@@ -7557,7 +7560,7 @@ export namespace GolemioApi {
          * @type {string}
          * @memberof PedestriansLocation
          */
-        'measurement_end'?: string;
+        'measurement_end'?: string | null;
         /**
          * 
          * @type {Array<PedestriansDirection>}
@@ -8933,6 +8936,20 @@ export namespace GolemioApi {
          * @memberof V2EnergeticsOrganizationsOrganizationIdGet400Response
          */
         'error_info'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V2MvtZXYGet401Response
+     */
+    export interface V2MvtZXYGet401Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof V2MvtZXYGet401Response
+         */
+        'message'?: string;
     }
     
         /**
@@ -12156,6 +12173,192 @@ export namespace GolemioApi {
             axiosRequestConfig["baseURL"] = this.configuration.basePath;
             
             return this.axios.request<Garden>(axiosRequestConfig);
+        }
+    }
+    
+        
+        
+    
+    
+    /**
+     * Query parameters for v2MvtZXYGet operation in MVTMapsV2Api.
+     * @export
+     * @interface MVTMapsV2ApiV2MvtZXYGetQueryParams
+     */
+    export interface MVTMapsV2ApiV2MvtZXYGetQueryParams {
+        //table
+        /**
+         * Fully qualified table name (e.g. &#x60;schema.table&#x60;) to fetch data from.
+         * @type {string}
+         * @memberof MVTMapsV2ApiV2MvtZXYGet
+         */
+        table: string
+    
+        //geometry
+        /**
+         * Name of the geometry column in the table.
+         * @type {string}
+         * @memberof MVTMapsV2ApiV2MvtZXYGet
+         */
+        geometry: string
+    
+        //attributes
+        /**
+         * List of attribute columns to include in the tile features.
+         * @type {Array<string>}
+         * @memberof MVTMapsV2ApiV2MvtZXYGet
+         */
+        attributes: Array<string>
+    
+        //maxZoom
+        /**
+         * Maximum zoom level at which data from this table should be rendered.
+         * @type {number}
+         * @memberof MVTMapsV2ApiV2MvtZXYGet
+         */
+        maxZoom?: number
+    
+        //radius
+        /**
+         * Buffer radius in pixels around the tile to include features near edges.
+         * @type {number}
+         * @memberof MVTMapsV2ApiV2MvtZXYGet
+         */
+        radius?: number
+    }
+    
+    
+    
+    
+    /**
+     * MVTMapsV2Api - object-oriented interface
+     * @export
+     * @class MVTMapsV2Api
+     * @extends {BaseAPI}
+     */
+    export class MVTMapsV2Api extends BaseAPI {
+    
+        constructor(protected override configuration: GolemioApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
+            super(configuration, configuration.basePath, axios);
+        }
+    
+        /**
+         * Returns a Mapbox Vector Tile (MVT) containing features from the specified table and geometry column. Useful for rendering geospatial data on interactive maps at the specified zoom, x, and y tile coordinates. 
+         * @summary Get vector tile data for a specific map tile
+    
+         * @param {number} z Zoom level of the tile.
+         * @param {number} x X coordinate of the tile.
+         * @param {number} y Y coordinate of the tile.
+         * @param {MVTMapsV2ApiV2MvtZXYGetQueryParams} queryParams Query parameters.
+         * @param {AxiosRequestConfig} [options] Override http request option.
+         * @throws {RequiredError}
+         * @memberof MVTMapsV2Api
+         */
+        
+        public async v2MvtZXYGet(
+            z: number,
+            x: number,
+            y: number,
+            queryParams: MVTMapsV2ApiV2MvtZXYGetQueryParams,
+            options: AxiosRequestConfig = {}
+        ) {
+    
+            // verify required parameter 'z' is not null or undefined
+            assertParamExists('v2MvtZXYGet', 'z', z)
+            assertParamExists('v2MvtZXYGet', 'x', x)
+            assertParamExists('v2MvtZXYGet', 'y', y)
+            assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+            assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            
+            // verify required parameter 'x' is not null or undefined
+            assertParamExists('v2MvtZXYGet', 'z', z)
+            assertParamExists('v2MvtZXYGet', 'x', x)
+            assertParamExists('v2MvtZXYGet', 'y', y)
+            assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+            assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            
+            // verify required parameter 'y' is not null or undefined
+            assertParamExists('v2MvtZXYGet', 'z', z)
+            assertParamExists('v2MvtZXYGet', 'x', x)
+            assertParamExists('v2MvtZXYGet', 'y', y)
+            assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+            assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            
+            // verify required parameter 'table' is not null or undefined
+            assertParamExists('v2MvtZXYGet', 'z', z)
+            assertParamExists('v2MvtZXYGet', 'x', x)
+            assertParamExists('v2MvtZXYGet', 'y', y)
+            assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+            assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            
+            // verify required parameter 'geometry' is not null or undefined
+            assertParamExists('v2MvtZXYGet', 'z', z)
+            assertParamExists('v2MvtZXYGet', 'x', x)
+            assertParamExists('v2MvtZXYGet', 'y', y)
+            assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+            assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            
+            // verify required parameter 'attributes' is not null or undefined
+            assertParamExists('v2MvtZXYGet', 'z', z)
+            assertParamExists('v2MvtZXYGet', 'x', x)
+            assertParamExists('v2MvtZXYGet', 'y', y)
+            assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+            assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            
+            const localVarPath = `/v2/mvt/{z}/{x}/{y}`
+                .replace(`{${"z"}}`, encodeURIComponent(String(z)))
+                .replace(`{${"x"}}`, encodeURIComponent(String(x)))
+                .replace(`{${"y"}}`, encodeURIComponent(String(y)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (this.configuration) {
+                baseOptions = this.configuration.baseOptions;
+            }
+    
+            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const requestHeaderParameter = {} as any;
+            const requestQueryParameter = {} as any;
+    
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+    
+            if (queryParams.table !== undefined) {
+                requestQueryParameter['table'] = queryParams.table;
+            }
+    
+            if (queryParams.geometry !== undefined) {
+                requestQueryParameter['geometry'] = queryParams.geometry;
+            }
+    
+            if (queryParams.attributes) {
+                requestQueryParameter['attributes'] = queryParams.attributes;
+            }
+    
+            if (queryParams.maxZoom !== undefined) {
+                requestQueryParameter['maxZoom'] = queryParams.maxZoom;
+            }
+    
+            if (queryParams.radius !== undefined) {
+                requestQueryParameter['radius'] = queryParams.radius;
+            }
+    
+    
+    
+            setSearchParams(requestUrlObj, requestQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+    
+            axiosRequestConfig["url"] = toPathString(requestUrlObj);
+            axiosRequestConfig["baseURL"] = this.configuration.basePath;
+            
+            return this.axios.request<File>(axiosRequestConfig);
         }
     }
     
@@ -15447,18 +15650,18 @@ export namespace GolemioApi {
         //locationId
         /**
          * Lists only measurements for this location
-         * @type {number}
+         * @type {string}
          * @memberof PedestriansV2ApiV2PedestriansMeasurementsGet
          */
-        locationId?: number
+        locationId?: string
     
         //directionId
         /**
          * Lists only measurements for this direction
-         * @type {number}
+         * @type {string}
          * @memberof PedestriansV2ApiV2PedestriansMeasurementsGet
          */
-        directionId?: number
+        directionId?: string
     
         //limit
         /**
@@ -15563,7 +15766,7 @@ export namespace GolemioApi {
             axiosRequestConfig["url"] = toPathString(requestUrlObj);
             axiosRequestConfig["baseURL"] = this.configuration.basePath;
             
-            return this.axios.request<PedestriansLocation>(axiosRequestConfig);
+            return this.axios.request<Array<PedestriansLocation>>(axiosRequestConfig);
         }
     
         /**
@@ -15633,7 +15836,7 @@ export namespace GolemioApi {
             axiosRequestConfig["url"] = toPathString(requestUrlObj);
             axiosRequestConfig["baseURL"] = this.configuration.basePath;
             
-            return this.axios.request<PedestriansMeasurement>(axiosRequestConfig);
+            return this.axios.request<Array<PedestriansMeasurement>>(axiosRequestConfig);
         }
     }
     

@@ -1,23 +1,19 @@
-# PedestriansDirection
+# V2MvtZXYGet401Response
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **string** |  | [default to undefined]
-**name** | **string** |  | [default to undefined]
-**to** | **number** |  | [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
 ```typescript
-import { PedestriansDirection } from 'golemio-api';
+import { V2MvtZXYGet401Response } from 'golemio-api';
 
-const instance: PedestriansDirection = {
-    id,
-    name,
-    to,
+const instance: V2MvtZXYGet401Response = {
+    message,
 };
 ```
 

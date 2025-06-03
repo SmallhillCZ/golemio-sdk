@@ -8,7 +8,7 @@ All URIs are relative to *https://api.golemio.cz*
 |[**v2PedestriansMeasurementsGet**](#v2pedestriansmeasurementsget) | **GET** /v2/pedestrians/measurements | GET measurements of pedestrian traffic|
 
 # **v2PedestriansLocationsGet**
-> PedestriansLocation v2PedestriansLocationsGet()
+> Array<PedestriansLocation> v2PedestriansLocationsGet()
 
 
 
@@ -48,7 +48,7 @@ const { status, data } = await apiInstance.v2PedestriansLocationsGet(
 
 ### Return type
 
-**PedestriansLocation**
+**Array<PedestriansLocation>**
 
 ### Authorization
 
@@ -70,7 +70,7 @@ const { status, data } = await apiInstance.v2PedestriansLocationsGet(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **v2PedestriansMeasurementsGet**
-> PedestriansMeasurement v2PedestriansMeasurementsGet()
+> Array<PedestriansMeasurement> v2PedestriansMeasurementsGet()
 
 
 
@@ -85,8 +85,8 @@ import {
 const configuration = new Configuration();
 const apiInstance = new PedestriansV2Api(configuration);
 
-let locationId: number; //Lists only measurements for this location (optional) (default to undefined)
-let directionId: number; //Lists only measurements for this direction (optional) (default to undefined)
+let locationId: string; //Lists only measurements for this location (optional) (default to undefined)
+let directionId: string; //Lists only measurements for this direction (optional) (default to undefined)
 let limit: number; //Limits number of retrieved items (optional) (default to undefined)
 let offset: number; //Number of the first items that are skipped (optional) (default to undefined)
 let from: string; //Date in ISO8601, limits data measured from this datetime (optional) (default to undefined)
@@ -106,8 +106,8 @@ const { status, data } = await apiInstance.v2PedestriansMeasurementsGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **locationId** | [**number**] | Lists only measurements for this location | (optional) defaults to undefined|
-| **directionId** | [**number**] | Lists only measurements for this direction | (optional) defaults to undefined|
+| **locationId** | [**string**] | Lists only measurements for this location | (optional) defaults to undefined|
+| **directionId** | [**string**] | Lists only measurements for this direction | (optional) defaults to undefined|
 | **limit** | [**number**] | Limits number of retrieved items | (optional) defaults to undefined|
 | **offset** | [**number**] | Number of the first items that are skipped | (optional) defaults to undefined|
 | **from** | [**string**] | Date in ISO8601, limits data measured from this datetime | (optional) defaults to undefined|
@@ -116,7 +116,7 @@ const { status, data } = await apiInstance.v2PedestriansMeasurementsGet(
 
 ### Return type
 
-**PedestriansMeasurement**
+**Array<PedestriansMeasurement>**
 
 ### Authorization
 

@@ -131,6 +131,7 @@ docs/GeoJSONFeaturePropertiesRulesInner.md
 docs/GeoJSONMultiPolygon.md
 docs/Location.md
 docs/LocationPointsInner.md
+docs/MVTMapsV2Api.md
 docs/MVTSApi.md
 docs/Measurement.md
 docs/MedicalInstitution.md
@@ -264,6 +265,7 @@ docs/V2EnergeticsDevicesGet401Response.md
 docs/V2EnergeticsDevicesGet500Response.md
 docs/V2EnergeticsOrganizationsGet200Response.md
 docs/V2EnergeticsOrganizationsOrganizationIdGet400Response.md
+docs/V2MvtZXYGet401Response.md
 docs/V2ParkingGet200Response.md
 docs/V2VehiclesharingMvtsFreeVehicleStatusGet200Response.md
 docs/V2VehiclesharingMvtsFreeVehicleStatusGet200ResponseLayers.md

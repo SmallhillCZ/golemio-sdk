@@ -28,8 +28,9 @@ let y: number; //Y coordinate of the tile. (default to undefined)
 let table: string; //Fully qualified table name (e.g. `schema.table`) to fetch data from. (default to undefined)
 let geometry: string; //Name of the geometry column in the table. (default to undefined)
 let attributes: Array<string>; //List of attribute columns to include in the tile features. (default to undefined)
-let maxZoom: number; //Maximum zoom level at which data from this table should be rendered. (optional) (default to undefined)
-let radius: number; //Buffer radius in pixels around the tile to include features near edges. (optional) (default to undefined)
+let maxZoom: number; //Maximum zoom level at which data from this table should be rendered. (default to undefined)
+let radius: number; //Buffer radius in pixels around the tile to include features near edges. (optional) (default to 15)
+let clusterPoint: string; //Name of the column that will be used for clustering, use only if it differs from geometry. (e.g. calculating clustering for polygons can take longer and result in bigger clusters.) (optional) (default to undefined)
 
 const { status, data } = await apiInstance.v2MvtZXYGet(
     z,
@@ -39,7 +40,8 @@ const { status, data } = await apiInstance.v2MvtZXYGet(
     geometry,
     attributes,
     maxZoom,
-    radius
+    radius,
+    clusterPoint
 );
 ```
 
@@ -53,8 +55,9 @@ const { status, data } = await apiInstance.v2MvtZXYGet(
 | **table** | [**string**] | Fully qualified table name (e.g. &#x60;schema.table&#x60;) to fetch data from. | defaults to undefined|
 | **geometry** | [**string**] | Name of the geometry column in the table. | defaults to undefined|
 | **attributes** | **Array&lt;string&gt;** | List of attribute columns to include in the tile features. | defaults to undefined|
-| **maxZoom** | [**number**] | Maximum zoom level at which data from this table should be rendered. | (optional) defaults to undefined|
-| **radius** | [**number**] | Buffer radius in pixels around the tile to include features near edges. | (optional) defaults to undefined|
+| **maxZoom** | [**number**] | Maximum zoom level at which data from this table should be rendered. | defaults to undefined|
+| **radius** | [**number**] | Buffer radius in pixels around the tile to include features near edges. | (optional) defaults to 15|
+| **clusterPoint** | [**string**] | Name of the column that will be used for clustering, use only if it differs from geometry. (e.g. calculating clustering for polygons can take longer and result in bigger clusters.) | (optional) defaults to undefined|
 
 
 ### Return type

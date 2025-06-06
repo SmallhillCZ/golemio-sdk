@@ -12216,7 +12216,7 @@ export namespace GolemioApi {
          * @type {number}
          * @memberof MVTMapsV2ApiV2MvtZXYGet
          */
-        maxZoom?: number
+        maxZoom: number
     
         //radius
         /**
@@ -12225,6 +12225,14 @@ export namespace GolemioApi {
          * @memberof MVTMapsV2ApiV2MvtZXYGet
          */
         radius?: number
+    
+        //clusterPoint
+        /**
+         * Name of the column that will be used for clustering, use only if it differs from geometry. (e.g. calculating clustering for polygons can take longer and result in bigger clusters.)
+         * @type {string}
+         * @memberof MVTMapsV2ApiV2MvtZXYGet
+         */
+        clusterPoint?: string
     }
     
     
@@ -12270,6 +12278,7 @@ export namespace GolemioApi {
             assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
             assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
             assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
             
             // verify required parameter 'x' is not null or undefined
             assertParamExists('v2MvtZXYGet', 'z', z)
@@ -12278,6 +12287,7 @@ export namespace GolemioApi {
             assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
             assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
             assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
             
             // verify required parameter 'y' is not null or undefined
             assertParamExists('v2MvtZXYGet', 'z', z)
@@ -12286,6 +12296,7 @@ export namespace GolemioApi {
             assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
             assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
             assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
             
             // verify required parameter 'table' is not null or undefined
             assertParamExists('v2MvtZXYGet', 'z', z)
@@ -12294,6 +12305,7 @@ export namespace GolemioApi {
             assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
             assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
             assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
             
             // verify required parameter 'geometry' is not null or undefined
             assertParamExists('v2MvtZXYGet', 'z', z)
@@ -12302,6 +12314,7 @@ export namespace GolemioApi {
             assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
             assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
             assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
             
             // verify required parameter 'attributes' is not null or undefined
             assertParamExists('v2MvtZXYGet', 'z', z)
@@ -12310,6 +12323,16 @@ export namespace GolemioApi {
             assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
             assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
             assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
+            
+            // verify required parameter 'maxZoom' is not null or undefined
+            assertParamExists('v2MvtZXYGet', 'z', z)
+            assertParamExists('v2MvtZXYGet', 'x', x)
+            assertParamExists('v2MvtZXYGet', 'y', y)
+            assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+            assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+            assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
             
             const localVarPath = `/v2/mvt/{z}/{x}/{y}`
                 .replace(`{${"z"}}`, encodeURIComponent(String(z)))
@@ -12347,6 +12370,10 @@ export namespace GolemioApi {
     
             if (queryParams.radius !== undefined) {
                 requestQueryParameter['radius'] = queryParams.radius;
+            }
+    
+            if (queryParams.clusterPoint !== undefined) {
+                requestQueryParameter['clusterPoint'] = queryParams.clusterPoint;
             }
     
     

@@ -26,6 +26,7 @@ export { ConfigurationParameters as GolemioPublicTransportApiConfiguration } fro
 export class GolemioPublicTransportApi {
         GTFSRealtimeV2Api: GolemioPublicTransportApi.GTFSRealtimeV2Api;
         GTFSStaticV2Api: GolemioPublicTransportApi.GTFSStaticV2Api;
+        JISV1Api: GolemioPublicTransportApi.JISV1Api;
         PIDDepartureBoardsV2Api: GolemioPublicTransportApi.PIDDepartureBoardsV2Api;
         PIDDepartureBoardsV3Api: GolemioPublicTransportApi.PIDDepartureBoardsV3Api;
         PIDDepartureBoardsV3InternalApi: GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi;
@@ -41,6 +42,7 @@ export class GolemioPublicTransportApi {
 
             this.GTFSRealtimeV2Api = new GolemioPublicTransportApi.GTFSRealtimeV2Api(configuration, axios!);
             this.GTFSStaticV2Api = new GolemioPublicTransportApi.GTFSStaticV2Api(configuration, axios!);
+            this.JISV1Api = new GolemioPublicTransportApi.JISV1Api(configuration, axios!);
             this.PIDDepartureBoardsV2Api = new GolemioPublicTransportApi.PIDDepartureBoardsV2Api(configuration, axios!);
             this.PIDDepartureBoardsV3Api = new GolemioPublicTransportApi.PIDDepartureBoardsV3Api(configuration, axios!);
             this.PIDDepartureBoardsV3InternalApi = new GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi(configuration, axios!);
@@ -71,6 +73,294 @@ export namespace GolemioPublicTransportApi {
          * @memberof ASWid
          */
         'stop': number;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface Effect
+     */
+    export interface Effect {
+        /**
+         * 
+         * @type {string}
+         * @memberof Effect
+         */
+        'cs': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof Effect
+         */
+        'en'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EventCustomFormat
+     */
+    export interface EventCustomFormat {
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormat
+         */
+        'id': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormat
+         */
+        'type': EventCustomFormatTypeEnum;
+        /**
+         * 
+         * @type {EventCustomFormatHeaderText}
+         * @memberof EventCustomFormat
+         */
+        'header_text': EventCustomFormatHeaderText;
+        /**
+         * 
+         * @type {EventCustomFormatCause}
+         * @memberof EventCustomFormat
+         */
+        'cause': EventCustomFormatCause;
+        /**
+         * 
+         * @type {EventCustomFormatCauseDetail}
+         * @memberof EventCustomFormat
+         */
+        'cause_detail': EventCustomFormatCauseDetail;
+        /**
+         * INFO - priority 3 \\ WARNING - priority 2 \\ SEVERE - priority 1 
+         * @type {string}
+         * @memberof EventCustomFormat
+         */
+        'severity_level': EventCustomFormatSeverityLevelEnum;
+        /**
+         * 
+         * @type {EventCustomFormatActivePeriod}
+         * @memberof EventCustomFormat
+         */
+        'active_period': EventCustomFormatActivePeriod;
+        /**
+         * 
+         * @type {EventCustomFormatDisplayPeriod}
+         * @memberof EventCustomFormat
+         */
+        'display_period': EventCustomFormatDisplayPeriod;
+        /**
+         * 
+         * @type {Array<Effect>}
+         * @memberof EventCustomFormat
+         */
+        'effects': Array<Effect>;
+        /**
+         * 
+         * @type {EventCustomFormatDescriptionText}
+         * @memberof EventCustomFormat
+         */
+        'description_text': EventCustomFormatDescriptionText;
+        /**
+         * 
+         * @type {EventCustomFormatDescriptionHtml}
+         * @memberof EventCustomFormat
+         */
+        'description_html': EventCustomFormatDescriptionHtml;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormat
+         */
+        'organization_name': string;
+        /**
+         * 
+         * @type {EventCustomFormatInformedEntity}
+         * @memberof EventCustomFormat
+         */
+        'informed_entity'?: EventCustomFormatInformedEntity | null;
+        /**
+         * Timestamp from when the event was last modified in VYMI
+         * @type {string}
+         * @memberof EventCustomFormat
+         */
+        'last_modified_timestamp': string;
+        /**
+         * Timestamp from when the event was created in VYMI
+         * @type {string}
+         * @memberof EventCustomFormat
+         */
+        'created_timestamp': string;
+    }
+    
+    export const EventCustomFormatTypeEnum = {
+        Incident: 'INCIDENT',
+        Disruption: 'DISRUPTION',
+        ServiceChange: 'SERVICE_CHANGE'
+    } as const;
+    
+    export type EventCustomFormatTypeEnum = typeof EventCustomFormatTypeEnum[keyof typeof EventCustomFormatTypeEnum];
+    export const EventCustomFormatSeverityLevelEnum = {
+        Info: 'INFO',
+        Warning: 'WARNING',
+        Severe: 'SEVERE'
+    } as const;
+    
+    export type EventCustomFormatSeverityLevelEnum = typeof EventCustomFormatSeverityLevelEnum[keyof typeof EventCustomFormatSeverityLevelEnum];
+    
+    
+        /**
+     * The start and end date/time of the event validity
+     * @export
+     * @interface EventCustomFormatActivePeriod
+     */
+    export interface EventCustomFormatActivePeriod {
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatActivePeriod
+         */
+        'start': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatActivePeriod
+         */
+        'end': string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EventCustomFormatCause
+     */
+    export interface EventCustomFormatCause {
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatCause
+         */
+        'cs': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatCause
+         */
+        'en'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EventCustomFormatCauseDetail
+     */
+    export interface EventCustomFormatCauseDetail {
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatCauseDetail
+         */
+        'cs': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatCauseDetail
+         */
+        'en'?: string | null;
+    }
+    
+        /**
+     * Localized descriptions of the event in HTML format
+     * @export
+     * @interface EventCustomFormatDescriptionHtml
+     */
+    export interface EventCustomFormatDescriptionHtml {
+        /**
+         * Event description in Czech in HTML format
+         * @type {string}
+         * @memberof EventCustomFormatDescriptionHtml
+         */
+        'cs': string;
+        /**
+         * Event description in English in HTML format
+         * @type {string}
+         * @memberof EventCustomFormatDescriptionHtml
+         */
+        'en'?: string | null;
+    }
+    
+        /**
+     * Localized descriptions of the event in plain text
+     * @export
+     * @interface EventCustomFormatDescriptionText
+     */
+    export interface EventCustomFormatDescriptionText {
+        /**
+         * Event description in Czech in plain text
+         * @type {string}
+         * @memberof EventCustomFormatDescriptionText
+         */
+        'cs': string;
+        /**
+         * Event description in English in plain text
+         * @type {string}
+         * @memberof EventCustomFormatDescriptionText
+         */
+        'en'?: string | null;
+    }
+    
+        /**
+     * The start and end date/time when the event should be displayed
+     * @export
+     * @interface EventCustomFormatDisplayPeriod
+     */
+    export interface EventCustomFormatDisplayPeriod {
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatDisplayPeriod
+         */
+        'start': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatDisplayPeriod
+         */
+        'end': string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EventCustomFormatHeaderText
+     */
+    export interface EventCustomFormatHeaderText {
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatHeaderText
+         */
+        'cs': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatHeaderText
+         */
+        'en'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EventCustomFormatInformedEntity
+     */
+    export interface EventCustomFormatInformedEntity {
+        /**
+         * 
+         * @type {Array<InformedEntityRoute>}
+         * @memberof EventCustomFormatInformedEntity
+         */
+        'routes'?: Array<InformedEntityRoute> | null;
     }
     
         /**
@@ -533,6 +823,40 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
+     * @interface InformedEntityRoute
+     */
+    export interface InformedEntityRoute {
+        /**
+         * 
+         * @type {string}
+         * @memberof InformedEntityRoute
+         */
+        'id': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof InformedEntityRoute
+         */
+        'route_short_name': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof InformedEntityRoute
+         */
+        'route_long_name': string;
+        /**
+         * 
+         * @type {RouteType}
+         * @memberof InformedEntityRoute
+         */
+        'route_type': RouteType;
+    }
+    
+    
+    
+        /**
+     * 
+     * @export
      * @interface PIDDepartureBoard
      */
     export interface PIDDepartureBoard {
@@ -663,7 +987,7 @@ export namespace GolemioPublicTransportApi {
          */
         'text_en': string | null;
         /**
-         * Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures), `general-alternate` (full screen alternates with departures).
+         * Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures).
          * @type {string}
          * @memberof PIDDepartureBoardInfotext
          */
@@ -709,7 +1033,7 @@ export namespace GolemioPublicTransportApi {
          */
         'text_en': string | null;
         /**
-         * Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures), `general-alternate` (full screen alternates with departures).
+         * Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures).
          * @type {string}
          * @memberof PIDDepartureBoardInfotextsInner
          */
@@ -1417,6 +1741,25 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
+     * 0 - tram \\ 1 - metro \\ 2 - rail \\ 3 - bus \\ 4 - ferry \\ 7 - funicular \\ 11 - trolleybus 
+     * @export
+     * @enum {number}
+     */
+    
+    export const RouteType = {
+        NUMBER_0: 0,
+        NUMBER_1: 1,
+        NUMBER_2: 2,
+        NUMBER_3: 3,
+        NUMBER_4: 4,
+        NUMBER_7: 7,
+        NUMBER_11: 11
+    } as const;
+    
+    export type RouteType = typeof RouteType[keyof typeof RouteType];
+    
+    
+        /**
      * 
      * @export
      * @interface ScopeInfo
@@ -1973,7 +2316,7 @@ export namespace GolemioPublicTransportApi {
          */
         'text_en': string | null;
         /**
-         * Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures), `general-alternate` (full screen alternates with departures).
+         * Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures).
          * @type {string}
          * @memberof V2PidInfotextsGet200ResponseInner
          */
@@ -2417,7 +2760,7 @@ export namespace GolemioPublicTransportApi {
          */
         'text_en': string | null;
         /**
-         * Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures), `general-alternate` (full screen alternates with departures).
+         * Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures).
          * @type {string}
          * @memberof V3PidInfotextsGet200ResponseInner
          */
@@ -4181,6 +4524,115 @@ export namespace GolemioPublicTransportApi {
             axiosRequestConfig["baseURL"] = this.configuration.basePath;
             
             return this.axios.request<V2GtfsTripsIdGet200Response>(axiosRequestConfig);
+        }
+    }
+    
+        
+        
+    
+    
+    /**
+     * Query parameters for v1JisEventsCustomFormatGet operation in JISV1Api.
+     * @export
+     * @interface JISV1ApiV1JisEventsCustomFormatGetQueryParams
+     */
+    export interface JISV1ApiV1JisEventsCustomFormatGetQueryParams {
+        //displayPeriodStart
+        /**
+         * Start of the display period
+         * @type {string}
+         * @memberof JISV1ApiV1JisEventsCustomFormatGet
+         */
+        displayPeriodStart?: string
+    
+        //displayPeriodEnd
+        /**
+         * End of the display period
+         * @type {string}
+         * @memberof JISV1ApiV1JisEventsCustomFormatGet
+         */
+        displayPeriodEnd?: string
+    
+        //organizationNames
+        /**
+         * List of organization names to filter events by.
+         * @type {Array<string>}
+         * @memberof JISV1ApiV1JisEventsCustomFormatGet
+         */
+        organizationNames?: Array<string>
+    }
+    
+    
+    
+    
+    /**
+     * JISV1Api - object-oriented interface
+     * @export
+     * @class JISV1Api
+     * @extends {BaseAPI}
+     */
+    export class JISV1Api extends BaseAPI {
+    
+        constructor(protected override configuration: GolemioPublicTransportApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
+            super(configuration, configuration.basePath, axios);
+        }
+    
+        /**
+         * 
+         * @summary Get all published events in custom format for external use
+    
+         * @param {JISV1ApiV1JisEventsCustomFormatGetQueryParams} queryParams Query parameters.
+         * @param {AxiosRequestConfig} [options] Override http request option.
+         * @throws {RequiredError}
+         * @memberof JISV1Api
+         */
+        
+        public async v1JisEventsCustomFormatGet(
+            queryParams: JISV1ApiV1JisEventsCustomFormatGetQueryParams = {},
+            options: AxiosRequestConfig = {}
+        ) {
+    
+            const localVarPath = `/v1/jis/events/custom-format`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (this.configuration) {
+                baseOptions = this.configuration.baseOptions;
+            }
+    
+            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const requestHeaderParameter = {} as any;
+            const requestQueryParameter = {} as any;
+    
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+    
+            if (queryParams.displayPeriodStart !== undefined) {
+                requestQueryParameter['displayPeriodStart'] = (queryParams.displayPeriodStart as any instanceof Date) ?
+                    (queryParams.displayPeriodStart as any).toISOString() :
+                    queryParams.displayPeriodStart;
+            }
+    
+            if (queryParams.displayPeriodEnd !== undefined) {
+                requestQueryParameter['displayPeriodEnd'] = (queryParams.displayPeriodEnd as any instanceof Date) ?
+                    (queryParams.displayPeriodEnd as any).toISOString() :
+                    queryParams.displayPeriodEnd;
+            }
+    
+            if (queryParams.organizationNames) {
+                requestQueryParameter['organizationNames'] = queryParams.organizationNames;
+            }
+    
+    
+    
+            setSearchParams(requestUrlObj, requestQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+    
+            axiosRequestConfig["url"] = toPathString(requestUrlObj);
+            axiosRequestConfig["baseURL"] = this.configuration.basePath;
+            
+            return this.axios.request<Array<EventCustomFormat>>(axiosRequestConfig);
         }
     }
     

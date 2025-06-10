@@ -6,6 +6,16 @@ base.ts
 common.ts
 configuration.ts
 docs/ASWid.md
+docs/Effect.md
+docs/EventCustomFormat.md
+docs/EventCustomFormatActivePeriod.md
+docs/EventCustomFormatCause.md
+docs/EventCustomFormatCauseDetail.md
+docs/EventCustomFormatDescriptionHtml.md
+docs/EventCustomFormatDescriptionText.md
+docs/EventCustomFormatDisplayPeriod.md
+docs/EventCustomFormatHeaderText.md
+docs/EventCustomFormatInformedEntity.md
 docs/FeaturePoint.md
 docs/FeaturePointGeometry.md
 docs/GTFSRealtimeV2Api.md
@@ -17,6 +27,8 @@ docs/GTFSStop.md
 docs/GTFSStopTime.md
 docs/GTFSTrip.md
 docs/GeometryPoint.md
+docs/InformedEntityRoute.md
+docs/JISV1Api.md
 docs/PIDDepartureBoard.md
 docs/PIDDepartureBoardDelay.md
 docs/PIDDepartureBoardDeparture.md
@@ -50,6 +62,7 @@ docs/PublicTripStopTimeFeatureCollection.md
 docs/PublicTripStopTimeFeatureCollectionFeaturesInner.md
 docs/PublicTripStopTimeFeatureCollectionFeaturesInnerProperties.md
 docs/PublicVehiclePositionsV2Api.md
+docs/RouteType.md
 docs/ScopeInfo.md
 docs/ScopeShapes.md
 docs/ScopeStaticInfo.md

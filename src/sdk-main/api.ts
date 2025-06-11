@@ -6658,7 +6658,7 @@ export namespace GolemioApi {
          */
         'filter'?: string;
         /**
-         * The parking type of the parking location. * `on_street` - parking on the street * `underground` - subterranean parking facility * `multi_storey` - multi-level parking garage * `surface` - open-air parking lot * `rooftop` - parking on building roof 
+         * The parking type of the parking location. * `on_street` - parking on the street * `underground` - subterranean parking facility * `multi_storey` - multi-level parking garage * `surface` - open-air parking lot * `rooftop` - parking on building roof * `other` - other type of parking 
          * @type {string}
          * @memberof ParkingProperties
          */
@@ -6727,7 +6727,8 @@ export namespace GolemioApi {
         Underground: 'underground',
         MultiStorey: 'multi_storey',
         Surface: 'surface',
-        Rooftop: 'rooftop'
+        Rooftop: 'rooftop',
+        Other: 'other'
     } as const;
     
     export type ParkingPropertiesParkingTypeEnum = typeof ParkingPropertiesParkingTypeEnum[keyof typeof ParkingPropertiesParkingTypeEnum];

@@ -178,7 +178,7 @@ export namespace GolemioPublicTransportApi {
          * @type {EventCustomFormatInformedEntity}
          * @memberof EventCustomFormat
          */
-        'informed_entity'?: EventCustomFormatInformedEntity | null;
+        'informed_entity': EventCustomFormatInformedEntity | null;
         /**
          * Timestamp from when the event was last modified in VYMI
          * @type {string}

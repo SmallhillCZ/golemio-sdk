@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **description_text** | [**EventCustomFormatDescriptionText**](EventCustomFormatDescriptionText.md) |  | [default to undefined]
 **description_html** | [**EventCustomFormatDescriptionHtml**](EventCustomFormatDescriptionHtml.md) |  | [default to undefined]
 **organization_name** | **string** |  | [default to undefined]
-**informed_entity** | [**EventCustomFormatInformedEntity**](EventCustomFormatInformedEntity.md) |  | [optional] [default to undefined]
+**informed_entity** | [**EventCustomFormatInformedEntity**](EventCustomFormatInformedEntity.md) |  | [default to undefined]
 **last_modified_timestamp** | **string** | Timestamp from when the event was last modified in VYMI | [default to undefined]
 **created_timestamp** | **string** | Timestamp from when the event was created in VYMI | [default to undefined]
 

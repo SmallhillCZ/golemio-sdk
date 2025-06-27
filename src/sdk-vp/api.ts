@@ -857,6 +857,52 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
+     * @interface InlineObject
+     */
+    export interface InlineObject {
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof InlineObject
+         */
+        'error_status': number;
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject
+         */
+        'error_info'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface InlineObject1
+     */
+    export interface InlineObject1 {
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject1
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof InlineObject1
+         */
+        'error_status': number;
+    }
+    
+        /**
+     * 
+     * @export
      * @interface PIDDepartureBoard
      */
     export interface PIDDepartureBoard {
@@ -2078,26 +2124,6 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
-     * @interface V2GtfsServicesGet401Response
-     */
-    export interface V2GtfsServicesGet401Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2GtfsServicesGet401Response
-         */
-        'error_message': string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2GtfsServicesGet401Response
-         */
-        'error_status': number;
-    }
-    
-        /**
-     * 
-     * @export
      * @interface V2GtfsShapesIdGet200Response
      */
     export interface V2GtfsShapesIdGet200Response {
@@ -2397,32 +2423,6 @@ export namespace GolemioPublicTransportApi {
          * @memberof V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner
          */
         'platform_code'?: string | null;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V2PublicDepartureboardsGet400Response
-     */
-    export interface V2PublicDepartureboardsGet400Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2PublicDepartureboardsGet400Response
-         */
-        'error_message': string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2PublicDepartureboardsGet400Response
-         */
-        'error_status': number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2PublicDepartureboardsGet400Response
-         */
-        'error_info'?: string | null;
     }
     
         /**

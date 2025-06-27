@@ -28,6 +28,8 @@ docs/GTFSStopTime.md
 docs/GTFSTrip.md
 docs/GeometryPoint.md
 docs/InformedEntityRoute.md
+docs/InlineObject.md
+docs/InlineObject1.md
 docs/JISV1Api.md
 docs/PIDDepartureBoard.md
 docs/PIDDepartureBoardDelay.md
@@ -73,7 +75,6 @@ docs/ScopeStopTimes.md
 docs/ScopeVehicleDescriptor.md
 docs/ScopeVehicleDescriptorVehicleDescriptor.md
 docs/StatePosition.md
-docs/V2GtfsServicesGet401Response.md
 docs/V2GtfsShapesIdGet200Response.md
 docs/V2GtfsStopsGet200Response.md
 docs/V2GtfsStopsGet200ResponseFeaturesInner.md
@@ -81,7 +82,6 @@ docs/V2GtfsTripsIdGet200Response.md
 docs/V2GtfsTripsIdGet200ResponseAllOfShapesInner.md
 docs/V2PidInfotextsGet200ResponseInner.md
 docs/V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner.md
-docs/V2PublicDepartureboardsGet400Response.md
 docs/V2PublicGtfsTripsGtfsTripIdGet200Response.md
 docs/V2PublicVehiclepositionsGet200Response.md
 docs/V2PublicVehiclepositionsVehicleIdGet200Response.md

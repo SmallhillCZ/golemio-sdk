@@ -3921,6 +3921,26 @@ export namespace GolemioApi {
         /**
      * 
      * @export
+     * @interface GETAllGardens403Response
+     */
+    export interface GETAllGardens403Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof GETAllGardens403Response
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof GETAllGardens403Response
+         */
+        'error_status': number;
+    }
+    
+        /**
+     * 
+     * @export
      * @interface GETAllMedicalInstitutions200Response
      */
     export interface GETAllMedicalInstitutions200Response {
@@ -4381,6 +4401,124 @@ export namespace GolemioApi {
     
     export type GeoJSONMultiPolygonTypeEnum = typeof GeoJSONMultiPolygonTypeEnum[keyof typeof GeoJSONMultiPolygonTypeEnum];
     
+    
+        /**
+     * 
+     * @export
+     * @interface InlineObject
+     */
+    export interface InlineObject {
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject
+         */
+        'error_message'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof InlineObject
+         */
+        'error_status'?: number;
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject
+         */
+        'error_info'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface InlineObject1
+     */
+    export interface InlineObject1 {
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject1
+         */
+        'error_message'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof InlineObject1
+         */
+        'error_status'?: number;
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject1
+         */
+        'error_info'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface InlineObject2
+     */
+    export interface InlineObject2 {
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject2
+         */
+        'error_message'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof InlineObject2
+         */
+        'error_status'?: number;
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject2
+         */
+        'error_info'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface InlineObject3
+     */
+    export interface InlineObject3 {
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject3
+         */
+        'message'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface InlineObject4
+     */
+    export interface InlineObject4 {
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject4
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof InlineObject4
+         */
+        'error_status': number;
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject4
+         */
+        'error_info'?: string | null;
+    }
     
         /**
      * 
@@ -8810,147 +8948,9 @@ export namespace GolemioApi {
         /**
      * 
      * @export
-     * @interface V2CitydistrictsGet403Response
-     */
-    export interface V2CitydistrictsGet403Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2CitydistrictsGet403Response
-         */
-        'error_message': string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2CitydistrictsGet403Response
-         */
-        'error_status': number;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V2EnergeticsDevicesDeviceIdGet404Response
-     */
-    export interface V2EnergeticsDevicesDeviceIdGet404Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsDevicesDeviceIdGet404Response
-         */
-        'error_message'?: string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2EnergeticsDevicesDeviceIdGet404Response
-         */
-        'error_status'?: number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsDevicesDeviceIdGet404Response
-         */
-        'error_info'?: string;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V2EnergeticsDevicesGet401Response
-     */
-    export interface V2EnergeticsDevicesGet401Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsDevicesGet401Response
-         */
-        'error_message'?: string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2EnergeticsDevicesGet401Response
-         */
-        'error_status'?: number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsDevicesGet401Response
-         */
-        'error_info'?: string;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V2EnergeticsDevicesGet500Response
-     */
-    export interface V2EnergeticsDevicesGet500Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsDevicesGet500Response
-         */
-        'error_message'?: string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2EnergeticsDevicesGet500Response
-         */
-        'error_status'?: number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsDevicesGet500Response
-         */
-        'error_info'?: string;
-    }
-    
-        /**
-     * 
-     * @export
      * @interface V2EnergeticsOrganizationsGet200Response
      */
     export interface V2EnergeticsOrganizationsGet200Response {
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V2EnergeticsOrganizationsOrganizationIdGet400Response
-     */
-    export interface V2EnergeticsOrganizationsOrganizationIdGet400Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsOrganizationsOrganizationIdGet400Response
-         */
-        'error_message'?: string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2EnergeticsOrganizationsOrganizationIdGet400Response
-         */
-        'error_status'?: number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsOrganizationsOrganizationIdGet400Response
-         */
-        'error_info'?: string;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V2MvtZXYGet401Response
-     */
-    export interface V2MvtZXYGet401Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2MvtZXYGet401Response
-         */
-        'message'?: string;
     }
     
         /**
@@ -8971,6 +8971,32 @@ export namespace GolemioApi {
          * @memberof V2ParkingGet200Response
          */
         'type'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V2ParkingMeasurementsGet400Response
+     */
+    export interface V2ParkingMeasurementsGet400Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof V2ParkingMeasurementsGet400Response
+         */
+        'error_message'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof V2ParkingMeasurementsGet400Response
+         */
+        'error_status'?: number;
+        /**
+         * 
+         * @type {string}
+         * @memberof V2ParkingMeasurementsGet400Response
+         */
+        'error_info'?: string;
     }
     
         /**
@@ -8999,32 +9025,6 @@ export namespace GolemioApi {
          * @memberof V2VehiclesharingMvtsFreeVehicleStatusGet200ResponseLayers
          */
         'free_vehicle_status'?: FreeVehicleStatusMVTS;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V2VehiclesharingMvtsFreeVehicleStatusGet400Response
-     */
-    export interface V2VehiclesharingMvtsFreeVehicleStatusGet400Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2VehiclesharingMvtsFreeVehicleStatusGet400Response
-         */
-        'error_message': string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2VehiclesharingMvtsFreeVehicleStatusGet400Response
-         */
-        'error_status': number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2VehiclesharingMvtsFreeVehicleStatusGet400Response
-         */
-        'error_info'?: string | null;
     }
     
         /**

@@ -8956,6 +8956,26 @@ export namespace GolemioApi {
         /**
      * 
      * @export
+     * @interface V2MvtValidationGet200Response
+     */
+    export interface V2MvtValidationGet200Response {
+        /**
+         * 
+         * @type {boolean}
+         * @memberof V2MvtValidationGet200Response
+         */
+        'valid': boolean;
+        /**
+         * 
+         * @type {string}
+         * @memberof V2MvtValidationGet200Response
+         */
+        'error'?: string;
+    }
+    
+        /**
+     * 
+     * @export
      * @interface V2ParkingGet200Response
      */
     export interface V2ParkingGet200Response {
@@ -12182,6 +12202,57 @@ export namespace GolemioApi {
     
     
     /**
+     * Query parameters for v2MvtValidationGet operation in MVTMapsV2Api.
+     * @export
+     * @interface MVTMapsV2ApiV2MvtValidationGetQueryParams
+     */
+    export interface MVTMapsV2ApiV2MvtValidationGetQueryParams {
+        //table
+        /**
+         * Fully qualified table name (e.g. &#x60;schema.table&#x60;) to fetch data from.
+         * @type {string}
+         * @memberof MVTMapsV2ApiV2MvtValidationGet
+         */
+        table: string
+    
+        //geometry
+        /**
+         * Name of the geometry column in the table.
+         * @type {string}
+         * @memberof MVTMapsV2ApiV2MvtValidationGet
+         */
+        geometry: string
+    
+        //attributes
+        /**
+         * List of attribute columns to include in the tile features.
+         * @type {Array<string>}
+         * @memberof MVTMapsV2ApiV2MvtValidationGet
+         */
+        attributes: Array<string>
+    
+        //clusterPoint
+        /**
+         * Name of the column that will be used for clustering, use only if it differs from geometry. (e.g. calculating clustering for polygons can take longer and result in bigger clusters.)
+         * @type {string}
+         * @memberof MVTMapsV2ApiV2MvtValidationGet
+         */
+        clusterPoint?: string
+    
+        //colorAttribute
+        /**
+         * Name of the column to use for coloring features
+         * @type {string}
+         * @memberof MVTMapsV2ApiV2MvtValidationGet
+         */
+        colorAttribute?: string
+    }
+    
+    
+    
+    
+    
+    /**
      * Query parameters for v2MvtZXYGet operation in MVTMapsV2Api.
      * @export
      * @interface MVTMapsV2ApiV2MvtZXYGetQueryParams
@@ -12234,6 +12305,14 @@ export namespace GolemioApi {
          * @memberof MVTMapsV2ApiV2MvtZXYGet
          */
         clusterPoint?: string
+    
+        //colorAttribute
+        /**
+         * Name of the column to use for coloring features
+         * @type {string}
+         * @memberof MVTMapsV2ApiV2MvtZXYGet
+         */
+        colorAttribute?: string
     }
     
     
@@ -12249,6 +12328,83 @@ export namespace GolemioApi {
     
         constructor(protected override configuration: GolemioApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
             super(configuration, configuration.basePath, axios);
+        }
+    
+        /**
+         * Ensure the provided data conforms to the database schema requirements. 
+         * @summary Validate attributes of MVT request
+    
+         * @param {MVTMapsV2ApiV2MvtValidationGetQueryParams} queryParams Query parameters.
+         * @param {AxiosRequestConfig} [options] Override http request option.
+         * @throws {RequiredError}
+         * @memberof MVTMapsV2Api
+         */
+        
+        public async v2MvtValidationGet(
+            queryParams: MVTMapsV2ApiV2MvtValidationGetQueryParams,
+            options: AxiosRequestConfig = {}
+        ) {
+    
+            // verify required parameter 'table' is not null or undefined
+            assertParamExists('v2MvtValidationGet', 'table', queryParams.table)
+            assertParamExists('v2MvtValidationGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtValidationGet', 'attributes', queryParams.attributes)
+            
+            // verify required parameter 'geometry' is not null or undefined
+            assertParamExists('v2MvtValidationGet', 'table', queryParams.table)
+            assertParamExists('v2MvtValidationGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtValidationGet', 'attributes', queryParams.attributes)
+            
+            // verify required parameter 'attributes' is not null or undefined
+            assertParamExists('v2MvtValidationGet', 'table', queryParams.table)
+            assertParamExists('v2MvtValidationGet', 'geometry', queryParams.geometry)
+            assertParamExists('v2MvtValidationGet', 'attributes', queryParams.attributes)
+            
+            const localVarPath = `/v2/mvt/validation`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (this.configuration) {
+                baseOptions = this.configuration.baseOptions;
+            }
+    
+            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const requestHeaderParameter = {} as any;
+            const requestQueryParameter = {} as any;
+    
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+    
+            if (queryParams.table !== undefined) {
+                requestQueryParameter['table'] = queryParams.table;
+            }
+    
+            if (queryParams.geometry !== undefined) {
+                requestQueryParameter['geometry'] = queryParams.geometry;
+            }
+    
+            if (queryParams.attributes) {
+                requestQueryParameter['attributes'] = queryParams.attributes;
+            }
+    
+            if (queryParams.clusterPoint !== undefined) {
+                requestQueryParameter['clusterPoint'] = queryParams.clusterPoint;
+            }
+    
+            if (queryParams.colorAttribute !== undefined) {
+                requestQueryParameter['colorAttribute'] = queryParams.colorAttribute;
+            }
+    
+    
+    
+            setSearchParams(requestUrlObj, requestQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+    
+            axiosRequestConfig["url"] = toPathString(requestUrlObj);
+            axiosRequestConfig["baseURL"] = this.configuration.basePath;
+            
+            return this.axios.request<V2MvtValidationGet200Response>(axiosRequestConfig);
         }
     
         /**
@@ -12375,6 +12531,10 @@ export namespace GolemioApi {
     
             if (queryParams.clusterPoint !== undefined) {
                 requestQueryParameter['clusterPoint'] = queryParams.clusterPoint;
+            }
+    
+            if (queryParams.colorAttribute !== undefined) {
+                requestQueryParameter['colorAttribute'] = queryParams.colorAttribute;
             }
     
     

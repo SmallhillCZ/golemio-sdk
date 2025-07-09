@@ -266,6 +266,7 @@ docs/V2AirqualitystationsGet200Response.md
 docs/V2BicyclecountersGet200Response.md
 docs/V2CitydistrictsGet200Response.md
 docs/V2EnergeticsOrganizationsGet200Response.md
+docs/V2MvtValidationGet200Response.md
 docs/V2ParkingGet200Response.md
 docs/V2ParkingMeasurementsGet400Response.md
 docs/V2VehiclesharingMvtsFreeVehicleStatusGet200Response.md

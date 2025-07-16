@@ -15085,7 +15085,7 @@ export namespace GolemioApi {
     
         //typeisEnumTypeEnum
         /**
-         * Filter by type
+         * Filter by type. Use with square brackets &#x60;type[]&#x60;
          * @type {Array<'payment_machine' | 'info_box'>}
          * @memberof ParkingV3ApiV3ParkingMachinesGet
          */

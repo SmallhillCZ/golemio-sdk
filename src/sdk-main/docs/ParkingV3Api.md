@@ -216,7 +216,7 @@ const configuration = new Configuration();
 const apiInstance = new ParkingV3Api(configuration);
 
 let primarySource: Array<string>; //Filter by primary source. Use with square brackets `primarySource[]` (optional) (default to undefined)
-let type: Array<'payment_machine' | 'info_box'>; //Filter by type (optional) (default to undefined)
+let type: Array<'payment_machine' | 'info_box'>; //Filter by type. Use with square brackets `type[]` (optional) (default to undefined)
 let boundingBox: string; //Filter by bounding box in format \"topLeft.lat,topLeft.lon,bottomRight.lat,bottomRight.lon\", polygons that fit only partially to selected bounding box are included (optional) (default to undefined)
 let codeMask: string; //Filter by code mask using substring match and \"%\" wildcard (partial match). (If used directly in postman or browser, \"%\" needs to be encoded as \"%25\". Examples: - `query` matches substring in codes - `start%` matches codes starting with \"start\" - `%end` matches codes ending with \"end\" - `%middle%` matches codes containing \"middle\" anywhere  (optional) (default to undefined)
 let validFrom: string; //Filter by valid from date (optional) (default to undefined)
@@ -241,7 +241,7 @@ const { status, data } = await apiInstance.v3ParkingMachinesGet(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **primarySource** | **Array&lt;string&gt;** | Filter by primary source. Use with square brackets &#x60;primarySource[]&#x60; | (optional) defaults to undefined|
-| **type** | **Array<&#39;payment_machine&#39; &#124; &#39;info_box&#39;>** | Filter by type | (optional) defaults to undefined|
+| **type** | **Array<&#39;payment_machine&#39; &#124; &#39;info_box&#39;>** | Filter by type. Use with square brackets &#x60;type[]&#x60; | (optional) defaults to undefined|
 | **boundingBox** | [**string**] | Filter by bounding box in format \&quot;topLeft.lat,topLeft.lon,bottomRight.lat,bottomRight.lon\&quot;, polygons that fit only partially to selected bounding box are included | (optional) defaults to undefined|
 | **codeMask** | [**string**] | Filter by code mask using substring match and \&quot;%\&quot; wildcard (partial match). (If used directly in postman or browser, \&quot;%\&quot; needs to be encoded as \&quot;%25\&quot;. Examples: - &#x60;query&#x60; matches substring in codes - &#x60;start%&#x60; matches codes starting with \&quot;start\&quot; - &#x60;%end&#x60; matches codes ending with \&quot;end\&quot; - &#x60;%middle%&#x60; matches codes containing \&quot;middle\&quot; anywhere  | (optional) defaults to undefined|
 | **validFrom** | [**string**] | Filter by valid from date | (optional) defaults to undefined|

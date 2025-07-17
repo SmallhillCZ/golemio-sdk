@@ -23,7 +23,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new PIDRealtimePositionsV2Api(configuration);
 
-let limit: number; //Limits number of retrieved items. The maximum is 10000 (default value). (optional) (default to undefined)
+let limit: number; //Limits number of retrieved items. The maximum is 10000. (optional) (default to 100)
 let offset: number; //Number of the first items that are skipped. (optional) (default to undefined)
 let includeNotTracking: boolean; //Enrich result dataset with not tracking trip (those trips not being on track - before and after trip) (optional) (default to undefined)
 let includeNotPublic: boolean; //Enrich result dataset with not public trips (trips without run schedule) (optional) (default to false)
@@ -52,7 +52,7 @@ const { status, data } = await apiInstance.v2VehiclepositionsGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **limit** | [**number**] | Limits number of retrieved items. The maximum is 10000 (default value). | (optional) defaults to undefined|
+| **limit** | [**number**] | Limits number of retrieved items. The maximum is 10000. | (optional) defaults to 100|
 | **offset** | [**number**] | Number of the first items that are skipped. | (optional) defaults to undefined|
 | **includeNotTracking** | [**boolean**] | Enrich result dataset with not tracking trip (those trips not being on track - before and after trip) | (optional) defaults to undefined|
 | **includeNotPublic** | [**boolean**] | Enrich result dataset with not public trips (trips without run schedule) | (optional) defaults to false|

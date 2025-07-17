@@ -26,7 +26,7 @@ export { ConfigurationParameters as GolemioPublicTransportApiConfiguration } fro
 export class GolemioPublicTransportApi {
         GTFSRealtimeV2Api: GolemioPublicTransportApi.GTFSRealtimeV2Api;
         GTFSStaticV2Api: GolemioPublicTransportApi.GTFSStaticV2Api;
-        JISV1Api: GolemioPublicTransportApi.JISV1Api;
+        JISV1InternalApi: GolemioPublicTransportApi.JISV1InternalApi;
         PIDDepartureBoardsV2Api: GolemioPublicTransportApi.PIDDepartureBoardsV2Api;
         PIDDepartureBoardsV3Api: GolemioPublicTransportApi.PIDDepartureBoardsV3Api;
         PIDDepartureBoardsV3InternalApi: GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi;
@@ -42,7 +42,7 @@ export class GolemioPublicTransportApi {
 
             this.GTFSRealtimeV2Api = new GolemioPublicTransportApi.GTFSRealtimeV2Api(configuration, axios!);
             this.GTFSStaticV2Api = new GolemioPublicTransportApi.GTFSStaticV2Api(configuration, axios!);
-            this.JISV1Api = new GolemioPublicTransportApi.JISV1Api(configuration, axios!);
+            this.JISV1InternalApi = new GolemioPublicTransportApi.JISV1InternalApi(configuration, axios!);
             this.PIDDepartureBoardsV2Api = new GolemioPublicTransportApi.PIDDepartureBoardsV2Api(configuration, axios!);
             this.PIDDepartureBoardsV3Api = new GolemioPublicTransportApi.PIDDepartureBoardsV3Api(configuration, axios!);
             this.PIDDepartureBoardsV3InternalApi = new GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi(configuration, axios!);
@@ -4532,16 +4532,16 @@ export namespace GolemioPublicTransportApi {
     
     
     /**
-     * Query parameters for v1JisEventsCustomFormatGet operation in JISV1Api.
+     * Query parameters for v1JisEventsCustomFormatGet operation in JISV1InternalApi.
      * @export
-     * @interface JISV1ApiV1JisEventsCustomFormatGetQueryParams
+     * @interface JISV1InternalApiV1JisEventsCustomFormatGetQueryParams
      */
-    export interface JISV1ApiV1JisEventsCustomFormatGetQueryParams {
+    export interface JISV1InternalApiV1JisEventsCustomFormatGetQueryParams {
         //displayPeriodStart
         /**
          * Start of the display period
          * @type {string}
-         * @memberof JISV1ApiV1JisEventsCustomFormatGet
+         * @memberof JISV1InternalApiV1JisEventsCustomFormatGet
          */
         displayPeriodStart?: string
     
@@ -4549,7 +4549,7 @@ export namespace GolemioPublicTransportApi {
         /**
          * End of the display period
          * @type {string}
-         * @memberof JISV1ApiV1JisEventsCustomFormatGet
+         * @memberof JISV1InternalApiV1JisEventsCustomFormatGet
          */
         displayPeriodEnd?: string
     
@@ -4557,7 +4557,7 @@ export namespace GolemioPublicTransportApi {
         /**
          * List of organization names to filter events by.
          * @type {Array<string>}
-         * @memberof JISV1ApiV1JisEventsCustomFormatGet
+         * @memberof JISV1InternalApiV1JisEventsCustomFormatGet
          */
         organizationNames?: Array<string>
     }
@@ -4566,12 +4566,12 @@ export namespace GolemioPublicTransportApi {
     
     
     /**
-     * JISV1Api - object-oriented interface
+     * JISV1InternalApi - object-oriented interface
      * @export
-     * @class JISV1Api
+     * @class JISV1InternalApi
      * @extends {BaseAPI}
      */
-    export class JISV1Api extends BaseAPI {
+    export class JISV1InternalApi extends BaseAPI {
     
         constructor(protected override configuration: GolemioPublicTransportApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
             super(configuration, configuration.basePath, axios);
@@ -4581,14 +4581,14 @@ export namespace GolemioPublicTransportApi {
          * 
          * @summary Get all published events in custom format for external use
     
-         * @param {JISV1ApiV1JisEventsCustomFormatGetQueryParams} queryParams Query parameters.
+         * @param {JISV1InternalApiV1JisEventsCustomFormatGetQueryParams} queryParams Query parameters.
          * @param {AxiosRequestConfig} [options] Override http request option.
          * @throws {RequiredError}
-         * @memberof JISV1Api
+         * @memberof JISV1InternalApi
          */
         
         public async v1JisEventsCustomFormatGet(
-            queryParams: JISV1ApiV1JisEventsCustomFormatGetQueryParams = {},
+            queryParams: JISV1InternalApiV1JisEventsCustomFormatGetQueryParams = {},
             options: AxiosRequestConfig = {}
         ) {
     
@@ -5195,7 +5195,7 @@ export namespace GolemioPublicTransportApi {
     export interface PIDRealtimePositionsV2ApiV2VehiclepositionsGetQueryParams {
         //limit
         /**
-         * Limits number of retrieved items. The maximum is 10000 (default value).
+         * Limits number of retrieved items. The maximum is 10000.
          * @type {number}
          * @memberof PIDRealtimePositionsV2ApiV2VehiclepositionsGet
          */

@@ -97,6 +97,7 @@ let maxZoom: number; //Maximum zoom level at which data from this table should b
 let radius: number; //Buffer radius in pixels around the tile to include features near edges. (optional) (default to 15)
 let clusterPoint: string; //Name of the column that will be used for clustering, use only if it differs from geometry. (e.g. calculating clustering for polygons can take longer and result in bigger clusters.) (optional) (default to undefined)
 let colorAttribute: string; //Name of the column to use for coloring features (optional) (default to undefined)
+let filter: string; //stringified json for filter parameters (optional) (default to undefined)
 
 const { status, data } = await apiInstance.v2MvtZXYGet(
     z,
@@ -108,7 +109,8 @@ const { status, data } = await apiInstance.v2MvtZXYGet(
     maxZoom,
     radius,
     clusterPoint,
-    colorAttribute
+    colorAttribute,
+    filter
 );
 ```
 
@@ -126,6 +128,7 @@ const { status, data } = await apiInstance.v2MvtZXYGet(
 | **radius** | [**number**] | Buffer radius in pixels around the tile to include features near edges. | (optional) defaults to 15|
 | **clusterPoint** | [**string**] | Name of the column that will be used for clustering, use only if it differs from geometry. (e.g. calculating clustering for polygons can take longer and result in bigger clusters.) | (optional) defaults to undefined|
 | **colorAttribute** | [**string**] | Name of the column to use for coloring features | (optional) defaults to undefined|
+| **filter** | [**string**] | stringified json for filter parameters | (optional) defaults to undefined|
 
 
 ### Return type

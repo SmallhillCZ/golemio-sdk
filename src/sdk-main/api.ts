@@ -12313,6 +12313,14 @@ export namespace GolemioApi {
          * @memberof MVTMapsV2ApiV2MvtZXYGet
          */
         colorAttribute?: string
+    
+        //filter
+        /**
+         * stringified json for filter parameters
+         * @type {string}
+         * @memberof MVTMapsV2ApiV2MvtZXYGet
+         */
+        filter?: string
     }
     
     
@@ -12535,6 +12543,10 @@ export namespace GolemioApi {
     
             if (queryParams.colorAttribute !== undefined) {
                 requestQueryParameter['colorAttribute'] = queryParams.colorAttribute;
+            }
+    
+            if (queryParams.filter !== undefined) {
+                requestQueryParameter['filter'] = queryParams.filter;
             }
     
     

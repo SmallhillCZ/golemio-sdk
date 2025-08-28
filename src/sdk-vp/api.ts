@@ -30,6 +30,7 @@ export class GolemioPublicTransportApi {
         PIDDepartureBoardsV2Api: GolemioPublicTransportApi.PIDDepartureBoardsV2Api;
         PIDDepartureBoardsV3Api: GolemioPublicTransportApi.PIDDepartureBoardsV3Api;
         PIDDepartureBoardsV3InternalApi: GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi;
+        PIDDepartureBoardsV4Api: GolemioPublicTransportApi.PIDDepartureBoardsV4Api;
         PIDRealtimePositionsV2Api: GolemioPublicTransportApi.PIDRealtimePositionsV2Api;
         PublicDeparturesV2Api: GolemioPublicTransportApi.PublicDeparturesV2Api;
         PublicGTFSStaticLookupV2Api: GolemioPublicTransportApi.PublicGTFSStaticLookupV2Api;
@@ -46,6 +47,7 @@ export class GolemioPublicTransportApi {
             this.PIDDepartureBoardsV2Api = new GolemioPublicTransportApi.PIDDepartureBoardsV2Api(configuration, axios!);
             this.PIDDepartureBoardsV3Api = new GolemioPublicTransportApi.PIDDepartureBoardsV3Api(configuration, axios!);
             this.PIDDepartureBoardsV3InternalApi = new GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi(configuration, axios!);
+            this.PIDDepartureBoardsV4Api = new GolemioPublicTransportApi.PIDDepartureBoardsV4Api(configuration, axios!);
             this.PIDRealtimePositionsV2Api = new GolemioPublicTransportApi.PIDRealtimePositionsV2Api(configuration, axios!);
             this.PublicDeparturesV2Api = new GolemioPublicTransportApi.PublicDeparturesV2Api(configuration, axios!);
             this.PublicGTFSStaticLookupV2Api = new GolemioPublicTransportApi.PublicGTFSStaticLookupV2Api(configuration, axios!);
@@ -853,6 +855,26 @@ export namespace GolemioPublicTransportApi {
     }
     
     
+    
+        /**
+     * 
+     * @export
+     * @interface InlineObject
+     */
+    export interface InlineObject {
+        /**
+         * 
+         * @type {string}
+         * @memberof InlineObject
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof InlineObject
+         */
+        'error_status': number;
+    }
     
         /**
      * 
@@ -2078,26 +2100,6 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
-     * @interface V2GtfsServicesGet401Response
-     */
-    export interface V2GtfsServicesGet401Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2GtfsServicesGet401Response
-         */
-        'error_message': string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2GtfsServicesGet401Response
-         */
-        'error_status': number;
-    }
-    
-        /**
-     * 
-     * @export
      * @interface V2GtfsShapesIdGet200Response
      */
     export interface V2GtfsShapesIdGet200Response {
@@ -2402,32 +2404,6 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
-     * @interface V2PublicDepartureboardsGet400Response
-     */
-    export interface V2PublicDepartureboardsGet400Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2PublicDepartureboardsGet400Response
-         */
-        'error_message': string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2PublicDepartureboardsGet400Response
-         */
-        'error_status': number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2PublicDepartureboardsGet400Response
-         */
-        'error_info'?: string | null;
-    }
-    
-        /**
-     * 
-     * @export
      * @interface V2PublicGtfsTripsGtfsTripIdGet200Response
      */
     export interface V2PublicGtfsTripsGtfsTripIdGet200Response {
@@ -2696,12 +2672,6 @@ export namespace GolemioPublicTransportApi {
          */
         'type': string;
     }
-    
-        /**
-     * @type V2VehiclepositionsGetAcceptEncodingParameter
-     * @export
-     */
-    export type V2VehiclepositionsGetAcceptEncodingParameter = string;
     
         /**
      * 
@@ -3004,6 +2974,242 @@ export namespace GolemioPublicTransportApi {
          * @memberof V3PidTransferboardsGet404Response
          */
         'infotexts': Array<object>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V4PidTransferboardsGet200Response
+     */
+    export interface V4PidTransferboardsGet200Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200Response
+         */
+        'platform_code': string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200Response
+         */
+        'stop_name': string | null;
+        /**
+         * 
+         * @type {Array<string | null>}
+         * @memberof V4PidTransferboardsGet200Response
+         */
+        'icons'?: Array<string | null>;
+        /**
+         * List of departures from the stop. The list is sorted by: - route type - subway and then other   - subway is sorted alphabetically, then by departure time, then by direction id - departure time 
+         * @type {Array<V4PidTransferboardsGet200ResponseDeparturesInner>}
+         * @memberof V4PidTransferboardsGet200Response
+         */
+        'departures': Array<V4PidTransferboardsGet200ResponseDeparturesInner>;
+        /**
+         * 
+         * @type {Array<V4PidTransferboardsGet200ResponseInfotextsInner>}
+         * @memberof V4PidTransferboardsGet200Response
+         */
+        'infotexts': Array<V4PidTransferboardsGet200ResponseInfotextsInner>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V4PidTransferboardsGet200ResponseDeparturesInner
+     */
+    export interface V4PidTransferboardsGet200ResponseDeparturesInner {
+        /**
+         * 
+         * @type {V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
+         */
+        'departure_timestamp': V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp;
+        /**
+         * 
+         * @type {V4PidTransferboardsGet200ResponseDeparturesInnerRoute}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
+         */
+        'route': V4PidTransferboardsGet200ResponseDeparturesInnerRoute;
+        /**
+         * 
+         * @type {V3PidTransferboardsGet200ResponseDeparturesInnerStop}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
+         */
+        'stop'?: V3PidTransferboardsGet200ResponseDeparturesInnerStop;
+        /**
+         * 
+         * @type {V4PidTransferboardsGet200ResponseDeparturesInnerTrip}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
+         */
+        'trip': V4PidTransferboardsGet200ResponseDeparturesInnerTrip;
+        /**
+         * 
+         * @type {Array<string | null>}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
+         */
+        'icons'?: Array<string | null>;
+        /**
+         * 
+         * @type {V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
+         */
+        'substitution_text'?: V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp
+     */
+    export interface V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp {
+        /**
+         * 
+         * @type {Array<string | null>}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp
+         */
+        'minutes': Array<string | null>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V4PidTransferboardsGet200ResponseDeparturesInnerRoute
+     */
+    export interface V4PidTransferboardsGet200ResponseDeparturesInnerRoute {
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerRoute
+         */
+        'short_name': string | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerRoute
+         */
+        'type': number | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText
+     */
+    export interface V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText {
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText
+         */
+        'cs': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText
+         */
+        'en'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V4PidTransferboardsGet200ResponseDeparturesInnerTrip
+     */
+    export interface V4PidTransferboardsGet200ResponseDeparturesInnerTrip {
+        /**
+         * If more then one trips are available, the first one is taken. Trips are grouped by direction_id.
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerTrip
+         */
+        'headsign': string;
+        /**
+         * If more then one trips are available, the first one is taken. Trips are grouped by direction_id.
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerTrip
+         */
+        'id': string;
+        /**
+         * True if the vehicle being used on this trip is wheelchair accessible. Metro trips are deemed accessible if the station is accessible.
+         * @type {boolean}
+         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerTrip
+         */
+        'is_wheelchair_accessible': boolean;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V4PidTransferboardsGet200ResponseInfotextsInner
+     */
+    export interface V4PidTransferboardsGet200ResponseInfotextsInner {
+        /**
+         * 
+         * @type {V4PidTransferboardsGet200ResponseInfotextsInnerText}
+         * @memberof V4PidTransferboardsGet200ResponseInfotextsInner
+         */
+        'text': V4PidTransferboardsGet200ResponseInfotextsInnerText | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200ResponseInfotextsInner
+         */
+        'display_type': V4PidTransferboardsGet200ResponseInfotextsInnerDisplayTypeEnum;
+    }
+    
+    export const V4PidTransferboardsGet200ResponseInfotextsInnerDisplayTypeEnum = {
+        Inline: 'inline',
+        General: 'general'
+    } as const;
+    
+    export type V4PidTransferboardsGet200ResponseInfotextsInnerDisplayTypeEnum = typeof V4PidTransferboardsGet200ResponseInfotextsInnerDisplayTypeEnum[keyof typeof V4PidTransferboardsGet200ResponseInfotextsInnerDisplayTypeEnum];
+    
+    
+        /**
+     * 
+     * @export
+     * @interface V4PidTransferboardsGet200ResponseInfotextsInnerText
+     */
+    export interface V4PidTransferboardsGet200ResponseInfotextsInnerText {
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200ResponseInfotextsInnerText
+         */
+        'cs': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet200ResponseInfotextsInnerText
+         */
+        'en'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V4PidTransferboardsGet400Response
+     */
+    export interface V4PidTransferboardsGet400Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet400Response
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof V4PidTransferboardsGet400Response
+         */
+        'error_status': number;
+        /**
+         * 
+         * @type {string}
+         * @memberof V4PidTransferboardsGet400Response
+         */
+        'error_info'?: string | null;
     }
     
         /**
@@ -5183,6 +5389,183 @@ export namespace GolemioPublicTransportApi {
     
         
         
+    /**
+     * @export
+     */
+    export const V4PidTransferboardsGetRouteTypeEnum = {
+        NUMBER_0: 0,
+        NUMBER_1: 1,
+        NUMBER_2: 2,
+        NUMBER_3: 3,
+        NUMBER_4: 4,
+        NUMBER_7: 7,
+        NUMBER_11: 11
+    } as const;
+    export type V4PidTransferboardsGetRouteTypeEnum = typeof V4PidTransferboardsGetRouteTypeEnum[keyof typeof V4PidTransferboardsGetRouteTypeEnum];
+    
+    
+    /**
+     * Query parameters for v4PidTransferboardsGet operation in PIDDepartureBoardsV4Api.
+     * @export
+     * @interface PIDDepartureBoardsV4ApiV4PidTransferboardsGetQueryParams
+     */
+    export interface PIDDepartureBoardsV4ApiV4PidTransferboardsGetQueryParams {
+        //cisId
+        /**
+         * CIS identifier of the stop or node. A list of CIS IDs can be found in [Prague Open data](https://opendata.praha.eu/datasets/https%3A%2F%2Fapi.opendata.praha.eu%2Flod%2Fcatalog%2F6ac8381f-ea19-4ea9-8949-92076809dc5a). Includes departures from all stops at the given CIS ID. Required if &#x60;aswId&#x60; is not provided. Only one of &#x60;cisId&#x60; or &#x60;aswId&#x60; can be used. 
+         * @type {number}
+         * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
+         */
+        cisId?: number
+    
+        //aswId
+        /**
+         * ASW identifier of the stop. The format is &#x60;nodeId/stopId&#x60; where stopId is not mandatory. You can use &#x60;_&#x60; instead of &#x60;/&#x60; or encode the slash sign with &#x60;%2F&#x60;,  Includes departures from the given stop, plus from all stops at the given node (1330_1 -&gt; 1330 -&gt; 1330_1, 1330_2, ...), plus from all stops sharing the same name. Departures from associated metro and train stations are also included (Na Knížecí -&gt; Anděl). Required if &#x60;cisId&#x60; is not provided. Only one of &#x60;cisId&#x60; or &#x60;aswId&#x60; can be used. 
+         * @type {string}
+         * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
+         */
+        aswId?: string
+    
+        //tripNumber
+        /**
+         * Trip number of the vehicle in which the transfer is planned. Use to filter out transfers for a specific trip. Represents the numeric part of the GTFS &#x60;trip_short_name&#x60; (&#x60;Os 2547&#x60; -&gt; &#x60;2547&#x60;). Generally, &#x60;trip_short_name&#x60; is available only for train services. Required if &#x60;vehicleRegistrationNumber&#x60; is not provided. Only one of &#x60;tripNumber&#x60; or &#x60;vehicleRegistrationNumber&#x60; can be used. 
+         * @type {number}
+         * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
+         */
+        tripNumber?: number
+    
+        //vehicleRegistrationNumber
+        /**
+         * Registration number of the vehicle in which the transfer is planned. Use to filter out transfers for a specific vehicle. Required if &#x60;tripNumber&#x60; is not provided. Only one of &#x60;tripNumber&#x60; or &#x60;vehicleRegistrationNumber&#x60; can be used. 
+         * @type {string}
+         * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
+         */
+        vehicleRegistrationNumber?: string
+    
+        //routeTypeisEnumRouteTypeEnum
+        /**
+         * Transport type of the route in which the transfer is planned. This parameter is required to distinguish between different vehicle types, as trams and buses can share the same registration number. The value is represented by the following enum from GTFS: - 0: Tram - 1: Subway - 2: Train - 3: Bus - 4: Ferry - 7: Funicular - 11: Trolleybus For example, if you want to get a tram with registration number \&quot;1001\&quot;, use routeType&#x3D;0. For a bus with the same registration number, use routeType&#x3D;3. 
+         * @type {0 | 1 | 2 | 3 | 4 | 7 | 11}
+         * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
+         */
+        routeType: V4PidTransferboardsGetRouteTypeEnum
+    
+        //timeFrom
+        /**
+         * Set initial timestamp for time interval given by &#x60;minutesBefore&#x60; (hardcoded to 0) and &#x60;minutesAfter&#x60; (hardcoded to 60). Use to simulate query time different from now. Use ISO 8601 time format and URL encoded symbols - &#x60;%3A&#x60; for &#x60;:&#x60;, &#x60;%2B&#x60; for &#x60;.&#x60;, &#x60;%2F&#x60; for &#x60;+&#x60;. Time zone is set to &#x60;Europe/Prague&#x60;. Applicable range is -6 hours +2 days from now. 
+         * @type {string}
+         * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
+         */
+        timeFrom?: string
+    
+        //limit
+        /**
+         * Limit the number of rows of departures returned. The total number of departures is a union across individual types of departures. The default value is 8. 
+         * @type {number}
+         * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
+         */
+        limit?: number
+    }
+    
+    
+    
+    
+    /**
+     * PIDDepartureBoardsV4Api - object-oriented interface
+     * @export
+     * @class PIDDepartureBoardsV4Api
+     * @extends {BaseAPI}
+     */
+    export class PIDDepartureBoardsV4Api extends BaseAPI {
+    
+        constructor(protected override configuration: GolemioPublicTransportApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
+            super(configuration, configuration.basePath, axios);
+        }
+    
+        /**
+         * 
+         * @summary GET Transfer Boards
+    
+         * @param {PIDDepartureBoardsV4ApiV4PidTransferboardsGetQueryParams} queryParams Query parameters.
+         * @param {AxiosRequestConfig} [options] Override http request option.
+         * @throws {RequiredError}
+         * @memberof PIDDepartureBoardsV4Api
+         */
+        
+        public async v4PidTransferboardsGet(
+            queryParams: PIDDepartureBoardsV4ApiV4PidTransferboardsGetQueryParams,
+            options: AxiosRequestConfig = {}
+        ) {
+    
+            // verify required parameter 'routeType' is not null or undefined
+            assertParamExists('v4PidTransferboardsGet', 'routeType', queryParams.routeType)
+            
+            const localVarPath = `/v4/pid/transferboards`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (this.configuration) {
+                baseOptions = this.configuration.baseOptions;
+            }
+    
+            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+            const requestHeaderParameter = {} as any;
+            const requestQueryParameter = {} as any;
+    
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+    
+            if (queryParams.cisId !== undefined) {
+                requestQueryParameter['cisId'] = queryParams.cisId;
+            }
+    
+            if (queryParams.aswId !== undefined) {
+                requestQueryParameter['aswId'] = queryParams.aswId;
+            }
+    
+            if (queryParams.tripNumber !== undefined) {
+                requestQueryParameter['tripNumber'] = queryParams.tripNumber;
+            }
+    
+            if (queryParams.vehicleRegistrationNumber !== undefined) {
+                requestQueryParameter['vehicleRegistrationNumber'] = queryParams.vehicleRegistrationNumber;
+            }
+    
+            if (queryParams.routeType !== undefined) {
+                requestQueryParameter['routeType'] = queryParams.routeType;
+            }
+    
+            if (queryParams.timeFrom !== undefined) {
+                requestQueryParameter['timeFrom'] = queryParams.timeFrom;
+            }
+    
+            if (queryParams.limit !== undefined) {
+                requestQueryParameter['limit'] = queryParams.limit;
+            }
+    
+    
+    
+            setSearchParams(requestUrlObj, requestQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+    
+            axiosRequestConfig["url"] = toPathString(requestUrlObj);
+            axiosRequestConfig["baseURL"] = this.configuration.basePath;
+            
+            return this.axios.request<V4PidTransferboardsGet200Response>(axiosRequestConfig);
+        }
+    }
+    
+        
+        
+    /**
+     * @export
+     */
+    export const V2VehiclepositionsGetAcceptEncodingEnum = {
+        Gzip: 'gzip',
+        Identity: 'identity'
+    } as const;
+    export type V2VehiclepositionsGetAcceptEncodingEnum = typeof V2VehiclepositionsGetAcceptEncodingEnum[keyof typeof V2VehiclepositionsGetAcceptEncodingEnum];
     
     
     /**
@@ -5273,13 +5656,21 @@ export namespace GolemioPublicTransportApi {
     export interface PIDRealtimePositionsV2ApiV2VehiclepositionsGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
+         * @type {'gzip' | 'identity'}
          * @memberof PIDRealtimePositionsV2ApiV2VehiclepositionsGet
          */
-        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
+        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingEnum
     }
     
     
+    /**
+     * @export
+     */
+    export const V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum = {
+        Gzip: 'gzip',
+        Identity: 'identity'
+    } as const;
+    export type V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum = typeof V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum[keyof typeof V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum];
     
     
     /**
@@ -5322,10 +5713,10 @@ export namespace GolemioPublicTransportApi {
     export interface PIDRealtimePositionsV2ApiV2VehiclepositionsGtfsTripIdGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
+         * @type {'gzip' | 'identity'}
          * @memberof PIDRealtimePositionsV2ApiV2VehiclepositionsGtfsTripIdGet
          */
-        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
+        acceptEncoding?: V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum
     }
     
     
@@ -5410,9 +5801,7 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
-                    ? headerParams.acceptEncoding
-                    : JSON.stringify(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
             }
     
     
@@ -5477,9 +5866,7 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
-                    ? headerParams.acceptEncoding
-                    : JSON.stringify(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
             }
     
     
@@ -5497,6 +5884,14 @@ export namespace GolemioPublicTransportApi {
     
         
         
+    /**
+     * @export
+     */
+    export const V2PublicDepartureboardsGetAcceptEncodingEnum = {
+        Gzip: 'gzip',
+        Identity: 'identity'
+    } as const;
+    export type V2PublicDepartureboardsGetAcceptEncodingEnum = typeof V2PublicDepartureboardsGetAcceptEncodingEnum[keyof typeof V2PublicDepartureboardsGetAcceptEncodingEnum];
     
     
     /**
@@ -5547,10 +5942,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicDeparturesV2ApiV2PublicDepartureboardsGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
+         * @type {'gzip' | 'identity'}
          * @memberof PublicDeparturesV2ApiV2PublicDepartureboardsGet
          */
-        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
+        acceptEncoding?: V2PublicDepartureboardsGetAcceptEncodingEnum
     }
     
     
@@ -5618,9 +6013,7 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
-                    ? headerParams.acceptEncoding
-                    : JSON.stringify(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
             }
     
     
@@ -5648,6 +6041,14 @@ export namespace GolemioPublicTransportApi {
         VehicleDescriptor: 'vehicle_descriptor'
     } as const;
     export type V2PublicGtfsTripsGtfsTripIdGetScopesEnum = typeof V2PublicGtfsTripsGtfsTripIdGetScopesEnum[keyof typeof V2PublicGtfsTripsGtfsTripIdGetScopesEnum];
+    /**
+     * @export
+     */
+    export const V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum = {
+        Gzip: 'gzip',
+        Identity: 'identity'
+    } as const;
+    export type V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum = typeof V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum[keyof typeof V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum];
     
     
     /**
@@ -5674,10 +6075,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicGTFSStaticLookupV2ApiV2PublicGtfsTripsGtfsTripIdGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
+         * @type {'gzip' | 'identity'}
          * @memberof PublicGTFSStaticLookupV2ApiV2PublicGtfsTripsGtfsTripIdGet
          */
-        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
+        acceptEncoding?: V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum
     }
     
     
@@ -5741,9 +6142,7 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
-                    ? headerParams.acceptEncoding
-                    : JSON.stringify(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
             }
     
     
@@ -5774,6 +6173,14 @@ export namespace GolemioPublicTransportApi {
         Trolleybus: 'trolleybus'
     } as const;
     export type V2PublicVehiclepositionsGetRouteTypeEnum = typeof V2PublicVehiclepositionsGetRouteTypeEnum[keyof typeof V2PublicVehiclepositionsGetRouteTypeEnum];
+    /**
+     * @export
+     */
+    export const V2PublicVehiclepositionsGetAcceptEncodingEnum = {
+        Gzip: 'gzip',
+        Identity: 'identity'
+    } as const;
+    export type V2PublicVehiclepositionsGetAcceptEncodingEnum = typeof V2PublicVehiclepositionsGetAcceptEncodingEnum[keyof typeof V2PublicVehiclepositionsGetAcceptEncodingEnum];
     
     
     /**
@@ -5816,10 +6223,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicVehiclePositionsV2ApiV2PublicVehiclepositionsGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
+         * @type {'gzip' | 'identity'}
          * @memberof PublicVehiclePositionsV2ApiV2PublicVehiclepositionsGet
          */
-        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
+        acceptEncoding?: V2PublicVehiclepositionsGetAcceptEncodingEnum
     }
     
     
@@ -5833,6 +6240,14 @@ export namespace GolemioPublicTransportApi {
         VehicleDescriptor: 'vehicle_descriptor'
     } as const;
     export type V2PublicVehiclepositionsVehicleIdGetScopesEnum = typeof V2PublicVehiclepositionsVehicleIdGetScopesEnum[keyof typeof V2PublicVehiclepositionsVehicleIdGetScopesEnum];
+    /**
+     * @export
+     */
+    export const V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum = {
+        Gzip: 'gzip',
+        Identity: 'identity'
+    } as const;
+    export type V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum = typeof V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum[keyof typeof V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum];
     
     
     /**
@@ -5859,10 +6274,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicVehiclePositionsV2ApiV2PublicVehiclepositionsVehicleIdGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
+         * @type {'gzip' | 'identity'}
          * @memberof PublicVehiclePositionsV2ApiV2PublicVehiclepositionsVehicleIdGet
          */
-        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
+        acceptEncoding?: V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum
     }
     
     
@@ -5876,6 +6291,14 @@ export namespace GolemioPublicTransportApi {
         VehicleDescriptor: 'vehicle_descriptor'
     } as const;
     export type V2PublicVehiclepositionsVehicleIdgtfsTripIdGetScopesEnum = typeof V2PublicVehiclepositionsVehicleIdgtfsTripIdGetScopesEnum[keyof typeof V2PublicVehiclepositionsVehicleIdgtfsTripIdGetScopesEnum];
+    /**
+     * @export
+     */
+    export const V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum = {
+        Gzip: 'gzip',
+        Identity: 'identity'
+    } as const;
+    export type V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum = typeof V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum[keyof typeof V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum];
     
     
     /**
@@ -5902,10 +6325,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicVehiclePositionsV2ApiV2PublicVehiclepositionsVehicleIdgtfsTripIdGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
+         * @type {'gzip' | 'identity'}
          * @memberof PublicVehiclePositionsV2ApiV2PublicVehiclepositionsVehicleIdgtfsTripIdGet
          */
-        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
+        acceptEncoding?: V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum
     }
     
     
@@ -5966,9 +6389,7 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
-                    ? headerParams.acceptEncoding
-                    : JSON.stringify(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
             }
     
     
@@ -6030,9 +6451,7 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
-                    ? headerParams.acceptEncoding
-                    : JSON.stringify(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
             }
     
     
@@ -6104,9 +6523,7 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
-                    ? headerParams.acceptEncoding
-                    : JSON.stringify(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
             }
     
     

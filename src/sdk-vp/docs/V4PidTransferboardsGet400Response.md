@@ -1,4 +1,4 @@
-# InlineObject
+# V4PidTransferboardsGet400Response
 
 
 ## Properties
@@ -7,15 +7,17 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **error_message** | **string** |  | [default to undefined]
 **error_status** | **number** |  | [default to undefined]
+**error_info** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
 ```typescript
-import { InlineObject } from 'golemio-public-transport-api';
+import { V4PidTransferboardsGet400Response } from 'golemio-public-transport-api';
 
-const instance: InlineObject = {
+const instance: V4PidTransferboardsGet400Response = {
     error_message,
     error_status,
+    error_info,
 };
 ```
 

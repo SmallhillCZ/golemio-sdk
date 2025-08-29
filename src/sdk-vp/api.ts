@@ -859,26 +859,6 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
-     * @interface InlineObject
-     */
-    export interface InlineObject {
-        /**
-         * 
-         * @type {string}
-         * @memberof InlineObject
-         */
-        'error_message': string;
-        /**
-         * 
-         * @type {number}
-         * @memberof InlineObject
-         */
-        'error_status': number;
-    }
-    
-        /**
-     * 
-     * @export
      * @interface PIDDepartureBoard
      */
     export interface PIDDepartureBoard {
@@ -2100,6 +2080,26 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
+     * @interface V2GtfsServicesGet401Response
+     */
+    export interface V2GtfsServicesGet401Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof V2GtfsServicesGet401Response
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof V2GtfsServicesGet401Response
+         */
+        'error_status': number;
+    }
+    
+        /**
+     * 
+     * @export
      * @interface V2GtfsShapesIdGet200Response
      */
     export interface V2GtfsShapesIdGet200Response {
@@ -2672,6 +2672,12 @@ export namespace GolemioPublicTransportApi {
          */
         'type': string;
     }
+    
+        /**
+     * @type V2VehiclepositionsGetAcceptEncodingParameter
+     * @export
+     */
+    export type V2VehiclepositionsGetAcceptEncodingParameter = string;
     
         /**
      * 
@@ -5558,14 +5564,6 @@ export namespace GolemioPublicTransportApi {
     
         
         
-    /**
-     * @export
-     */
-    export const V2VehiclepositionsGetAcceptEncodingEnum = {
-        Gzip: 'gzip',
-        Identity: 'identity'
-    } as const;
-    export type V2VehiclepositionsGetAcceptEncodingEnum = typeof V2VehiclepositionsGetAcceptEncodingEnum[keyof typeof V2VehiclepositionsGetAcceptEncodingEnum];
     
     
     /**
@@ -5656,21 +5654,13 @@ export namespace GolemioPublicTransportApi {
     export interface PIDRealtimePositionsV2ApiV2VehiclepositionsGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {'gzip' | 'identity'}
+         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
          * @memberof PIDRealtimePositionsV2ApiV2VehiclepositionsGet
          */
-        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingEnum
+        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
     }
     
     
-    /**
-     * @export
-     */
-    export const V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum = {
-        Gzip: 'gzip',
-        Identity: 'identity'
-    } as const;
-    export type V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum = typeof V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum[keyof typeof V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum];
     
     
     /**
@@ -5713,10 +5703,10 @@ export namespace GolemioPublicTransportApi {
     export interface PIDRealtimePositionsV2ApiV2VehiclepositionsGtfsTripIdGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {'gzip' | 'identity'}
+         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
          * @memberof PIDRealtimePositionsV2ApiV2VehiclepositionsGtfsTripIdGet
          */
-        acceptEncoding?: V2VehiclepositionsGtfsTripIdGetAcceptEncodingEnum
+        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
     }
     
     
@@ -5801,7 +5791,9 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
+                    ? headerParams.acceptEncoding
+                    : JSON.stringify(headerParams.acceptEncoding);
             }
     
     
@@ -5866,7 +5858,9 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
+                    ? headerParams.acceptEncoding
+                    : JSON.stringify(headerParams.acceptEncoding);
             }
     
     
@@ -5884,14 +5878,6 @@ export namespace GolemioPublicTransportApi {
     
         
         
-    /**
-     * @export
-     */
-    export const V2PublicDepartureboardsGetAcceptEncodingEnum = {
-        Gzip: 'gzip',
-        Identity: 'identity'
-    } as const;
-    export type V2PublicDepartureboardsGetAcceptEncodingEnum = typeof V2PublicDepartureboardsGetAcceptEncodingEnum[keyof typeof V2PublicDepartureboardsGetAcceptEncodingEnum];
     
     
     /**
@@ -5942,10 +5928,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicDeparturesV2ApiV2PublicDepartureboardsGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {'gzip' | 'identity'}
+         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
          * @memberof PublicDeparturesV2ApiV2PublicDepartureboardsGet
          */
-        acceptEncoding?: V2PublicDepartureboardsGetAcceptEncodingEnum
+        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
     }
     
     
@@ -6013,7 +5999,9 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
+                    ? headerParams.acceptEncoding
+                    : JSON.stringify(headerParams.acceptEncoding);
             }
     
     
@@ -6041,14 +6029,6 @@ export namespace GolemioPublicTransportApi {
         VehicleDescriptor: 'vehicle_descriptor'
     } as const;
     export type V2PublicGtfsTripsGtfsTripIdGetScopesEnum = typeof V2PublicGtfsTripsGtfsTripIdGetScopesEnum[keyof typeof V2PublicGtfsTripsGtfsTripIdGetScopesEnum];
-    /**
-     * @export
-     */
-    export const V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum = {
-        Gzip: 'gzip',
-        Identity: 'identity'
-    } as const;
-    export type V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum = typeof V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum[keyof typeof V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum];
     
     
     /**
@@ -6075,10 +6055,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicGTFSStaticLookupV2ApiV2PublicGtfsTripsGtfsTripIdGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {'gzip' | 'identity'}
+         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
          * @memberof PublicGTFSStaticLookupV2ApiV2PublicGtfsTripsGtfsTripIdGet
          */
-        acceptEncoding?: V2PublicGtfsTripsGtfsTripIdGetAcceptEncodingEnum
+        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
     }
     
     
@@ -6142,7 +6122,9 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
+                    ? headerParams.acceptEncoding
+                    : JSON.stringify(headerParams.acceptEncoding);
             }
     
     
@@ -6173,14 +6155,6 @@ export namespace GolemioPublicTransportApi {
         Trolleybus: 'trolleybus'
     } as const;
     export type V2PublicVehiclepositionsGetRouteTypeEnum = typeof V2PublicVehiclepositionsGetRouteTypeEnum[keyof typeof V2PublicVehiclepositionsGetRouteTypeEnum];
-    /**
-     * @export
-     */
-    export const V2PublicVehiclepositionsGetAcceptEncodingEnum = {
-        Gzip: 'gzip',
-        Identity: 'identity'
-    } as const;
-    export type V2PublicVehiclepositionsGetAcceptEncodingEnum = typeof V2PublicVehiclepositionsGetAcceptEncodingEnum[keyof typeof V2PublicVehiclepositionsGetAcceptEncodingEnum];
     
     
     /**
@@ -6223,10 +6197,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicVehiclePositionsV2ApiV2PublicVehiclepositionsGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {'gzip' | 'identity'}
+         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
          * @memberof PublicVehiclePositionsV2ApiV2PublicVehiclepositionsGet
          */
-        acceptEncoding?: V2PublicVehiclepositionsGetAcceptEncodingEnum
+        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
     }
     
     
@@ -6240,14 +6214,6 @@ export namespace GolemioPublicTransportApi {
         VehicleDescriptor: 'vehicle_descriptor'
     } as const;
     export type V2PublicVehiclepositionsVehicleIdGetScopesEnum = typeof V2PublicVehiclepositionsVehicleIdGetScopesEnum[keyof typeof V2PublicVehiclepositionsVehicleIdGetScopesEnum];
-    /**
-     * @export
-     */
-    export const V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum = {
-        Gzip: 'gzip',
-        Identity: 'identity'
-    } as const;
-    export type V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum = typeof V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum[keyof typeof V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum];
     
     
     /**
@@ -6274,10 +6240,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicVehiclePositionsV2ApiV2PublicVehiclepositionsVehicleIdGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {'gzip' | 'identity'}
+         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
          * @memberof PublicVehiclePositionsV2ApiV2PublicVehiclepositionsVehicleIdGet
          */
-        acceptEncoding?: V2PublicVehiclepositionsVehicleIdGetAcceptEncodingEnum
+        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
     }
     
     
@@ -6291,14 +6257,6 @@ export namespace GolemioPublicTransportApi {
         VehicleDescriptor: 'vehicle_descriptor'
     } as const;
     export type V2PublicVehiclepositionsVehicleIdgtfsTripIdGetScopesEnum = typeof V2PublicVehiclepositionsVehicleIdgtfsTripIdGetScopesEnum[keyof typeof V2PublicVehiclepositionsVehicleIdgtfsTripIdGetScopesEnum];
-    /**
-     * @export
-     */
-    export const V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum = {
-        Gzip: 'gzip',
-        Identity: 'identity'
-    } as const;
-    export type V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum = typeof V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum[keyof typeof V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum];
     
     
     /**
@@ -6325,10 +6283,10 @@ export namespace GolemioPublicTransportApi {
     export interface PublicVehiclePositionsV2ApiV2PublicVehiclepositionsVehicleIdgtfsTripIdGetHeaderParams {
         /**
          * Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression).
-         * @type {'gzip' | 'identity'}
+         * @type {V2VehiclepositionsGetAcceptEncodingParameter}
          * @memberof PublicVehiclePositionsV2ApiV2PublicVehiclepositionsVehicleIdgtfsTripIdGet
          */
-        acceptEncoding?: V2PublicVehiclepositionsVehicleIdgtfsTripIdGetAcceptEncodingEnum
+        acceptEncoding?: V2VehiclepositionsGetAcceptEncodingParameter
     }
     
     
@@ -6389,7 +6347,9 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
+                    ? headerParams.acceptEncoding
+                    : JSON.stringify(headerParams.acceptEncoding);
             }
     
     
@@ -6451,7 +6411,9 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
+                    ? headerParams.acceptEncoding
+                    : JSON.stringify(headerParams.acceptEncoding);
             }
     
     
@@ -6523,7 +6485,9 @@ export namespace GolemioPublicTransportApi {
             }
     
             if (headerParams.acceptEncoding != null) {
-                requestHeaderParameter['Accept-Encoding'] = String(headerParams.acceptEncoding);
+                requestHeaderParameter['Accept-Encoding'] = typeof headerParams.acceptEncoding === 'string'
+                    ? headerParams.acceptEncoding
+                    : JSON.stringify(headerParams.acceptEncoding);
             }
     
     

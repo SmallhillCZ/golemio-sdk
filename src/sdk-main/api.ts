@@ -38,7 +38,6 @@ export class GolemioApi {
         MunicipalAuthoritiesV2Api: GolemioApi.MunicipalAuthoritiesV2Api;
         MunicipalLibrariesV2Api: GolemioApi.MunicipalLibrariesV2Api;
         MunicipalPoliceStationsV2Api: GolemioApi.MunicipalPoliceStationsV2Api;
-        ParkingV1Api: GolemioApi.ParkingV1Api;
         ParkingV2Api: GolemioApi.ParkingV2Api;
         ParkingV2InternalApi: GolemioApi.ParkingV2InternalApi;
         ParkingV3Api: GolemioApi.ParkingV3Api;
@@ -73,7 +72,6 @@ export class GolemioApi {
             this.MunicipalAuthoritiesV2Api = new GolemioApi.MunicipalAuthoritiesV2Api(configuration, axios!);
             this.MunicipalLibrariesV2Api = new GolemioApi.MunicipalLibrariesV2Api(configuration, axios!);
             this.MunicipalPoliceStationsV2Api = new GolemioApi.MunicipalPoliceStationsV2Api(configuration, axios!);
-            this.ParkingV1Api = new GolemioApi.ParkingV1Api(configuration, axios!);
             this.ParkingV2Api = new GolemioApi.ParkingV2Api(configuration, axios!);
             this.ParkingV2InternalApi = new GolemioApi.ParkingV2InternalApi(configuration, axios!);
             this.ParkingV3Api = new GolemioApi.ParkingV3Api(configuration, axios!);
@@ -5926,329 +5924,6 @@ export namespace GolemioApi {
         /**
      * 
      * @export
-     * @interface ParkingLotFeature
-     */
-    export interface ParkingLotFeature {
-        /**
-         * 
-         * @type {ParkingLotFeatureGeometry}
-         * @memberof ParkingLotFeature
-         */
-        'geometry'?: ParkingLotFeatureGeometry;
-        /**
-         * 
-         * @type {ParkingLotFeatureProperties}
-         * @memberof ParkingLotFeature
-         */
-        'properties'?: ParkingLotFeatureProperties;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeature
-         */
-        'type'?: string;
-    }
-    
-        /**
-     * GeoJson geometry
-     * @export
-     * @interface ParkingLotFeatureGeometry
-     */
-    export interface ParkingLotFeatureGeometry {
-        /**
-         * 
-         * @type {ParkingLotFeatureGeometryCoordinates}
-         * @memberof ParkingLotFeatureGeometry
-         */
-        'coordinates'?: ParkingLotFeatureGeometryCoordinates;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeatureGeometry
-         */
-        'type'?: ParkingLotFeatureGeometryTypeEnum;
-    }
-    
-    export const ParkingLotFeatureGeometryTypeEnum = {
-        Point: 'Point',
-        Polygon: 'Polygon',
-        MultiPolygon: 'MultiPolygon'
-    } as const;
-    
-    export type ParkingLotFeatureGeometryTypeEnum = typeof ParkingLotFeatureGeometryTypeEnum[keyof typeof ParkingLotFeatureGeometryTypeEnum];
-    
-    
-        /**
-     * @type ParkingLotFeatureGeometryCoordinates
-     * @export
-     */
-    export type ParkingLotFeatureGeometryCoordinates = Array<Array<Array<Array<number>>>> | Array<Array<Array<number>>> | Array<number>;
-    
-        /**
-     * 
-     * @export
-     * @interface ParkingLotFeatureProperties
-     */
-    export interface ParkingLotFeatureProperties {
-        /**
-         * 
-         * @type {ParkingLotFeaturePropertiesId}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'id': ParkingLotFeaturePropertiesId;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'name': string;
-        /**
-         * 
-         * @type {ParkingLotFeaturePropertiesParkingType}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'parking_type'?: ParkingLotFeaturePropertiesParkingType;
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'num_of_free_places': number;
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'num_of_taken_places': number;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'updated_at'?: string;
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'total_num_of_places': number;
-        /**
-         * 
-         * @type {ParkingLotFeaturePropertiesAverageOccupancy}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'average_occupancy'?: ParkingLotFeaturePropertiesAverageOccupancy;
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'area'?: number;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'district'?: string | null;
-        /**
-         * 
-         * @type {ParkingLotFeaturePropertiesAddress}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'address'?: ParkingLotFeaturePropertiesAddress | null;
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'last_updated'?: number | null;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'payment_link'?: string | null;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeatureProperties
-         */
-        'payment_shortname'?: string | null;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface ParkingLotFeaturePropertiesAddress
-     */
-    export interface ParkingLotFeaturePropertiesAddress {
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeaturePropertiesAddress
-         */
-        'address_country'?: string;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeaturePropertiesAddress
-         */
-        'address_formatted'?: string;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeaturePropertiesAddress
-         */
-        'address_locality'?: string;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeaturePropertiesAddress
-         */
-        'address_region'?: string;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeaturePropertiesAddress
-         */
-        'postal_code'?: string;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeaturePropertiesAddress
-         */
-        'street_address'?: string;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeaturePropertiesAddress
-         */
-        'house_number'?: string;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface ParkingLotFeaturePropertiesAverageOccupancy
-     */
-    export interface ParkingLotFeaturePropertiesAverageOccupancy {
-        /**
-         * 
-         * @type {AverageOccupancyDay}
-         * @memberof ParkingLotFeaturePropertiesAverageOccupancy
-         */
-        '0'?: AverageOccupancyDay;
-        /**
-         * 
-         * @type {AverageOccupancyDay}
-         * @memberof ParkingLotFeaturePropertiesAverageOccupancy
-         */
-        '1'?: AverageOccupancyDay;
-        /**
-         * 
-         * @type {AverageOccupancyDay}
-         * @memberof ParkingLotFeaturePropertiesAverageOccupancy
-         */
-        '2'?: AverageOccupancyDay;
-        /**
-         * 
-         * @type {AverageOccupancyDay}
-         * @memberof ParkingLotFeaturePropertiesAverageOccupancy
-         */
-        '3'?: AverageOccupancyDay;
-        /**
-         * 
-         * @type {AverageOccupancyDay}
-         * @memberof ParkingLotFeaturePropertiesAverageOccupancy
-         */
-        '4'?: AverageOccupancyDay;
-        /**
-         * 
-         * @type {AverageOccupancyDay}
-         * @memberof ParkingLotFeaturePropertiesAverageOccupancy
-         */
-        '5'?: AverageOccupancyDay;
-        /**
-         * 
-         * @type {AverageOccupancyDay}
-         * @memberof ParkingLotFeaturePropertiesAverageOccupancy
-         */
-        '6'?: AverageOccupancyDay;
-    }
-    
-        /**
-     * @type ParkingLotFeaturePropertiesId
-     * @export
-     */
-    export type ParkingLotFeaturePropertiesId = number | string;
-    
-        /**
-     * 
-     * @export
-     * @interface ParkingLotFeaturePropertiesParkingType
-     */
-    export interface ParkingLotFeaturePropertiesParkingType {
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotFeaturePropertiesParkingType
-         */
-        'id': number;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotFeaturePropertiesParkingType
-         */
-        'description': string;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface ParkingLotHistory
-     */
-    export interface ParkingLotHistory {
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotHistory
-         */
-        'id': string;
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotHistory
-         */
-        'num_of_free_places': number;
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotHistory
-         */
-        'num_of_taken_places': number;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingLotHistory
-         */
-        'updated_at'?: string;
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotHistory
-         */
-        'total_num_of_places': number;
-        /**
-         * 
-         * @type {number}
-         * @memberof ParkingLotHistory
-         */
-        'last_updated'?: number | null;
-    }
-    
-        /**
-     * 
-     * @export
      * @interface ParkingMachine
      */
     export interface ParkingMachine {
@@ -7118,10 +6793,10 @@ export namespace GolemioApi {
     export interface ParkingSpaceFeature {
         /**
          * 
-         * @type {ParkingLotFeatureGeometry}
+         * @type {ParkingSpaceFeatureGeometry}
          * @memberof ParkingSpaceFeature
          */
-        'geometry'?: ParkingLotFeatureGeometry;
+        'geometry'?: ParkingSpaceFeatureGeometry;
         /**
          * 
          * @type {ParkingSpaceFeatureProperties}
@@ -7135,6 +6810,41 @@ export namespace GolemioApi {
          */
         'type'?: string;
     }
+    
+        /**
+     * GeoJson geometry
+     * @export
+     * @interface ParkingSpaceFeatureGeometry
+     */
+    export interface ParkingSpaceFeatureGeometry {
+        /**
+         * 
+         * @type {ParkingSpaceFeatureGeometryCoordinates}
+         * @memberof ParkingSpaceFeatureGeometry
+         */
+        'coordinates'?: ParkingSpaceFeatureGeometryCoordinates;
+        /**
+         * 
+         * @type {string}
+         * @memberof ParkingSpaceFeatureGeometry
+         */
+        'type'?: ParkingSpaceFeatureGeometryTypeEnum;
+    }
+    
+    export const ParkingSpaceFeatureGeometryTypeEnum = {
+        Point: 'Point',
+        Polygon: 'Polygon',
+        MultiPolygon: 'MultiPolygon'
+    } as const;
+    
+    export type ParkingSpaceFeatureGeometryTypeEnum = typeof ParkingSpaceFeatureGeometryTypeEnum[keyof typeof ParkingSpaceFeatureGeometryTypeEnum];
+    
+    
+        /**
+     * @type ParkingSpaceFeatureGeometryCoordinates
+     * @export
+     */
+    export type ParkingSpaceFeatureGeometryCoordinates = Array<Array<Array<Array<number>>>> | Array<Array<Array<number>>> | Array<number>;
     
         /**
      * 
@@ -7192,10 +6902,10 @@ export namespace GolemioApi {
         'address_formatted'?: string | null;
         /**
          * 
-         * @type {ParkingLotFeaturePropertiesAddress}
+         * @type {ParkingSpaceFeaturePropertiesAddress}
          * @memberof ParkingSpaceFeatureProperties
          */
-        'address'?: ParkingLotFeaturePropertiesAddress | null;
+        'address'?: ParkingSpaceFeaturePropertiesAddress | null;
         /**
          * 
          * @type {string}
@@ -7258,10 +6968,10 @@ export namespace GolemioApi {
         'zone_type'?: ParkingSpaceFeaturePropertiesZoneTypeEnum | null;
         /**
          * 
-         * @type {ParkingSpaceFeaturePropertiesCentroid}
+         * @type {ParkingSpacePropertiesCentroid}
          * @memberof ParkingSpaceFeatureProperties
          */
-        'centroid': ParkingSpaceFeaturePropertiesCentroid;
+        'centroid': ParkingSpacePropertiesCentroid;
         /**
          * 
          * @type {number}
@@ -7301,21 +7011,51 @@ export namespace GolemioApi {
         /**
      * 
      * @export
-     * @interface ParkingSpaceFeaturePropertiesCentroid
+     * @interface ParkingSpaceFeaturePropertiesAddress
      */
-    export interface ParkingSpaceFeaturePropertiesCentroid {
+    export interface ParkingSpaceFeaturePropertiesAddress {
         /**
          * 
          * @type {string}
-         * @memberof ParkingSpaceFeaturePropertiesCentroid
+         * @memberof ParkingSpaceFeaturePropertiesAddress
          */
-        'type'?: string;
+        'address_country'?: string;
         /**
          * 
-         * @type {Array<number>}
-         * @memberof ParkingSpaceFeaturePropertiesCentroid
+         * @type {string}
+         * @memberof ParkingSpaceFeaturePropertiesAddress
          */
-        'coordinates'?: Array<number>;
+        'address_formatted'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof ParkingSpaceFeaturePropertiesAddress
+         */
+        'address_locality'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof ParkingSpaceFeaturePropertiesAddress
+         */
+        'address_region'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof ParkingSpaceFeaturePropertiesAddress
+         */
+        'postal_code'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof ParkingSpaceFeaturePropertiesAddress
+         */
+        'street_address'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof ParkingSpaceFeaturePropertiesAddress
+         */
+        'house_number'?: string;
     }
     
         /**
@@ -7379,10 +7119,10 @@ export namespace GolemioApi {
         'address'?: ParkingAddress;
         /**
          * 
-         * @type {ParkingSpaceFeaturePropertiesCentroid}
+         * @type {ParkingSpacePropertiesCentroid}
          * @memberof ParkingSpaceProperties
          */
-        'centroid'?: ParkingSpaceFeaturePropertiesCentroid;
+        'centroid'?: ParkingSpacePropertiesCentroid;
     }
     
     export const ParkingSpacePropertiesAccessDedicatedToEnum = {
@@ -7401,6 +7141,26 @@ export namespace GolemioApi {
     
     export type ParkingSpacePropertiesAccessDedicatedToEnum = typeof ParkingSpacePropertiesAccessDedicatedToEnum[keyof typeof ParkingSpacePropertiesAccessDedicatedToEnum];
     
+    
+        /**
+     * 
+     * @export
+     * @interface ParkingSpacePropertiesCentroid
+     */
+    export interface ParkingSpacePropertiesCentroid {
+        /**
+         * 
+         * @type {string}
+         * @memberof ParkingSpacePropertiesCentroid
+         */
+        'type'?: string;
+        /**
+         * 
+         * @type {Array<number>}
+         * @memberof ParkingSpacePropertiesCentroid
+         */
+        'coordinates'?: Array<number>;
+    }
     
         /**
      * 
@@ -8863,26 +8623,6 @@ export namespace GolemioApi {
          * @memberof TrafficRestrictionsSituationRecordImpactDelays
          */
         'timeValue'?: number | null;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V1ParkingsGet200Response
-     */
-    export interface V1ParkingsGet200Response {
-        /**
-         * 
-         * @type {Array<ParkingLotFeature>}
-         * @memberof V1ParkingsGet200Response
-         */
-        'features'?: Array<ParkingLotFeature>;
-        /**
-         * 
-         * @type {string}
-         * @memberof V1ParkingsGet200Response
-         */
-        'type'?: string;
     }
     
         /**
@@ -13864,310 +13604,6 @@ export namespace GolemioApi {
             axiosRequestConfig["baseURL"] = this.configuration.basePath;
             
             return this.axios.request<MunicipalPoliceStation>(axiosRequestConfig);
-        }
-    }
-    
-        
-        
-    
-    
-    /**
-     * Query parameters for v1ParkingsGet operation in ParkingV1Api.
-     * @export
-     * @interface ParkingV1ApiV1ParkingsGetQueryParams
-     */
-    export interface ParkingV1ApiV1ParkingsGetQueryParams {
-        //latlng
-        /**
-         * Sorting by location (Latitude and Longitude separated by comma, latitude first).
-         * @type {string}
-         * @memberof ParkingV1ApiV1ParkingsGet
-         */
-        latlng?: string
-    
-        //range
-        /**
-         * Filter by distance from latlng in meters (range query). Depends on the latlng parameter.
-         * @type {number}
-         * @memberof ParkingV1ApiV1ParkingsGet
-         */
-        range?: number
-    
-        //districts
-        /**
-         * Filter by Prague city districts (slug) separated by comma.
-         * @type {Array<any>}
-         * @memberof ParkingV1ApiV1ParkingsGet
-         */
-        districts?: Array<any>
-    
-        //limit
-        /**
-         * Limits number of retrieved items.
-         * @type {number}
-         * @memberof ParkingV1ApiV1ParkingsGet
-         */
-        limit?: number
-    
-        //offset
-        /**
-         * Number of the first items that are skipped.
-         * @type {number}
-         * @memberof ParkingV1ApiV1ParkingsGet
-         */
-        offset?: number
-    
-        //updatedSince
-        /**
-         * Filters all results with older updated_at than this parameter
-         * @type {string}
-         * @memberof ParkingV1ApiV1ParkingsGet
-         */
-        updatedSince?: string
-    }
-    
-    
-    
-    
-    
-    /**
-     * Query parameters for v1ParkingsHistoryGet operation in ParkingV1Api.
-     * @export
-     * @interface ParkingV1ApiV1ParkingsHistoryGetQueryParams
-     */
-    export interface ParkingV1ApiV1ParkingsHistoryGetQueryParams {
-        //limit
-        /**
-         * Limits number of retrieved items.
-         * @type {number}
-         * @memberof ParkingV1ApiV1ParkingsHistoryGet
-         */
-        limit?: number
-    
-        //offset
-        /**
-         * Number of the first items that are skipped.
-         * @type {number}
-         * @memberof ParkingV1ApiV1ParkingsHistoryGet
-         */
-        offset?: number
-    
-        //from
-        /**
-         * Date in ISO8601, limits data measured from this datetime
-         * @type {string}
-         * @memberof ParkingV1ApiV1ParkingsHistoryGet
-         */
-        from?: string
-    
-        //to
-        /**
-         * Date in ISO8601, limits data measured up to this datetime
-         * @type {string}
-         * @memberof ParkingV1ApiV1ParkingsHistoryGet
-         */
-        to?: string
-    
-        //sensorId
-        /**
-         * Limits data measured by sensor with this id (parameter &#x60;id&#x60; of the parking)
-         * @type {string}
-         * @memberof ParkingV1ApiV1ParkingsHistoryGet
-         */
-        sensorId?: string
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    /**
-     * ParkingV1Api - object-oriented interface
-     * @export
-     * @class ParkingV1Api
-     * @extends {BaseAPI}
-     */
-    export class ParkingV1Api extends BaseAPI {
-    
-        constructor(protected override configuration: GolemioApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
-            super(configuration, configuration.basePath, axios);
-        }
-    
-        /**
-         * 
-         * @summary GET All Parking Lots within the region of interest
-    
-         * @param {ParkingV1ApiV1ParkingsGetQueryParams} queryParams Query parameters.
-         * @param {AxiosRequestConfig} [options] Override http request option.
-         * @throws {RequiredError}
-         * @memberof ParkingV1Api
-         */
-        
-        public async v1ParkingsGet(
-            queryParams: ParkingV1ApiV1ParkingsGetQueryParams = {},
-            options: AxiosRequestConfig = {}
-        ) {
-    
-            const localVarPath = `/v1/parkings`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (this.configuration) {
-                baseOptions = this.configuration.baseOptions;
-            }
-    
-            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
-            const requestHeaderParameter = {} as any;
-            const requestQueryParameter = {} as any;
-    
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
-    
-            if (queryParams.latlng !== undefined) {
-                requestQueryParameter['latlng'] = queryParams.latlng;
-            }
-    
-            if (queryParams.range !== undefined) {
-                requestQueryParameter['range'] = queryParams.range;
-            }
-    
-            if (queryParams.districts) {
-                requestQueryParameter['districts'] = queryParams.districts;
-            }
-    
-            if (queryParams.limit !== undefined) {
-                requestQueryParameter['limit'] = queryParams.limit;
-            }
-    
-            if (queryParams.offset !== undefined) {
-                requestQueryParameter['offset'] = queryParams.offset;
-            }
-    
-            if (queryParams.updatedSince !== undefined) {
-                requestQueryParameter['updatedSince'] = queryParams.updatedSince;
-            }
-    
-    
-    
-            setSearchParams(requestUrlObj, requestQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-    
-            axiosRequestConfig["url"] = toPathString(requestUrlObj);
-            axiosRequestConfig["baseURL"] = this.configuration.basePath;
-            
-            return this.axios.request<V1ParkingsGet200Response>(axiosRequestConfig);
-        }
-    
-        /**
-         * 
-         * @summary GET Parking Lot History
-    
-         * @param {ParkingV1ApiV1ParkingsHistoryGetQueryParams} queryParams Query parameters.
-         * @param {AxiosRequestConfig} [options] Override http request option.
-         * @throws {RequiredError}
-         * @memberof ParkingV1Api
-         */
-        
-        public async v1ParkingsHistoryGet(
-            queryParams: ParkingV1ApiV1ParkingsHistoryGetQueryParams = {},
-            options: AxiosRequestConfig = {}
-        ) {
-    
-            const localVarPath = `/v1/parkings/history`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (this.configuration) {
-                baseOptions = this.configuration.baseOptions;
-            }
-    
-            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
-            const requestHeaderParameter = {} as any;
-            const requestQueryParameter = {} as any;
-    
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
-    
-            if (queryParams.limit !== undefined) {
-                requestQueryParameter['limit'] = queryParams.limit;
-            }
-    
-            if (queryParams.offset !== undefined) {
-                requestQueryParameter['offset'] = queryParams.offset;
-            }
-    
-            if (queryParams.from !== undefined) {
-                requestQueryParameter['from'] = queryParams.from;
-            }
-    
-            if (queryParams.to !== undefined) {
-                requestQueryParameter['to'] = queryParams.to;
-            }
-    
-            if (queryParams.sensorId !== undefined) {
-                requestQueryParameter['sensorId'] = queryParams.sensorId;
-            }
-    
-    
-    
-            setSearchParams(requestUrlObj, requestQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-    
-            axiosRequestConfig["url"] = toPathString(requestUrlObj);
-            axiosRequestConfig["baseURL"] = this.configuration.basePath;
-            
-            return this.axios.request<Array<ParkingLotHistory>>(axiosRequestConfig);
-        }
-    
-        /**
-         * 
-         * @summary GET Parking Lot
-    
-         * @param {string} id Id of parking location.
-         * @param {AxiosRequestConfig} [options] Override http request option.
-         * @throws {RequiredError}
-         * @memberof ParkingV1Api
-         */
-        
-        public async v1ParkingsIdGet(
-            id: string,
-            options: AxiosRequestConfig = {}
-        ) {
-    
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('v1ParkingsIdGet', 'id', id)
-            
-            const localVarPath = `/v1/parkings/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (this.configuration) {
-                baseOptions = this.configuration.baseOptions;
-            }
-    
-            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
-            const requestHeaderParameter = {} as any;
-            const requestQueryParameter = {} as any;
-    
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
-    
-    
-    
-            setSearchParams(requestUrlObj, requestQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-    
-            axiosRequestConfig["url"] = toPathString(requestUrlObj);
-            axiosRequestConfig["baseURL"] = this.configuration.basePath;
-            
-            return this.axios.request<ParkingLotFeature>(axiosRequestConfig);
         }
     }
     

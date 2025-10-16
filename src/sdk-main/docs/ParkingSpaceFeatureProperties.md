@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **category** | **string** |  | [optional] [default to undefined]
 **date_modified** | **string** |  | [default to undefined]
 **address_formatted** | **string** |  | [optional] [default to undefined]
-**address** | [**ParkingLotFeaturePropertiesAddress**](ParkingLotFeaturePropertiesAddress.md) |  | [optional] [default to undefined]
+**address** | [**ParkingSpaceFeaturePropertiesAddress**](ParkingSpaceFeaturePropertiesAddress.md) |  | [optional] [default to undefined]
 **area_served** | **string** |  | [optional] [default to undefined]
 **web_app_payment_url** | **string** |  | [optional] [default to undefined]
 **android_app_payment_url** | **string** |  | [optional] [default to undefined]
@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 **valid_to** | **string** |  | [optional] [default to undefined]
 **parking_type** | **string** |  | [default to undefined]
 **zone_type** | **string** |  | [optional] [default to undefined]
-**centroid** | [**ParkingSpaceFeaturePropertiesCentroid**](ParkingSpaceFeaturePropertiesCentroid.md) |  | [default to undefined]
+**centroid** | [**ParkingSpacePropertiesCentroid**](ParkingSpacePropertiesCentroid.md) |  | [default to undefined]
 **available_spots_last_updated** | **number** |  | [default to undefined]
 **available_spots_number** | **number** |  | [default to undefined]
 

@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**geometry** | [**ParkingLotFeatureGeometry**](ParkingLotFeatureGeometry.md) |  | [optional] [default to undefined]
+**geometry** | [**ParkingSpaceFeatureGeometry**](ParkingSpaceFeatureGeometry.md) |  | [optional] [default to undefined]
 **properties** | [**ParkingSpaceFeatureProperties**](ParkingSpaceFeatureProperties.md) |  | [optional] [default to undefined]
 **type** | **string** |  | [optional] [default to undefined]
 

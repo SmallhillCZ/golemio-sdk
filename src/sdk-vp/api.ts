@@ -2290,120 +2290,6 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
-     * @interface V2PidInfotextsGet200ResponseInner
-     */
-    export interface V2PidInfotextsGet200ResponseInner {
-        /**
-         * Intended time of infotext publishing in ISO String.
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'valid_from': string | null;
-        /**
-         * Intended time of infotext removal in ISO String. If `null`, the infotext is valid indefinitely
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'valid_to': string | null;
-        /**
-         * Information text in Czech.
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'text': string;
-        /**
-         * Information text in English.
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'text_en': string | null;
-        /**
-         * Type of display on board by the intended form of presentation (where applicable). Enumerating `inline` (to be presented along with departures, usually in a marquee), `general` (to be displayed full screen instead of departures).
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'display_type': V2PidInfotextsGet200ResponseInnerDisplayTypeEnum;
-        /**
-         * 
-         * @type {Array<V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner>}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'related_stops'?: Array<V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner>;
-        /**
-         * 
-         * @type {Array<string>}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'related_routes'?: Array<string>;
-        /**
-         * Legacy VYMI event identifier.
-         * @type {number}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'vymi_id'?: number;
-        /**
-         * Legacy VYMI database identifier.
-         * @type {number}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'vymi_id_dtb'?: number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'expiration_date'?: string | null;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'last_updated'?: string;
-        /**
-         * Legacy ROPID VYMI user.
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInner
-         */
-        'last_updated_user'?: string;
-    }
-    
-    export const V2PidInfotextsGet200ResponseInnerDisplayTypeEnum = {
-        Inline: 'inline',
-        General: 'general'
-    } as const;
-    
-    export type V2PidInfotextsGet200ResponseInnerDisplayTypeEnum = typeof V2PidInfotextsGet200ResponseInnerDisplayTypeEnum[keyof typeof V2PidInfotextsGet200ResponseInnerDisplayTypeEnum];
-    
-    
-        /**
-     * 
-     * @export
-     * @interface V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner
-     */
-    export interface V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner {
-        /**
-         * GTFS station IDs for which the infotexts apply.
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner
-         */
-        'id'?: string;
-        /**
-         * GTFS station name.
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner
-         */
-        'name'?: string;
-        /**
-         * GTFS station platform code.
-         * @type {string}
-         * @memberof V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner
-         */
-        'platform_code'?: string | null;
-    }
-    
-        /**
-     * 
-     * @export
      * @interface V2PublicGtfsTripsGtfsTripIdGet200Response
      */
     export interface V2PublicGtfsTripsGtfsTripIdGet200Response {
@@ -2999,7 +2885,7 @@ export namespace GolemioPublicTransportApi {
          * @type {Array<string | null>}
          * @memberof V4PidTransferboardsGet200Response
          */
-        'icons'?: Array<string | null>;
+        'icons'?: Array<V4PidTransferboardsGet200ResponseIconsEnum | null>;
         /**
          * List of departures from the stop. The list is sorted by: - route type - subway and then other   - subway is sorted alphabetically, then by departure time, then by direction id - departure time 
          * @type {Array<V4PidTransferboardsGet200ResponseDeparturesInner>}
@@ -3013,6 +2899,30 @@ export namespace GolemioPublicTransportApi {
          */
         'infotexts': Array<V4PidTransferboardsGet200ResponseInfotextsInner>;
     }
+    
+    export const V4PidTransferboardsGet200ResponseIconsEnum = {
+        Metro: 'metro',
+        Tram: 'tram',
+        Bus: 'bus',
+        Trolleybus: 'trolleybus',
+        Train: 'train',
+        Funicular: 'funicular',
+        Aerial: 'aerial',
+        Ferry: 'ferry',
+        Airport: 'airport',
+        AirportBus: 'airport_bus',
+        AirportTrolleybus: 'airport_trolleybus',
+        AirportTrain: 'airport_train',
+        A: 'a',
+        B: 'b',
+        C: 'c',
+        D: 'd',
+        SBahn: 's_bahn',
+        Space: 'space'
+    } as const;
+    
+    export type V4PidTransferboardsGet200ResponseIconsEnum = typeof V4PidTransferboardsGet200ResponseIconsEnum[keyof typeof V4PidTransferboardsGet200ResponseIconsEnum];
+    
     
         /**
      * 
@@ -3049,7 +2959,7 @@ export namespace GolemioPublicTransportApi {
          * @type {Array<string | null>}
          * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
          */
-        'icons'?: Array<string | null>;
+        'icons'?: Array<V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum | null>;
         /**
          * 
          * @type {V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText}
@@ -3057,6 +2967,30 @@ export namespace GolemioPublicTransportApi {
          */
         'substitution_text'?: V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText;
     }
+    
+    export const V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum = {
+        Metro: 'metro',
+        Tram: 'tram',
+        Bus: 'bus',
+        Trolleybus: 'trolleybus',
+        Train: 'train',
+        Funicular: 'funicular',
+        Aerial: 'aerial',
+        Ferry: 'ferry',
+        Airport: 'airport',
+        AirportBus: 'airport_bus',
+        AirportTrolleybus: 'airport_trolleybus',
+        AirportTrain: 'airport_train',
+        A: 'a',
+        B: 'b',
+        C: 'c',
+        D: 'd',
+        SBahn: 's_bahn',
+        Space: 'space'
+    } as const;
+    
+    export type V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum = typeof V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum[keyof typeof V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum];
+    
     
         /**
      * 
@@ -5008,10 +4942,6 @@ export namespace GolemioPublicTransportApi {
     
     
     
-    
-    
-    
-    
     /**
      * PIDDepartureBoardsV2Api - object-oriented interface
      * @export
@@ -5132,46 +5062,6 @@ export namespace GolemioPublicTransportApi {
             axiosRequestConfig["baseURL"] = this.configuration.basePath;
             
             return this.axios.request<PIDDepartureBoard>(axiosRequestConfig);
-        }
-    
-        /**
-         * 
-         * @summary GET Infotexts (export from the legacy VYMI system)
-    
-         * @param {AxiosRequestConfig} [options] Override http request option.
-         * @throws {RequiredError}
-         * @memberof PIDDepartureBoardsV2Api
-         */
-        
-        public async v2PidInfotextsGet(
-            options: AxiosRequestConfig = {}
-        ) {
-    
-            const localVarPath = `/v2/pid/infotexts`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (this.configuration) {
-                baseOptions = this.configuration.baseOptions;
-            }
-    
-            const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
-            const requestHeaderParameter = {} as any;
-            const requestQueryParameter = {} as any;
-    
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
-    
-    
-    
-            setSearchParams(requestUrlObj, requestQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-    
-            axiosRequestConfig["url"] = toPathString(requestUrlObj);
-            axiosRequestConfig["baseURL"] = this.configuration.basePath;
-            
-            return this.axios.request<Array<V2PidInfotextsGet200ResponseInner>>(axiosRequestConfig);
         }
     }
     
@@ -5420,7 +5310,7 @@ export namespace GolemioPublicTransportApi {
     
         //aswId
         /**
-         * ASW identifier of the stop. The format is &#x60;nodeId/stopId&#x60; where stopId is not mandatory. You can use &#x60;_&#x60; instead of &#x60;/&#x60; or encode the slash sign with &#x60;%2F&#x60;,  Includes departures from the given stop, plus from all stops at the given node (1330_1 -&gt; 1330 -&gt; 1330_1, 1330_2, ...), plus from all stops sharing the same name. Departures from associated metro and train stations are also included (Na Knížecí -&gt; Anděl). Required if &#x60;cisId&#x60; is not provided. Only one of &#x60;cisId&#x60; or &#x60;aswId&#x60; can be used. 
+         * ASW identifier of the stop. The format is &#x60;nodeId/stopId&#x60; where stopId is not mandatory. You can use &#x60;_&#x60; instead of &#x60;/&#x60; or encode the slash sign with &#x60;%2F&#x60;, Includes departures from the given stop, plus from all stops at the given node (1330_1 -&gt; 1330 -&gt; 1330_1, 1330_2, ...), plus from all stops sharing the same name. Departures from associated metro and train stations are also included (Na Knížecí -&gt; Anděl). Required if &#x60;cisId&#x60; is not provided. Only one of &#x60;cisId&#x60; or &#x60;aswId&#x60; can be used. 
          * @type {string}
          * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
          */
@@ -5460,7 +5350,7 @@ export namespace GolemioPublicTransportApi {
     
         //limit
         /**
-         * Limit the number of rows of departures returned. The total number of departures is a union across individual types of departures. The default value is 8. 
+         * Limit the number of rows of departures returned. The total number of departures is a union across individual types of departures. The default value is 8. The maximum value is 30. 
          * @type {number}
          * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
          */

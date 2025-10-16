@@ -80,8 +80,6 @@ docs/V2GtfsStopsGet200Response.md
 docs/V2GtfsStopsGet200ResponseFeaturesInner.md
 docs/V2GtfsTripsIdGet200Response.md
 docs/V2GtfsTripsIdGet200ResponseAllOfShapesInner.md
-docs/V2PidInfotextsGet200ResponseInner.md
-docs/V2PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner.md
 docs/V2PublicGtfsTripsGtfsTripIdGet200Response.md
 docs/V2PublicVehiclepositionsGet200Response.md
 docs/V2PublicVehiclepositionsVehicleIdGet200Response.md

@@ -5,7 +5,6 @@ All URIs are relative to *https://api.golemio.cz*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**v2PidDepartureboardsGet**](#v2piddepartureboardsget) | **GET** /v2/pid/departureboards | GET Departure Boards|
-|[**v2PidInfotextsGet**](#v2pidinfotextsget) | **GET** /v2/pid/infotexts | GET Infotexts (export from the legacy VYMI system)|
 
 # **v2PidDepartureboardsGet**
 > PIDDepartureBoard v2PidDepartureboardsGet()
@@ -103,52 +102,6 @@ const { status, data } = await apiInstance.v2PidDepartureboardsGet(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | Can return empty data in departures property (empty array []) if no departures were found |  * Cache-Control - Cache control directive for caching proxies <br>  |
-|**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
-|**404** | Not found |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **v2PidInfotextsGet**
-> Array<V2PidInfotextsGet200ResponseInner> v2PidInfotextsGet()
-
-
-
-### Example
-
-```typescript
-import {
-    PIDDepartureBoardsV2Api,
-    Configuration
-} from 'golemio-public-transport-api';
-
-const configuration = new Configuration();
-const apiInstance = new PIDDepartureBoardsV2Api(configuration);
-
-const { status, data } = await apiInstance.v2PidInfotextsGet();
-```
-
-### Parameters
-This endpoint does not have any parameters.
-
-
-### Return type
-
-**Array<V2PidInfotextsGet200ResponseInner>**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | List of all active infotexts |  * Cache-Control - Cache control directive for caching proxies <br>  |
 |**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
 |**404** | Not found |  -  |
 

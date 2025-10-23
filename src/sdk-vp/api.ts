@@ -5069,6 +5069,21 @@ export namespace GolemioPublicTransportApi {
         
     
     
+    /**
+     * Query parameters for v3PidInfotextsGet operation in PIDDepartureBoardsV3Api.
+     * @export
+     * @interface PIDDepartureBoardsV3ApiV3PidInfotextsGetQueryParams
+     */
+    export interface PIDDepartureBoardsV3ApiV3PidInfotextsGetQueryParams {
+        //includeFuture
+        /**
+         * If set to true, the endpoint returns both active and future infotexts. If false or omitted, only active infotexts are returned.
+         * @type {boolean}
+         * @memberof PIDDepartureBoardsV3ApiV3PidInfotextsGet
+         */
+        includeFuture?: boolean
+    }
+    
     
     
     
@@ -5123,12 +5138,14 @@ export namespace GolemioPublicTransportApi {
          * 
          * @summary GET Infotexts (export from the VYMI (JIS) Infotexts system)
     
+         * @param {PIDDepartureBoardsV3ApiV3PidInfotextsGetQueryParams} queryParams Query parameters.
          * @param {AxiosRequestConfig} [options] Override http request option.
          * @throws {RequiredError}
          * @memberof PIDDepartureBoardsV3Api
          */
         
         public async v3PidInfotextsGet(
+            queryParams: PIDDepartureBoardsV3ApiV3PidInfotextsGetQueryParams = {},
             options: AxiosRequestConfig = {}
         ) {
     
@@ -5146,6 +5163,10 @@ export namespace GolemioPublicTransportApi {
     
             // authentication ApiKeyAuth required
             await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+    
+            if (queryParams.includeFuture !== undefined) {
+                requestQueryParameter['includeFuture'] = queryParams.includeFuture;
+            }
     
     
     

@@ -23,11 +23,18 @@ import {
 const configuration = new Configuration();
 const apiInstance = new PIDDepartureBoardsV3Api(configuration);
 
-const { status, data } = await apiInstance.v3PidInfotextsGet();
+let includeFuture: boolean; //If set to true, the endpoint returns both active and future infotexts. If false or omitted, only active infotexts are returned. (optional) (default to undefined)
+
+const { status, data } = await apiInstance.v3PidInfotextsGet(
+    includeFuture
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **includeFuture** | [**boolean**] | If set to true, the endpoint returns both active and future infotexts. If false or omitted, only active infotexts are returned. | (optional) defaults to undefined|
 
 
 ### Return type

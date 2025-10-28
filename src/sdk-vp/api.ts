@@ -5842,6 +5842,14 @@ export namespace GolemioPublicTransportApi {
          * @memberof PublicDeparturesV2ApiV2PublicDepartureboardsGet
          */
         minutesAfter?: number
+    
+        //minutesBefore
+        /**
+         * Set the starting point of the departure retrieval window, in minutes, relative to now (or to timeFrom, if used). Positive values will return departures starting earlier in the past. Negative values will return departures starting later in the future. This setting helps account for walking time to the stop. Example: 2 returns departures that left 2 minutes ago. -10 returns departures no earlier then 10 minutes from now. Default is set to 0. Maximum value is 30. Minimum value is -359.
+         * @type {number}
+         * @memberof PublicDeparturesV2ApiV2PublicDepartureboardsGet
+         */
+        minutesBefore?: number
     }
     
     
@@ -5921,6 +5929,10 @@ export namespace GolemioPublicTransportApi {
     
             if (queryParams.minutesAfter !== undefined) {
                 requestQueryParameter['minutesAfter'] = queryParams.minutesAfter;
+            }
+    
+            if (queryParams.minutesBefore !== undefined) {
+                requestQueryParameter['minutesBefore'] = queryParams.minutesBefore;
             }
     
             if (headerParams.acceptEncoding != null) {

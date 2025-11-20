@@ -7,9 +7,8 @@
     "default": "./dist/esm/index.js"
   },
   "scripts": {
-    "generate": "npm run generate:main && npm run generate:vp",
-    "generate:main": "openapi-sdk -i https://api.golemio.cz/docs/static/output-gateway/openapi.json -o src/sdk-main --additional-properties=npmName=golemio-api",
-    "generate:vp": "openapi-sdk -i https://api.golemio.cz/docs/static/vp-output-gateway/openapi.json -o src/sdk-vp --additional-properties=npmName=golemio-public-transport-api",
+    "pregenerate": "rm -fr lib/sdk-main lib/sdk-vp",
+    "generate": "openapi-generator-cli generate",
     "build": "rm -fr ./dist && npm run build:commonjs && npm run build:esm",
     "build:commonjs": "tsc",
     "build:esm": "tsc -p tsconfig.esm.json",
@@ -38,11 +37,11 @@
   },
   "homepage": "https://github.com/SmallhillCZ/golemio-sdk#readme",
   "devDependencies": {
-    "@smallhillcz/openapi-sdk": "^2.1.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "axios": "^1.7.9"
+    "@openapitools/openapi-generator-cli": "^2.25.2",
+    "axios": "^1.13.2"
   },
   "files": [
     "dist",

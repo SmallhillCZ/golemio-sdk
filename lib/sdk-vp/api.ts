@@ -261,7 +261,7 @@ export namespace GolemioPublicTransportApi {
          * @type {string}
          * @memberof EventCustomFormatCauseDetail
          */
-        'cs': string;
+        'cs'?: string | null;
         /**
          * 
          * @type {string}
@@ -4667,7 +4667,7 @@ export namespace GolemioPublicTransportApi {
         export interface JISV1InternalApiV1JisEventsCustomFormatGetQueryParams {
             //displayPeriodStart
             /**
-             * Start of the display period
+             * Sets the beginning of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range.
              * @type     {string}    
              * @memberof JISV1InternalApiV1JisEventsCustomFormatGet
              */
@@ -4675,7 +4675,7 @@ export namespace GolemioPublicTransportApi {
         
                 //displayPeriodEnd
             /**
-             * End of the display period
+             * Sets the end of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range.
              * @type     {string}    
              * @memberof JISV1InternalApiV1JisEventsCustomFormatGet
              */

@@ -21,8 +21,8 @@ import {
 const configuration = new Configuration();
 const apiInstance = new JISV1InternalApi(configuration);
 
-let displayPeriodStart: string; //Start of the display period (optional) (default to undefined)
-let displayPeriodEnd: string; //End of the display period (optional) (default to undefined)
+let displayPeriodStart: string; //Sets the beginning of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range. (optional) (default to undefined)
+let displayPeriodEnd: string; //Sets the end of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range. (optional) (default to undefined)
 let organizationNames: Array<string>; //List of organization names to filter events by. (optional) (default to undefined)
 
 const { status, data } = await apiInstance.v1JisEventsCustomFormatGet(
@@ -36,8 +36,8 @@ const { status, data } = await apiInstance.v1JisEventsCustomFormatGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **displayPeriodStart** | [**string**] | Start of the display period | (optional) defaults to undefined|
-| **displayPeriodEnd** | [**string**] | End of the display period | (optional) defaults to undefined|
+| **displayPeriodStart** | [**string**] | Sets the beginning of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range. | (optional) defaults to undefined|
+| **displayPeriodEnd** | [**string**] | Sets the end of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range. | (optional) defaults to undefined|
 | **organizationNames** | **Array&lt;string&gt;** | List of organization names to filter events by. | (optional) defaults to undefined|
 
 

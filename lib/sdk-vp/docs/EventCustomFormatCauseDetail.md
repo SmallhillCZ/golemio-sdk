@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**cs** | **string** |  | [default to undefined]
+**cs** | **string** |  | [optional] [default to undefined]
 **en** | **string** |  | [optional] [default to undefined]
 
 ## Example

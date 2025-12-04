@@ -24,11 +24,13 @@ const apiInstance = new JISV1InternalApi(configuration);
 let displayPeriodStart: string; //Sets the beginning of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range. (optional) (default to undefined)
 let displayPeriodEnd: string; //Sets the end of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range. (optional) (default to undefined)
 let organizationNames: Array<string>; //List of organization names to filter events by. (optional) (default to undefined)
+let type: 'INCIDENT' | 'DISRUPTION' | 'SERVICE_CHANGE'; // (optional) (default to undefined)
 
 const { status, data } = await apiInstance.v1JisEventsCustomFormatGet(
     displayPeriodStart,
     displayPeriodEnd,
-    organizationNames
+    organizationNames,
+    type
 );
 ```
 
@@ -39,6 +41,7 @@ const { status, data } = await apiInstance.v1JisEventsCustomFormatGet(
 | **displayPeriodStart** | [**string**] | Sets the beginning of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range. | (optional) defaults to undefined|
 | **displayPeriodEnd** | [**string**] | Sets the end of the query window; events are included in the response if any part of their display interval overlaps with the displayPeriodStart to displayPeriodEnd range. | (optional) defaults to undefined|
 | **organizationNames** | **Array&lt;string&gt;** | List of organization names to filter events by. | (optional) defaults to undefined|
+| **type** | [**&#39;INCIDENT&#39; | &#39;DISRUPTION&#39; | &#39;SERVICE_CHANGE&#39;**]**Array<&#39;INCIDENT&#39; &#124; &#39;DISRUPTION&#39; &#124; &#39;SERVICE_CHANGE&#39;>** |  | (optional) defaults to undefined|
 
 
 ### Return type

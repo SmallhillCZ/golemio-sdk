@@ -4657,7 +4657,16 @@ export namespace GolemioPublicTransportApi {
             }
         
         
-                            
+                                    /**
+         * @export
+         */
+        export const V1JisEventsCustomFormatGetTypeEnum = {
+                Incident: 'INCIDENT',
+            Disruption: 'DISRUPTION',
+            ServiceChange: 'SERVICE_CHANGE'
+            } as const;
+        export type V1JisEventsCustomFormatGetTypeEnum = typeof V1JisEventsCustomFormatGetTypeEnum[keyof typeof V1JisEventsCustomFormatGetTypeEnum];
+                
         
         /**
          * Query parameters for v1JisEventsCustomFormatGet operation in JISV1InternalApi.
@@ -4688,6 +4697,14 @@ export namespace GolemioPublicTransportApi {
              * @memberof JISV1InternalApiV1JisEventsCustomFormatGet
              */
             organizationNames?: Array<string>
+        
+                //typeisEnumTypeEnum
+            /**
+             * 
+             * @type     {'INCIDENT' | 'DISRUPTION' | 'SERVICE_CHANGE'}    
+             * @memberof JISV1InternalApiV1JisEventsCustomFormatGet
+             */
+            type?: V1JisEventsCustomFormatGetTypeEnum
             }
         
         
@@ -4719,7 +4736,7 @@ export namespace GolemioPublicTransportApi {
                 options: AxiosRequestConfig = {}
             ) {
         
-                                        const localVarPath = `/v1/jis/events/custom-format`;
+                                                const localVarPath = `/v1/jis/events/custom-format`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;
@@ -4750,6 +4767,10 @@ export namespace GolemioPublicTransportApi {
                             requestQueryParameter['organizationNames'] = queryParams.organizationNames;
                         }
             
+                        if (queryParams.type !== undefined) {
+                                requestQueryParameter['type'] = queryParams.type;
+                    }
+        
                 
         
                 setSearchParams(requestUrlObj, requestQueryParameter);

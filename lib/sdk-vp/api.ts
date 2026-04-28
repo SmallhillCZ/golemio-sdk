@@ -7660,7 +7660,7 @@ export namespace GolemioPublicTransportApi {
              */
             
             public async getFyprElementDetail(
-                kind: KindEnum,
+                kind: GetFyprElementDetailKindEnum,
                 id: string,
                 options: AxiosRequestConfig = {}
             ) {

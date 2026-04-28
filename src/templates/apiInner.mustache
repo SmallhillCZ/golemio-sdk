@@ -37,7 +37,7 @@ export class {{classname}} extends BaseAPI {
      */
     
     public async {{nickname}}(
-        {{#pathParams}}{{paramName}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}},
+        {{#pathParams}}{{paramName}}: {{#isEnum}}{{operationIdCamelCase}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}},
         {{/pathParams}}{{#hasQueryParams}}queryParams: {{classname}}{{operationIdCamelCase}}QueryParams{{^hasRequiredParams}} = {}{{/hasRequiredParams}},
         {{/hasQueryParams}}{{#formParams}}{{paramName}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}},
         {{/formParams}}{{#bodyParam}}body: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}},

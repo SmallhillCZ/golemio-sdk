@@ -29,6 +29,8 @@ Name | Type | Description | Notes
 **tariff** | **string** | UUID of related parking tariff. | [optional] [default to undefined]
 **opening_hours** | [**Array&lt;OpeningHours&gt;**](OpeningHours.md) | Array is sorted by valid_from. | [optional] [default to undefined]
 **has_occupancy_info** | **boolean** | True if average occupancy info calculated from measurements is available | [optional] [default to undefined]
+**area** | **number** | Area of the parking lot in square meters. | [optional] [default to undefined]
+**address** | [**ParkingAddress**](ParkingAddress.md) |  | [optional] [default to undefined]
 
 ## Example
 
@@ -60,6 +62,8 @@ const instance: ParkingProperties = {
     tariff,
     opening_hours,
     has_occupancy_info,
+    area,
+    address,
 };
 ```
 

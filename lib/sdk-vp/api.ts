@@ -23,6 +23,7 @@ import { COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from '
 export type { ConfigurationParameters as GolemioPublicTransportApiConfiguration } from './configuration'; 
 
 export class GolemioPublicTransportApi {
+        FYPRV1Api: GolemioPublicTransportApi.FYPRV1Api;
         GTFSRealtimeV2Api: GolemioPublicTransportApi.GTFSRealtimeV2Api;
         GTFSStaticV2Api: GolemioPublicTransportApi.GTFSStaticV2Api;
         JISV1InternalApi: GolemioPublicTransportApi.JISV1InternalApi;
@@ -40,6 +41,7 @@ export class GolemioPublicTransportApi {
 
             if(!axios) axios = globalAxios.create();
 
+            this.FYPRV1Api = new GolemioPublicTransportApi.FYPRV1Api(configuration, axios!);
             this.GTFSRealtimeV2Api = new GolemioPublicTransportApi.GTFSRealtimeV2Api(configuration, axios!);
             this.GTFSStaticV2Api = new GolemioPublicTransportApi.GTFSStaticV2Api(configuration, axios!);
             this.JISV1InternalApi = new GolemioPublicTransportApi.JISV1InternalApi(configuration, axios!);
@@ -77,6 +79,476 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
+     * Fully composed DisplayCase schema for list responses. Combines DisplayCaseBase (writable display-case-specific and base fields) with server-set read-only fields from ElementReadOnly. The required array enforces that id and source_updated_at are always present in responses.
+     * @export
+     * @interface DisplayCase
+     */
+    export interface DisplayCase {
+        /**
+         * Server-generated UUID primary key. Immutable after creation.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'id': string;
+        /**
+         * Timestamp when the record was first created in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'source_created_at'?: string;
+        /**
+         * Timestamp of the most recent update in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'source_updated_at': string;
+        /**
+         * Timestamp when the record was published in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'source_published_at'?: string;
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'kind': DisplayCaseKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof DisplayCase
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof DisplayCase
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof DisplayCase
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'handover_date'?: string | null;
+        /**
+         * Name of the public transport stop where the display case is installed. May be null if not yet associated with a stop.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'stop_name'?: string | null;
+        /**
+         * Direction indicator for the stop (e.g. towards a terminal station). May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'stop_direction'?: string | null;
+        /**
+         * Platform or stand code at the stop where the display case is located. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'platform_code'?: string | null;
+        /**
+         * List of transport mode types served by the associated stop (e.g. bus, tram, metro). May be null if stop type is unknown.
+         * @type {Array<string>}
+         * @memberof DisplayCase
+         */
+        'stop_type'?: Array<string> | null;
+        /**
+         * Stop identifier from the THMP (Prague Transport Information System). May be null if not linked to a THMP stop.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'thmp_stop_id'?: string | null;
+        /**
+         * Type classification of the shelter or enclosure housing the display case. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'shelter_type'?: string | null;
+        /**
+         * Identifier of the shelter unit that contains this display case. May be null if not housed in a tracked shelter.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'shelter_id'?: string | null;
+        /**
+         * QR code value or URL associated with the display case for passenger information access. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'qr_code'?: string | null;
+        /**
+         * Name of the company or contractor that supplied or installed the display case. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'supplier'?: string | null;
+        /**
+         * Free-text operational comments or notes about the display case entered by field staff. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'comments'?: string | null;
+        /**
+         * Node identifier from the ASW (Automated Stop Management) system linking the display case to a stop node. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'asw_node_id'?: string | null;
+        /**
+         * Stop identifier from the ASW (Automated Stop Management) system. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'asw_stop_id'?: string | null;
+        /**
+         * Human-readable description of the exact physical placement of the display case at the stop. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'location_description'?: string | null;
+        /**
+         * Name of the street or square where the display case is located. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'street_name'?: string | null;
+        /**
+         * Element identifier assigned by ROPID (Prague Integrated Transport organizer). May be null if not yet registered with ROPID.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'ropid_element_id'?: string | null;
+        /**
+         * Acquisition or installation price of the display case excluding VAT, in Czech crowns (CZK). May be null if cost data is unavailable.
+         * @type {number}
+         * @memberof DisplayCase
+         */
+        'price_without_vat'?: number | null;
+        /**
+         * Manufacturer serial number of the display case unit. Used for asset tracking and warranty management. May be null.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'serial_number'?: string | null;
+        /**
+         * Element number assigned by the THMP (Prague Transport Information System). May be null if not registered in THMP.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'thmp_element_number'?: string | null;
+        /**
+         * Scheduled cleaning frequency for the display case (e.g. daily, weekly, monthly). May be null if no cleaning schedule is set.
+         * @type {string}
+         * @memberof DisplayCase
+         */
+        'cleaning_frequency'?: string | null;
+    }
+    
+    export const DisplayCaseKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type DisplayCaseKindEnum = typeof DisplayCaseKindEnum[keyof typeof DisplayCaseKindEnum];
+    
+    
+        /**
+     * 
+     * @export
+     * @interface DisplayCaseBase
+     */
+    export interface DisplayCaseBase {
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'kind': DisplayCaseBaseKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof DisplayCaseBase
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof DisplayCaseBase
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof DisplayCaseBase
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'handover_date'?: string | null;
+        /**
+         * Name of the public transport stop where the display case is installed. May be null if not yet associated with a stop.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'stop_name'?: string | null;
+        /**
+         * Direction indicator for the stop (e.g. towards a terminal station). May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'stop_direction'?: string | null;
+        /**
+         * Platform or stand code at the stop where the display case is located. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'platform_code'?: string | null;
+        /**
+         * List of transport mode types served by the associated stop (e.g. bus, tram, metro). May be null if stop type is unknown.
+         * @type {Array<string>}
+         * @memberof DisplayCaseBase
+         */
+        'stop_type'?: Array<string> | null;
+        /**
+         * Stop identifier from the THMP (Prague Transport Information System). May be null if not linked to a THMP stop.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'thmp_stop_id'?: string | null;
+        /**
+         * Type classification of the shelter or enclosure housing the display case. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'shelter_type'?: string | null;
+        /**
+         * Identifier of the shelter unit that contains this display case. May be null if not housed in a tracked shelter.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'shelter_id'?: string | null;
+        /**
+         * QR code value or URL associated with the display case for passenger information access. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'qr_code'?: string | null;
+        /**
+         * Name of the company or contractor that supplied or installed the display case. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'supplier'?: string | null;
+        /**
+         * Free-text operational comments or notes about the display case entered by field staff. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'comments'?: string | null;
+        /**
+         * Node identifier from the ASW (Automated Stop Management) system linking the display case to a stop node. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'asw_node_id'?: string | null;
+        /**
+         * Stop identifier from the ASW (Automated Stop Management) system. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'asw_stop_id'?: string | null;
+        /**
+         * Human-readable description of the exact physical placement of the display case at the stop. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'location_description'?: string | null;
+        /**
+         * Name of the street or square where the display case is located. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'street_name'?: string | null;
+        /**
+         * Element identifier assigned by ROPID (Prague Integrated Transport organizer). May be null if not yet registered with ROPID.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'ropid_element_id'?: string | null;
+        /**
+         * Acquisition or installation price of the display case excluding VAT, in Czech crowns (CZK). May be null if cost data is unavailable.
+         * @type {number}
+         * @memberof DisplayCaseBase
+         */
+        'price_without_vat'?: number | null;
+        /**
+         * Manufacturer serial number of the display case unit. Used for asset tracking and warranty management. May be null.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'serial_number'?: string | null;
+        /**
+         * Element number assigned by the THMP (Prague Transport Information System). May be null if not registered in THMP.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'thmp_element_number'?: string | null;
+        /**
+         * Scheduled cleaning frequency for the display case (e.g. daily, weekly, monthly). May be null if no cleaning schedule is set.
+         * @type {string}
+         * @memberof DisplayCaseBase
+         */
+        'cleaning_frequency'?: string | null;
+    }
+    
+    export const DisplayCaseBaseKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type DisplayCaseBaseKindEnum = typeof DisplayCaseBaseKindEnum[keyof typeof DisplayCaseBaseKindEnum];
+    
+    
+        /**
      * 
      * @export
      * @interface Effect
@@ -94,6 +566,147 @@ export namespace GolemioPublicTransportApi {
          * @memberof Effect
          */
         'en'?: string | null;
+    }
+    
+        /**
+     * Writable base fields shared by all FYPR element types. No id or timestamps. Composed via allOf by each typed element schema.
+     * @export
+     * @interface ElementBase
+     */
+    export interface ElementBase {
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'kind': ElementBaseKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof ElementBase
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof ElementBase
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof ElementBase
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof ElementBase
+         */
+        'handover_date'?: string | null;
+    }
+    
+    export const ElementBaseKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type ElementBaseKindEnum = typeof ElementBaseKindEnum[keyof typeof ElementBaseKindEnum];
+    
+    
+        /**
+     * Server-set fields that clients can only read. All properties carry readOnly: true. Composed via allOf into each typed element schema.
+     * @export
+     * @interface ElementReadOnly
+     */
+    export interface ElementReadOnly {
+        /**
+         * Server-generated UUID primary key. Immutable after creation.
+         * @type {string}
+         * @memberof ElementReadOnly
+         */
+        'id'?: string;
+        /**
+         * Timestamp when the record was first created in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof ElementReadOnly
+         */
+        'source_created_at'?: string;
+        /**
+         * Timestamp of the most recent update in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof ElementReadOnly
+         */
+        'source_updated_at'?: string;
+        /**
+         * Timestamp when the record was published in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof ElementReadOnly
+         */
+        'source_published_at'?: string;
     }
     
         /**
@@ -408,6 +1021,112 @@ export namespace GolemioPublicTransportApi {
          * @memberof FeaturePointGeometry
          */
         'coordinates': Array<number>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface FyprMetadataFieldTranslation
+     */
+    export interface FyprMetadataFieldTranslation {
+        /**
+         * Czech machine-readable field identifier (IE data-source field name).
+         * @type {string}
+         * @memberof FyprMetadataFieldTranslation
+         */
+        'slug_cs': string;
+        /**
+         * Czech human-readable field title.
+         * @type {string}
+         * @memberof FyprMetadataFieldTranslation
+         */
+        'title_cs': string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface FyprMetadataKindEntry
+     */
+    export interface FyprMetadataKindEntry {
+        /**
+         * 
+         * @type {Array<FyprMetadataKindLinksInner>}
+         * @memberof FyprMetadataKindEntry
+         */
+        'links': Array<FyprMetadataKindLinksInner>;
+        /**
+         * 
+         * @type {FyprMetadataKindTranslations}
+         * @memberof FyprMetadataKindEntry
+         */
+        'translations': FyprMetadataKindTranslations;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface FyprMetadataKindLinksInner
+     */
+    export interface FyprMetadataKindLinksInner {
+        /**
+         * Link relation type.
+         * @type {string}
+         * @memberof FyprMetadataKindLinksInner
+         */
+        'rel': string;
+        /**
+         * Path to the list endpoint for this element kind.
+         * @type {string}
+         * @memberof FyprMetadataKindLinksInner
+         */
+        'href': string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface FyprMetadataKindTranslation
+     */
+    export interface FyprMetadataKindTranslation {
+        /**
+         * Database table name of the element kind (snake_case).
+         * @type {string}
+         * @memberof FyprMetadataKindTranslation
+         */
+        'slug_en': string;
+        /**
+         * Czech plural name of the element kind.
+         * @type {string}
+         * @memberof FyprMetadataKindTranslation
+         */
+        'title_cs': string;
+        /**
+         * Czech singular name of the element kind.
+         * @type {string}
+         * @memberof FyprMetadataKindTranslation
+         */
+        'title_cs_singular': string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface FyprMetadataKindTranslations
+     */
+    export interface FyprMetadataKindTranslations {
+        /**
+         * 
+         * @type {FyprMetadataKindTranslation}
+         * @memberof FyprMetadataKindTranslations
+         */
+        'kind': FyprMetadataKindTranslation;
+        /**
+         * Map of English attribute slugs to their translation data. Keys are OG model attribute names; values contain the Czech slug and human-readable label.
+         * @type {{ [key: string]: FyprMetadataFieldTranslation; }}
+         * @memberof FyprMetadataKindTranslations
+         */
+        'attributes': { [key: string]: FyprMetadataFieldTranslation; };
     }
     
         /**
@@ -822,6 +1541,1316 @@ export namespace GolemioPublicTransportApi {
     
     
         /**
+     * @type GetFyprElementDetail200Response
+     * @export
+     */
+    export type GetFyprElementDetail200Response = DisplayCase | InformationPanel | Obelisk | Signpost | Totem;
+    
+        /**
+     * 
+     * @export
+     * @interface GetFyprElementDetail404Response
+     */
+    export interface GetFyprElementDetail404Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof GetFyprElementDetail404Response
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof GetFyprElementDetail404Response
+         */
+        'error_status': number;
+        /**
+         * 
+         * @type {string}
+         * @memberof GetFyprElementDetail404Response
+         */
+        'error_info'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface GetFyprMetadata200Response
+     */
+    export interface GetFyprMetadata200Response {
+        /**
+         * 
+         * @type {GetFyprMetadata200ResponseElements}
+         * @memberof GetFyprMetadata200Response
+         */
+        'elements': GetFyprMetadata200ResponseElements;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface GetFyprMetadata200ResponseElements
+     */
+    export interface GetFyprMetadata200ResponseElements {
+        /**
+         * 
+         * @type {FyprMetadataKindEntry}
+         * @memberof GetFyprMetadata200ResponseElements
+         */
+        'display-cases': FyprMetadataKindEntry;
+        /**
+         * 
+         * @type {FyprMetadataKindEntry}
+         * @memberof GetFyprMetadata200ResponseElements
+         */
+        'information-panels': FyprMetadataKindEntry;
+        /**
+         * 
+         * @type {FyprMetadataKindEntry}
+         * @memberof GetFyprMetadata200ResponseElements
+         */
+        'obelisks': FyprMetadataKindEntry;
+        /**
+         * 
+         * @type {FyprMetadataKindEntry}
+         * @memberof GetFyprMetadata200ResponseElements
+         */
+        'signposts': FyprMetadataKindEntry;
+        /**
+         * 
+         * @type {FyprMetadataKindEntry}
+         * @memberof GetFyprMetadata200ResponseElements
+         */
+        'totems': FyprMetadataKindEntry;
+    }
+    
+        /**
+     * Fully composed information panel schema. Combines InformationPanelBase (writable type-specific and base fields) with ElementReadOnly (server-set timestamps and id). Returned by the list endpoint GET /v1/information-panels.
+     * @export
+     * @interface InformationPanel
+     */
+    export interface InformationPanel {
+        /**
+         * Server-generated UUID primary key. Immutable after creation.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'id': string;
+        /**
+         * Timestamp when the record was first created in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'source_created_at'?: string;
+        /**
+         * Timestamp of the most recent update in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'source_updated_at': string;
+        /**
+         * Timestamp when the record was published in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'source_published_at'?: string;
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'kind': InformationPanelKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof InformationPanel
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof InformationPanel
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof InformationPanel
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'handover_date'?: string | null;
+        /**
+         * Human-readable name of the stop where the panel is installed. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'stop_name'?: string | null;
+        /**
+         * Direction label shown on the panel for the associated stop. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'stop_direction'?: string | null;
+        /**
+         * Platform or stand identifier within the stop. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'platform_code'?: string | null;
+        /**
+         * List of transport mode types served at the stop (e.g. bus, tram, metro). May be null.
+         * @type {Array<string>}
+         * @memberof InformationPanel
+         */
+        'stop_type'?: Array<string> | null;
+        /**
+         * Stop identifier in the THMP (Technicka hromadna mestska preprava) registry. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'thmp_stop_id'?: string | null;
+        /**
+         * Cadastral parcel number of the land where the panel is installed. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'land_parcel_number'?: string | null;
+        /**
+         * Owner of the land parcel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'land_owner'?: string | null;
+        /**
+         * Average number of passengers boarding at this stop on a workday. Integer count. May be null.
+         * @type {number}
+         * @memberof InformationPanel
+         */
+        'workday_boarding_count'?: number | null;
+        /**
+         * Comma-separated list of line numbers served at the stop. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'lines'?: string | null;
+        /**
+         * Free-text description of the panel\'s physical location. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'location_description'?: string | null;
+        /**
+         * Reference to the street light pole used to verify installation position. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'location_verification_on_street_light'?: string | null;
+        /**
+         * Type or model of the shelter associated with this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'shelter_type'?: string | null;
+        /**
+         * Identifier of the shelter associated with this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'shelter_id'?: string | null;
+        /**
+         * Reference number of the street light pole carrying this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'street_light_number'?: string | null;
+        /**
+         * Type of ground surface at the installation site. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'surface_type'?: string | null;
+        /**
+         * Current connectivity state of the panel (e.g. connected, disconnected, pending). May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'connection_state'?: string | null;
+        /**
+         * Technology used for the panel\'s data connection (e.g. ethernet, GSM, LTE). May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'connection_type'?: string | null;
+        /**
+         * Network addressing mode used for the panel connection. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'connection_mode'?: string | null;
+        /**
+         * Installation or maintenance priority assigned to this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'priority'?: string | null;
+        /**
+         * Investor action or project reference linked to this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'investor_action'?: string | null;
+        /**
+         * Reference identifier for the design (projekce) request. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'design_request'?: string | null;
+        /**
+         * Current state of the design phase. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'design_state'?: string | null;
+        /**
+         * Order number issued for the design phase. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'design_order_number'?: string | null;
+        /**
+         * Publication reference in the public procurement registry for the design order. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'design_registry_publication'?: string | null;
+        /**
+         * Indicates whether the design phase invoice has been paid. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'design_invoice_paid'?: string | null;
+        /**
+         * Order number issued for the production (vyroba) phase. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'production_order_number'?: string | null;
+        /**
+         * Current state of the production phase. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'production_state'?: string | null;
+        /**
+         * Publication reference in the public procurement registry for the production order. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'production_registry_publication'?: string | null;
+        /**
+         * Indicates whether the production phase invoice has been paid. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'production_invoice_paid'?: string | null;
+        /**
+         * Whether a realization (realizace) request has been raised for this panel. May be null.
+         * @type {boolean}
+         * @memberof InformationPanel
+         */
+        'realization_request'?: boolean | null;
+        /**
+         * Current state of the realization phase. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'realization_state'?: string | null;
+        /**
+         * Order number issued for the realization phase. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'realization_order_number'?: string | null;
+        /**
+         * Publication reference in the public procurement registry for the realization order. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'realization_registry_publication'?: string | null;
+        /**
+         * Indicates whether the realization phase invoice has been paid. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'realization_invoice_paid'?: string | null;
+        /**
+         * Accessible name of the stop used in audio announcements for visually impaired passengers. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'name_for_visually_impaired'?: string | null;
+        /**
+         * Voice announcement schedule for daytime operation. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'voice_day'?: string | null;
+        /**
+         * Voice announcement schedule for night-time operation. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'voice_night'?: string | null;
+        /**
+         * Display template identifier or name used to render content on this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'templates'?: string | null;
+        /**
+         * Preset configuration profile applied to this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'preset'?: string | null;
+        /**
+         * Identifier of the data source feeding real-time information to this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'data_source'?: string | null;
+        /**
+         * IMSI (International Mobile Subscriber Identity) of the SIM card installed in this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'imsi'?: string | null;
+        /**
+         * Identifier of the electrical or network connection point used by this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'connection_point'?: string | null;
+        /**
+         * Sequential number of the connection point within its cabinet or junction. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'connection_point_number'?: string | null;
+        /**
+         * Type of physical foundation used to mount the panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'foundation_type'?: string | null;
+        /**
+         * Date on which the manufacturer\'s warranty for this panel expires. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'warranty_end'?: string | null;
+        /**
+         * Date of the first technical revision carried out on this panel. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'initial_revision'?: string | null;
+        /**
+         * Date of the next scheduled technical revision. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'next_revision'?: string | null;
+        /**
+         * Whether the panel is covered by an electronics service contract. May be null.
+         * @type {boolean}
+         * @memberof InformationPanel
+         */
+        'electronics_service'?: boolean | null;
+        /**
+         * Date on which the electronics service contract expires. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'electronics_service_end'?: string | null;
+        /**
+         * Whether this panel has been registered in the asset management system. May be null.
+         * @type {boolean}
+         * @memberof InformationPanel
+         */
+        'asset_registered'?: boolean | null;
+        /**
+         * Asset management system identifier for this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'asset_number'?: string | null;
+        /**
+         * Whether this panel is covered by an insurance policy. May be null.
+         * @type {boolean}
+         * @memberof InformationPanel
+         */
+        'insurance'?: boolean | null;
+        /**
+         * Whether this panel has been formally handed over to OZP (Odbor zelene a pro verejny prostor) for management. May be null.
+         * @type {boolean}
+         * @memberof InformationPanel
+         */
+        'handed_over_to_ozp'?: boolean | null;
+        /**
+         * Whether documentation for DPP (Dopravni podnik Praha) has been requested. May be null.
+         * @type {boolean}
+         * @memberof InformationPanel
+         */
+        'dpp_documentation_request'?: boolean | null;
+        /**
+         * Date on which documentation was handed over to DPP. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'dpp_documentation_handover_date'?: string | null;
+        /**
+         * Contractual deadline for completing the design phase. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'design_deadline'?: string | null;
+        /**
+         * Contractual deadline for completing the production phase. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'production_deadline'?: string | null;
+        /**
+         * List of document types submitted to ROPID as part of the documentation package. May be null.
+         * @type {Array<string>}
+         * @memberof InformationPanel
+         */
+        'ropid_documentation_submitted'?: Array<string> | null;
+        /**
+         * Date on which documentation was handed over to ROPID. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'ropid_documentation_handover_date'?: string | null;
+        /**
+         * List of document types submitted to DPP as part of the documentation package. May be null.
+         * @type {Array<string>}
+         * @memberof InformationPanel
+         */
+        'dpp_documentation_submitted'?: Array<string> | null;
+        /**
+         * Contractual deadline for completing the realization phase. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'realization_deadline'?: string | null;
+        /**
+         * Unique device identifier assigned to the panel\'s embedded hardware unit. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'device_id'?: string | null;
+        /**
+         * Node identifier in the ASW (Automatizovany system rizeni) network registry. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'asw_node_id'?: string | null;
+        /**
+         * Stop identifier in the ASW network registry. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'asw_stop_id'?: string | null;
+        /**
+         * Rated power consumption of the panel in watts. Decimal values are permitted. May be null.
+         * @type {number}
+         * @memberof InformationPanel
+         */
+        'power_consumption_watt'?: number | null;
+        /**
+         * Element number assigned in the THMP registry. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'thmp_element_number'?: string | null;
+        /**
+         * Reference number of the electricity supply contract for this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'electricity_supply_contract'?: string | null;
+        /**
+         * Scheduled cleaning frequency for this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'cleaning_frequency'?: string | null;
+        /**
+         * Unit price per kWh charged under the electricity supply contract. Decimal values are permitted. May be null.
+         * @type {number}
+         * @memberof InformationPanel
+         */
+        'electricity_consumption_price'?: number | null;
+        /**
+         * Type of physical construction used for this panel (e.g. pole_mounted, wall_mounted, freestanding). May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'construction_type'?: string | null;
+        /**
+         * Display dimensions of the panel in centimetres (width x height). May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'panel_size'?: string | null;
+        /**
+         * Contracted price for the design phase excluding VAT, in CZK. May be null.
+         * @type {number}
+         * @memberof InformationPanel
+         */
+        'design_price_without_vat'?: number | null;
+        /**
+         * Contracted price for the production phase excluding VAT, in CZK. May be null.
+         * @type {number}
+         * @memberof InformationPanel
+         */
+        'production_price_without_vat'?: number | null;
+        /**
+         * Contracted price for the realization phase excluding VAT, in CZK. May be null.
+         * @type {number}
+         * @memberof InformationPanel
+         */
+        'realization_price_without_vat'?: number | null;
+        /**
+         * Manufacturer\'s serial number of the panel unit. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'serial_number'?: string | null;
+        /**
+         * Name of the panel manufacturer. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'producer'?: string | null;
+        /**
+         * Contact person at the panel manufacturer. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'producer_contact_person'?: string | null;
+        /**
+         * Display technology of the panel (e.g. LCD, e-paper). May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'panel_technology'?: string | null;
+        /**
+         * Model designation of the panel unit. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'panel_model'?: string | null;
+        /**
+         * Contact information for the element owner. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'owner_contact'?: string | null;
+        /**
+         * Internet connectivity type or provider for the panel. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'connectivity_internet'?: string | null;
+        /**
+         * Phone number associated with the panel\'s SIM or connectivity. May be null.
+         * @type {string}
+         * @memberof InformationPanel
+         */
+        'phone_number'?: string | null;
+    }
+    
+    export const InformationPanelKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type InformationPanelKindEnum = typeof InformationPanelKindEnum[keyof typeof InformationPanelKindEnum];
+    
+    
+        /**
+     * Writable fields for an information panel element. Extends ElementBase via allOf with 75 type-specific properties. Compose with ElementReadOnly to obtain the full InformationPanel read schema.
+     * @export
+     * @interface InformationPanelBase
+     */
+    export interface InformationPanelBase {
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'kind': InformationPanelBaseKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof InformationPanelBase
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof InformationPanelBase
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof InformationPanelBase
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'handover_date'?: string | null;
+        /**
+         * Human-readable name of the stop where the panel is installed. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'stop_name'?: string | null;
+        /**
+         * Direction label shown on the panel for the associated stop. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'stop_direction'?: string | null;
+        /**
+         * Platform or stand identifier within the stop. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'platform_code'?: string | null;
+        /**
+         * List of transport mode types served at the stop (e.g. bus, tram, metro). May be null.
+         * @type {Array<string>}
+         * @memberof InformationPanelBase
+         */
+        'stop_type'?: Array<string> | null;
+        /**
+         * Stop identifier in the THMP (Technicka hromadna mestska preprava) registry. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'thmp_stop_id'?: string | null;
+        /**
+         * Cadastral parcel number of the land where the panel is installed. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'land_parcel_number'?: string | null;
+        /**
+         * Owner of the land parcel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'land_owner'?: string | null;
+        /**
+         * Average number of passengers boarding at this stop on a workday. Integer count. May be null.
+         * @type {number}
+         * @memberof InformationPanelBase
+         */
+        'workday_boarding_count'?: number | null;
+        /**
+         * Comma-separated list of line numbers served at the stop. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'lines'?: string | null;
+        /**
+         * Free-text description of the panel\'s physical location. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'location_description'?: string | null;
+        /**
+         * Reference to the street light pole used to verify installation position. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'location_verification_on_street_light'?: string | null;
+        /**
+         * Type or model of the shelter associated with this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'shelter_type'?: string | null;
+        /**
+         * Identifier of the shelter associated with this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'shelter_id'?: string | null;
+        /**
+         * Reference number of the street light pole carrying this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'street_light_number'?: string | null;
+        /**
+         * Type of ground surface at the installation site. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'surface_type'?: string | null;
+        /**
+         * Current connectivity state of the panel (e.g. connected, disconnected, pending). May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'connection_state'?: string | null;
+        /**
+         * Technology used for the panel\'s data connection (e.g. ethernet, GSM, LTE). May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'connection_type'?: string | null;
+        /**
+         * Network addressing mode used for the panel connection. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'connection_mode'?: string | null;
+        /**
+         * Installation or maintenance priority assigned to this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'priority'?: string | null;
+        /**
+         * Investor action or project reference linked to this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'investor_action'?: string | null;
+        /**
+         * Reference identifier for the design (projekce) request. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'design_request'?: string | null;
+        /**
+         * Current state of the design phase. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'design_state'?: string | null;
+        /**
+         * Order number issued for the design phase. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'design_order_number'?: string | null;
+        /**
+         * Publication reference in the public procurement registry for the design order. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'design_registry_publication'?: string | null;
+        /**
+         * Indicates whether the design phase invoice has been paid. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'design_invoice_paid'?: string | null;
+        /**
+         * Order number issued for the production (vyroba) phase. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'production_order_number'?: string | null;
+        /**
+         * Current state of the production phase. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'production_state'?: string | null;
+        /**
+         * Publication reference in the public procurement registry for the production order. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'production_registry_publication'?: string | null;
+        /**
+         * Indicates whether the production phase invoice has been paid. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'production_invoice_paid'?: string | null;
+        /**
+         * Whether a realization (realizace) request has been raised for this panel. May be null.
+         * @type {boolean}
+         * @memberof InformationPanelBase
+         */
+        'realization_request'?: boolean | null;
+        /**
+         * Current state of the realization phase. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'realization_state'?: string | null;
+        /**
+         * Order number issued for the realization phase. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'realization_order_number'?: string | null;
+        /**
+         * Publication reference in the public procurement registry for the realization order. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'realization_registry_publication'?: string | null;
+        /**
+         * Indicates whether the realization phase invoice has been paid. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'realization_invoice_paid'?: string | null;
+        /**
+         * Accessible name of the stop used in audio announcements for visually impaired passengers. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'name_for_visually_impaired'?: string | null;
+        /**
+         * Voice announcement schedule for daytime operation. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'voice_day'?: string | null;
+        /**
+         * Voice announcement schedule for night-time operation. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'voice_night'?: string | null;
+        /**
+         * Display template identifier or name used to render content on this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'templates'?: string | null;
+        /**
+         * Preset configuration profile applied to this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'preset'?: string | null;
+        /**
+         * Identifier of the data source feeding real-time information to this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'data_source'?: string | null;
+        /**
+         * IMSI (International Mobile Subscriber Identity) of the SIM card installed in this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'imsi'?: string | null;
+        /**
+         * Identifier of the electrical or network connection point used by this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'connection_point'?: string | null;
+        /**
+         * Sequential number of the connection point within its cabinet or junction. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'connection_point_number'?: string | null;
+        /**
+         * Type of physical foundation used to mount the panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'foundation_type'?: string | null;
+        /**
+         * Date on which the manufacturer\'s warranty for this panel expires. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'warranty_end'?: string | null;
+        /**
+         * Date of the first technical revision carried out on this panel. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'initial_revision'?: string | null;
+        /**
+         * Date of the next scheduled technical revision. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'next_revision'?: string | null;
+        /**
+         * Whether the panel is covered by an electronics service contract. May be null.
+         * @type {boolean}
+         * @memberof InformationPanelBase
+         */
+        'electronics_service'?: boolean | null;
+        /**
+         * Date on which the electronics service contract expires. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'electronics_service_end'?: string | null;
+        /**
+         * Whether this panel has been registered in the asset management system. May be null.
+         * @type {boolean}
+         * @memberof InformationPanelBase
+         */
+        'asset_registered'?: boolean | null;
+        /**
+         * Asset management system identifier for this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'asset_number'?: string | null;
+        /**
+         * Whether this panel is covered by an insurance policy. May be null.
+         * @type {boolean}
+         * @memberof InformationPanelBase
+         */
+        'insurance'?: boolean | null;
+        /**
+         * Whether this panel has been formally handed over to OZP (Odbor zelene a pro verejny prostor) for management. May be null.
+         * @type {boolean}
+         * @memberof InformationPanelBase
+         */
+        'handed_over_to_ozp'?: boolean | null;
+        /**
+         * Whether documentation for DPP (Dopravni podnik Praha) has been requested. May be null.
+         * @type {boolean}
+         * @memberof InformationPanelBase
+         */
+        'dpp_documentation_request'?: boolean | null;
+        /**
+         * Date on which documentation was handed over to DPP. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'dpp_documentation_handover_date'?: string | null;
+        /**
+         * Contractual deadline for completing the design phase. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'design_deadline'?: string | null;
+        /**
+         * Contractual deadline for completing the production phase. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'production_deadline'?: string | null;
+        /**
+         * List of document types submitted to ROPID as part of the documentation package. May be null.
+         * @type {Array<string>}
+         * @memberof InformationPanelBase
+         */
+        'ropid_documentation_submitted'?: Array<string> | null;
+        /**
+         * Date on which documentation was handed over to ROPID. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'ropid_documentation_handover_date'?: string | null;
+        /**
+         * List of document types submitted to DPP as part of the documentation package. May be null.
+         * @type {Array<string>}
+         * @memberof InformationPanelBase
+         */
+        'dpp_documentation_submitted'?: Array<string> | null;
+        /**
+         * Contractual deadline for completing the realization phase. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'realization_deadline'?: string | null;
+        /**
+         * Unique device identifier assigned to the panel\'s embedded hardware unit. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'device_id'?: string | null;
+        /**
+         * Node identifier in the ASW (Automatizovany system rizeni) network registry. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'asw_node_id'?: string | null;
+        /**
+         * Stop identifier in the ASW network registry. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'asw_stop_id'?: string | null;
+        /**
+         * Rated power consumption of the panel in watts. Decimal values are permitted. May be null.
+         * @type {number}
+         * @memberof InformationPanelBase
+         */
+        'power_consumption_watt'?: number | null;
+        /**
+         * Element number assigned in the THMP registry. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'thmp_element_number'?: string | null;
+        /**
+         * Reference number of the electricity supply contract for this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'electricity_supply_contract'?: string | null;
+        /**
+         * Scheduled cleaning frequency for this panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'cleaning_frequency'?: string | null;
+        /**
+         * Unit price per kWh charged under the electricity supply contract. Decimal values are permitted. May be null.
+         * @type {number}
+         * @memberof InformationPanelBase
+         */
+        'electricity_consumption_price'?: number | null;
+        /**
+         * Type of physical construction used for this panel (e.g. pole_mounted, wall_mounted, freestanding). May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'construction_type'?: string | null;
+        /**
+         * Display dimensions of the panel in centimetres (width x height). May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'panel_size'?: string | null;
+        /**
+         * Contracted price for the design phase excluding VAT, in CZK. May be null.
+         * @type {number}
+         * @memberof InformationPanelBase
+         */
+        'design_price_without_vat'?: number | null;
+        /**
+         * Contracted price for the production phase excluding VAT, in CZK. May be null.
+         * @type {number}
+         * @memberof InformationPanelBase
+         */
+        'production_price_without_vat'?: number | null;
+        /**
+         * Contracted price for the realization phase excluding VAT, in CZK. May be null.
+         * @type {number}
+         * @memberof InformationPanelBase
+         */
+        'realization_price_without_vat'?: number | null;
+        /**
+         * Manufacturer\'s serial number of the panel unit. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'serial_number'?: string | null;
+        /**
+         * Name of the panel manufacturer. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'producer'?: string | null;
+        /**
+         * Contact person at the panel manufacturer. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'producer_contact_person'?: string | null;
+        /**
+         * Display technology of the panel (e.g. LCD, e-paper). May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'panel_technology'?: string | null;
+        /**
+         * Model designation of the panel unit. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'panel_model'?: string | null;
+        /**
+         * Contact information for the element owner. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'owner_contact'?: string | null;
+        /**
+         * Internet connectivity type or provider for the panel. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'connectivity_internet'?: string | null;
+        /**
+         * Phone number associated with the panel\'s SIM or connectivity. May be null.
+         * @type {string}
+         * @memberof InformationPanelBase
+         */
+        'phone_number'?: string | null;
+    }
+    
+    export const InformationPanelBaseKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type InformationPanelBaseKindEnum = typeof InformationPanelBaseKindEnum[keyof typeof InformationPanelBaseKindEnum];
+    
+    
+        /**
      * 
      * @export
      * @interface InformedEntityRoute
@@ -853,6 +2882,508 @@ export namespace GolemioPublicTransportApi {
         'route_type': RouteType;
     }
     
+    
+    
+        /**
+     * 
+     * @export
+     * @interface ListDisplayCases400Response
+     */
+    export interface ListDisplayCases400Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof ListDisplayCases400Response
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof ListDisplayCases400Response
+         */
+        'error_status': number;
+        /**
+         * 
+         * @type {string}
+         * @memberof ListDisplayCases400Response
+         */
+        'error_info'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface ListDisplayCases413Response
+     */
+    export interface ListDisplayCases413Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof ListDisplayCases413Response
+         */
+        'error_message': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof ListDisplayCases413Response
+         */
+        'error_status': number;
+        /**
+         * 
+         * @type {string}
+         * @memberof ListDisplayCases413Response
+         */
+        'error_info'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface ListFyprElementsKinds200Response
+     */
+    export interface ListFyprElementsKinds200Response {
+        /**
+         * 
+         * @type {Array<ListFyprElementsKinds200ResponseLinksInner>}
+         * @memberof ListFyprElementsKinds200Response
+         */
+        'links': Array<ListFyprElementsKinds200ResponseLinksInner>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface ListFyprElementsKinds200ResponseLinksInner
+     */
+    export interface ListFyprElementsKinds200ResponseLinksInner {
+        /**
+         * IANA link relation type.
+         * @type {string}
+         * @memberof ListFyprElementsKinds200ResponseLinksInner
+         */
+        'rel': string;
+        /**
+         * Machine-readable discriminator identifying the element kind (English API identifier).
+         * @type {string}
+         * @memberof ListFyprElementsKinds200ResponseLinksInner
+         */
+        'name': string;
+        /**
+         * Absolute path to the list endpoint for this element kind.
+         * @type {string}
+         * @memberof ListFyprElementsKinds200ResponseLinksInner
+         */
+        'href': string;
+    }
+    
+        /**
+     * Fully composed obelisk schema for list responses. Combines all writable obelisk-specific fields (ObeliskBase, which itself includes ElementBase) with server-set read-only fields (ElementReadOnly). The id and source_updated_at fields are required on every record returned by the API.
+     * @export
+     * @interface Obelisk
+     */
+    export interface Obelisk {
+        /**
+         * Server-generated UUID primary key. Immutable after creation.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'id': string;
+        /**
+         * Timestamp when the record was first created in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'source_created_at'?: string;
+        /**
+         * Timestamp of the most recent update in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'source_updated_at': string;
+        /**
+         * Timestamp when the record was published in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'source_published_at'?: string;
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'kind': ObeliskKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof Obelisk
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof Obelisk
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof Obelisk
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'handover_date'?: string | null;
+        /**
+         * Name of the street where the obelisk is physically located. May be null if the street name is not recorded.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'street_name'?: string | null;
+        /**
+         * Free-text description of the obelisk\'s exact placement within its location. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'location_description'?: string | null;
+        /**
+         * Cadastral land parcel number identifying the plot on which the obelisk stands. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'land_parcel_number'?: string | null;
+        /**
+         * Name of the entity that owns the land parcel where the obelisk is installed. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'land_owner'?: string | null;
+        /**
+         * Operational priority assigned to the obelisk for maintenance scheduling purposes. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'priority'?: string | null;
+        /**
+         * Indicates whether the obelisk is formally registered in the asset management system. May be null if the status is unknown.
+         * @type {boolean}
+         * @memberof Obelisk
+         */
+        'asset_registered'?: boolean | null;
+        /**
+         * Asset inventory number assigned when the obelisk is registered in the asset management system. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'asset_number'?: string | null;
+        /**
+         * Indicates whether the obelisk is covered by an insurance policy. May be null if insurance status is not recorded.
+         * @type {boolean}
+         * @memberof Obelisk
+         */
+        'insurance'?: boolean | null;
+        /**
+         * Current state of the insurance policy for the obelisk (e.g. ACTIVE, EXPIRED). May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'insurance_state'?: string | null;
+        /**
+         * Indicates whether the obelisk has been formally handed over to the OZP (Odbor zelene a prostredi) department for ongoing management. May be null.
+         * @type {boolean}
+         * @memberof Obelisk
+         */
+        'handed_over_to_ozp'?: boolean | null;
+        /**
+         * Free-text comments or operational notes associated with the obelisk. May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'comments'?: string | null;
+        /**
+         * Identifier assigned to this element within the ROPID external registry. May be null for elements not yet registered with ROPID.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'ropid_element_id'?: string | null;
+        /**
+         * Type of construction used for the obelisk (e.g. STEEL_FRAME, CONCRETE, COMPOSITE). May be null.
+         * @type {string}
+         * @memberof Obelisk
+         */
+        'construction_type'?: string | null;
+        /**
+         * Procurement or installation cost of the obelisk excluding VAT, expressed in the local currency (CZK). May be null if the cost is not recorded.
+         * @type {number}
+         * @memberof Obelisk
+         */
+        'price_without_vat'?: number | null;
+    }
+    
+    export const ObeliskKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type ObeliskKindEnum = typeof ObeliskKindEnum[keyof typeof ObeliskKindEnum];
+    
+    
+        /**
+     * Writable obelisk-specific fields extending ElementBase. Contains the 14 type-specific properties for the obelisk element type. Compose via allOf with ElementBase to obtain the full writable surface.
+     * @export
+     * @interface ObeliskBase
+     */
+    export interface ObeliskBase {
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'kind': ObeliskBaseKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof ObeliskBase
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof ObeliskBase
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof ObeliskBase
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'handover_date'?: string | null;
+        /**
+         * Name of the street where the obelisk is physically located. May be null if the street name is not recorded.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'street_name'?: string | null;
+        /**
+         * Free-text description of the obelisk\'s exact placement within its location. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'location_description'?: string | null;
+        /**
+         * Cadastral land parcel number identifying the plot on which the obelisk stands. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'land_parcel_number'?: string | null;
+        /**
+         * Name of the entity that owns the land parcel where the obelisk is installed. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'land_owner'?: string | null;
+        /**
+         * Operational priority assigned to the obelisk for maintenance scheduling purposes. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'priority'?: string | null;
+        /**
+         * Indicates whether the obelisk is formally registered in the asset management system. May be null if the status is unknown.
+         * @type {boolean}
+         * @memberof ObeliskBase
+         */
+        'asset_registered'?: boolean | null;
+        /**
+         * Asset inventory number assigned when the obelisk is registered in the asset management system. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'asset_number'?: string | null;
+        /**
+         * Indicates whether the obelisk is covered by an insurance policy. May be null if insurance status is not recorded.
+         * @type {boolean}
+         * @memberof ObeliskBase
+         */
+        'insurance'?: boolean | null;
+        /**
+         * Current state of the insurance policy for the obelisk (e.g. ACTIVE, EXPIRED). May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'insurance_state'?: string | null;
+        /**
+         * Indicates whether the obelisk has been formally handed over to the OZP (Odbor zelene a prostredi) department for ongoing management. May be null.
+         * @type {boolean}
+         * @memberof ObeliskBase
+         */
+        'handed_over_to_ozp'?: boolean | null;
+        /**
+         * Free-text comments or operational notes associated with the obelisk. May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'comments'?: string | null;
+        /**
+         * Identifier assigned to this element within the ROPID external registry. May be null for elements not yet registered with ROPID.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'ropid_element_id'?: string | null;
+        /**
+         * Type of construction used for the obelisk (e.g. STEEL_FRAME, CONCRETE, COMPOSITE). May be null.
+         * @type {string}
+         * @memberof ObeliskBase
+         */
+        'construction_type'?: string | null;
+        /**
+         * Procurement or installation cost of the obelisk excluding VAT, expressed in the local currency (CZK). May be null if the cost is not recorded.
+         * @type {number}
+         * @memberof ObeliskBase
+         */
+        'price_without_vat'?: number | null;
+    }
+    
+    export const ObeliskBaseKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type ObeliskBaseKindEnum = typeof ObeliskBaseKindEnum[keyof typeof ObeliskBaseKindEnum];
     
     
         /**
@@ -1246,7 +3777,7 @@ export namespace GolemioPublicTransportApi {
          */
         'direction': string | null;
         /**
-         * Trip headsign (usually the final stop).
+         * Trip headsign (usually the final stop). When the `appendHeadsignsLimit` parameter is used and the departure has route-switch data, this field may contain appended continuation info in the form `&lt;headsign&gt; → &lt;next_route&gt; &lt;next_headsign&gt;`.
          * @type {string}
          * @memberof PIDDepartureBoardTrip
          */
@@ -1742,6 +4273,26 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
+     * Daily repeat schedule for the infotext.
+     * @export
+     * @interface RepeatOnlyTimes
+     */
+    export interface RepeatOnlyTimes {
+        /**
+         * Daily repeat window start time (HH:MM:SS, Europe/Prague). Null when repeat is disabled.
+         * @type {string}
+         * @memberof RepeatOnlyTimes
+         */
+        'time_start': string | null;
+        /**
+         * Daily repeat window end time (HH:MM:SS, Europe/Prague). When start >= end the window wraps around midnight. Null when repeat is disabled.
+         * @type {string}
+         * @memberof RepeatOnlyTimes
+         */
+        'time_end': string | null;
+    }
+    
+        /**
      * 0 - tram \\ 1 - metro \\ 2 - rail \\ 3 - bus \\ 4 - ferry \\ 7 - funicular \\ 11 - trolleybus 
      * @export
      * @enum {number}
@@ -1844,7 +4395,7 @@ export namespace GolemioPublicTransportApi {
          */
         'last_stop_sequence'?: number | null;
         /**
-         * time when vehicle send last update
+         * Transmission time of the last message from the vehicle. Corresponds to the lat/lng position reported in the same message. 
          * @type {string}
          * @memberof ScopeInfo
          */
@@ -2058,6 +4609,440 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
+     * Fully composed Signpost schema including all writable base fields (via SignpostBase -> ElementBase), all 16 type-specific fields, and server-set read-only fields (ElementReadOnly). Use as the response schema for the GET /v1/signposts list endpoint.
+     * @export
+     * @interface Signpost
+     */
+    export interface Signpost {
+        /**
+         * Server-generated UUID primary key. Immutable after creation.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'id': string;
+        /**
+         * Timestamp when the record was first created in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'source_created_at'?: string;
+        /**
+         * Timestamp of the most recent update in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'source_updated_at': string;
+        /**
+         * Timestamp when the record was published in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'source_published_at'?: string;
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof Signpost
+         */
+        'kind': SignpostKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof Signpost
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof Signpost
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof Signpost
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'handover_date'?: string | null;
+        /**
+         * Name of the street where the signpost is located. May be null if not yet recorded.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'street_name'?: string | null;
+        /**
+         * Free-text description of the precise installation location. May be null if not yet recorded.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'location_description'?: string | null;
+        /**
+         * Cadastral land parcel number of the plot on which the signpost is installed. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'land_parcel_number'?: string | null;
+        /**
+         * Name of the land parcel owner. May be null if ownership has not been determined.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'land_owner'?: string | null;
+        /**
+         * Identifier of the street-light pole the signpost is attached to. May be null if not attached to a street-light pole.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'street_light_number'?: string | null;
+        /**
+         * Number of direction sheets (panels) mounted on the signpost. Whole number. May be null if not yet counted.
+         * @type {number}
+         * @memberof Signpost
+         */
+        'sheet_count'?: number | null;
+        /**
+         * Installation or maintenance priority classification assigned to this signpost. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'priority'?: string | null;
+        /**
+         * Indicates whether the signpost is registered in the asset management system. May be null if registration status is unknown.
+         * @type {boolean}
+         * @memberof Signpost
+         */
+        'asset_registered'?: boolean | null;
+        /**
+         * Asset management system identifier for the signpost. May be null if the signpost is not yet registered.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'asset_number'?: string | null;
+        /**
+         * Indicates whether the signpost is covered by an insurance policy. May be null if insurance status is unknown.
+         * @type {boolean}
+         * @memberof Signpost
+         */
+        'insurance'?: boolean | null;
+        /**
+         * Current state of the insurance coverage for the signpost (e.g. ACTIVE, EXPIRED). May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'insurance_state'?: string | null;
+        /**
+         * Indicates whether the signpost has been formally handed over to OZP (maintenance department) for ongoing administration. May be null.
+         * @type {boolean}
+         * @memberof Signpost
+         */
+        'handed_over_to_ozp'?: boolean | null;
+        /**
+         * Free-text comments or operational notes recorded by field staff. May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'comments'?: string | null;
+        /**
+         * Identifier assigned to this signpost within the ROPID system. May be null if no ROPID identifier has been assigned.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'ropid_element_id'?: string | null;
+        /**
+         * Type of construction or structural form of the signpost (e.g. STEEL_POLE, WALL_MOUNTED). May be null.
+         * @type {string}
+         * @memberof Signpost
+         */
+        'construction_type'?: string | null;
+        /**
+         * Procurement or installation price of the signpost, excluding VAT. Currency is CZK. May be null if pricing data is unavailable.
+         * @type {number}
+         * @memberof Signpost
+         */
+        'price_without_vat'?: number | null;
+    }
+    
+    export const SignpostKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type SignpostKindEnum = typeof SignpostKindEnum[keyof typeof SignpostKindEnum];
+    
+    
+        /**
+     * Writable fields for a Signpost element. Composes ElementBase via allOf and adds 16 type-specific properties.
+     * @export
+     * @interface SignpostBase
+     */
+    export interface SignpostBase {
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'kind': SignpostBaseKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof SignpostBase
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof SignpostBase
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof SignpostBase
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'handover_date'?: string | null;
+        /**
+         * Name of the street where the signpost is located. May be null if not yet recorded.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'street_name'?: string | null;
+        /**
+         * Free-text description of the precise installation location. May be null if not yet recorded.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'location_description'?: string | null;
+        /**
+         * Cadastral land parcel number of the plot on which the signpost is installed. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'land_parcel_number'?: string | null;
+        /**
+         * Name of the land parcel owner. May be null if ownership has not been determined.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'land_owner'?: string | null;
+        /**
+         * Identifier of the street-light pole the signpost is attached to. May be null if not attached to a street-light pole.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'street_light_number'?: string | null;
+        /**
+         * Number of direction sheets (panels) mounted on the signpost. Whole number. May be null if not yet counted.
+         * @type {number}
+         * @memberof SignpostBase
+         */
+        'sheet_count'?: number | null;
+        /**
+         * Installation or maintenance priority classification assigned to this signpost. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'priority'?: string | null;
+        /**
+         * Indicates whether the signpost is registered in the asset management system. May be null if registration status is unknown.
+         * @type {boolean}
+         * @memberof SignpostBase
+         */
+        'asset_registered'?: boolean | null;
+        /**
+         * Asset management system identifier for the signpost. May be null if the signpost is not yet registered.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'asset_number'?: string | null;
+        /**
+         * Indicates whether the signpost is covered by an insurance policy. May be null if insurance status is unknown.
+         * @type {boolean}
+         * @memberof SignpostBase
+         */
+        'insurance'?: boolean | null;
+        /**
+         * Current state of the insurance coverage for the signpost (e.g. ACTIVE, EXPIRED). May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'insurance_state'?: string | null;
+        /**
+         * Indicates whether the signpost has been formally handed over to OZP (maintenance department) for ongoing administration. May be null.
+         * @type {boolean}
+         * @memberof SignpostBase
+         */
+        'handed_over_to_ozp'?: boolean | null;
+        /**
+         * Free-text comments or operational notes recorded by field staff. May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'comments'?: string | null;
+        /**
+         * Identifier assigned to this signpost within the ROPID system. May be null if no ROPID identifier has been assigned.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'ropid_element_id'?: string | null;
+        /**
+         * Type of construction or structural form of the signpost (e.g. STEEL_POLE, WALL_MOUNTED). May be null.
+         * @type {string}
+         * @memberof SignpostBase
+         */
+        'construction_type'?: string | null;
+        /**
+         * Procurement or installation price of the signpost, excluding VAT. Currency is CZK. May be null if pricing data is unavailable.
+         * @type {number}
+         * @memberof SignpostBase
+         */
+        'price_without_vat'?: number | null;
+    }
+    
+    export const SignpostBaseKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type SignpostBaseKindEnum = typeof SignpostBaseKindEnum[keyof typeof SignpostBaseKindEnum];
+    
+    
+        /**
      * - `at_stop` - The position is tracking and the closest anchor point or metro rail track segment is a stop. - `before_track` - The position is not tracking and either the trip\'s previous position is not known, or the previous position\'s state is `at_stop` or `on_track`. - `before_track_delayed` - The position has a delay prediction based on the vehicle\'s previous trip. - `canceled` - The position is canceled. - `off_track` - The position is tracking and the vehicle is 200+ meters from the closest anchor point or metro rail track segment of its track. For metro positions, it is additionally required that the vehicle\'s message attributes `tm` and `odch` or less than or equal to the arrival to the final stop. - `on_track` - The position is tracking, but is neither `at_stop` nor `off_track`.  The following states also exist internally but are excluded from the API output: - `after_track` - The position is not tracking and the trip\'s last known position is tracking. For metro positions, this can also mean that it is tracking, the vehicle is 200+ meters from the closest metro rail track segment of its track and the vehicle\'s message attributes `tm` and `odch` or higher than the arrival to the final stop. For other positions from TCP sources (DPP buses and trams), this can also mean that it is tracking and the vehicle sent a message while at the final stop or sent a message with the `tjr` attribute higher than the arrival to the final stop. - `after_track_delayed` - The same as `after_track`, but the position always has defined delay (not null) if possible to deduct from GTFS static data and origin timestamp. Essentially, it means the vehicle is `at_stop` at the very last stop of the trip. The delay is also propagated to the next trip of the vehicle, unlike the `after_track` state. - `duplicate` - The position is not tracking, the trip\'s last known position is tracking and there is another position with identical `origin_timestamp`. - `invisible` - The position is not tracking and either:     - the trip\'s previous position is not known or the previous position\'s state is `at_stop` or `on_track`, and the vehicle is on its way from the garage;     - or the trip\'s last known position is tracking and the vehicle is on its way to the garage. - `mismatched` - The position does not make sense (e.g. it was sent late and thus has a mismatched stop sequence). - `not_public` - The position belongs to a non-public trip (trip without run schedule). - `unknown` - The position is not yet processed (or was determined to never be processed) or has been invalidated (e.g. due to a vehicle repeating some part of the trip). 
      * @export
      * @enum {string}
@@ -2073,6 +5058,1014 @@ export namespace GolemioPublicTransportApi {
     } as const;
     
     export type StatePosition = typeof StatePosition[keyof typeof StatePosition];
+    
+        /**
+     * Fully composed Totem schema for list responses. Combines TotemBase (writable fields including ElementBase), ElementReadOnly (server-set id and timestamps). Use this schema for items in the GET /v1/totems list response.
+     * @export
+     * @interface Totem
+     */
+    export interface Totem {
+        /**
+         * Server-generated UUID primary key. Immutable after creation.
+         * @type {string}
+         * @memberof Totem
+         */
+        'id': string;
+        /**
+         * Timestamp when the record was first created in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof Totem
+         */
+        'source_created_at'?: string;
+        /**
+         * Timestamp of the most recent update in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof Totem
+         */
+        'source_updated_at': string;
+        /**
+         * Timestamp when the record was published in the upstream CMS (Strapi). ISO 8601 UTC. Server-set, not writable by clients.
+         * @type {string}
+         * @memberof Totem
+         */
+        'source_published_at'?: string;
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof Totem
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof Totem
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof Totem
+         */
+        'kind': TotemKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof Totem
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof Totem
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof Totem
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'handover_date'?: string | null;
+        /**
+         * Physical size of the totem\'s display panel (width x height in mm). May be null if not yet specified.
+         * @type {string}
+         * @memberof Totem
+         */
+        'panel_size'?: string | null;
+        /**
+         * Named locality or area where the totem is installed. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'locality'?: string | null;
+        /**
+         * List of icon identifiers displayed on the totem face (e.g. transit mode icons). May be null if no icons are configured.
+         * @type {Array<string>}
+         * @memberof Totem
+         */
+        'displayed_icon'?: Array<string> | null;
+        /**
+         * Transit line identifiers served at or referenced by this totem. May be null.
+         * @type {Array<string>}
+         * @memberof Totem
+         */
+        'line'?: Array<string> | null;
+        /**
+         * Installation or operational priority rank for this totem. Integer value; lower numbers indicate higher priority. May be null.
+         * @type {number}
+         * @memberof Totem
+         */
+        'priority'?: number | null;
+        /**
+         * Free-text record of the site survey result or reference. May be null if no survey has been conducted.
+         * @type {string}
+         * @memberof Totem
+         */
+        'site_survey'?: string | null;
+        /**
+         * Height at which the totem is or will be installed. Stored as a string to accommodate unit suffixes. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'installation_height'?: string | null;
+        /**
+         * Identifier of the street light pole to which the totem is attached, if applicable. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'street_light_number'?: string | null;
+        /**
+         * Record or date of street light replacement associated with this totem installation. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'street_light_replacement'?: string | null;
+        /**
+         * Technical verification (TV) number assigned to this totem. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'tv_number'?: string | null;
+        /**
+         * Indicates whether a building permit has been obtained for this totem installation. May be null if status is unknown.
+         * @type {boolean}
+         * @memberof Totem
+         */
+        'building_permit'?: boolean | null;
+        /**
+         * Current state of the building permit process (e.g. PENDING, GRANTED, NOT_REQUIRED). May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'building_permit_state'?: string | null;
+        /**
+         * Free-text note describing the precise physical placement of the totem at its site. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'location_note'?: string | null;
+        /**
+         * Reference or summary of the formal site survey report. May be null if no report exists.
+         * @type {string}
+         * @memberof Totem
+         */
+        'site_survey_report'?: string | null;
+        /**
+         * Current state of the procurement order for this totem (e.g. DRAFT, SUBMITTED, IN_PROGRESS, COMPLETED). May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'order_state'?: string | null;
+        /**
+         * Procurement order number associated with this totem. May be null if no order has been raised.
+         * @type {string}
+         * @memberof Totem
+         */
+        'order_number'?: string | null;
+        /**
+         * Projected design/engineering cost for this totem, excluding VAT (Czech crowns). May be null.
+         * @type {number}
+         * @memberof Totem
+         */
+        'design_price_without_vat'?: number | null;
+        /**
+         * Actual realization (installation) cost for this totem, excluding VAT (Czech crowns). May be null.
+         * @type {number}
+         * @memberof Totem
+         */
+        'realization_price_without_vat'?: number | null;
+        /**
+         * Date on which the manufacturer or installer warranty expires. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'warranty_end'?: string | null;
+        /**
+         * Scheduled date of the next technical revision or inspection. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'next_revision'?: string | null;
+        /**
+         * URL or value encoded in the QR code affixed to this totem for field identification. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'qr_code'?: string | null;
+        /**
+         * Name of the supplier or manufacturer of this totem. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'supplier'?: string | null;
+        /**
+         * Name of the public transport stop associated with this totem. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'stop_name'?: string | null;
+        /**
+         * List of transport mode types at the associated stop (e.g. bus, tram, metro). May be null.
+         * @type {Array<string>}
+         * @memberof Totem
+         */
+        'stop_type'?: Array<string> | null;
+        /**
+         * Date on which the site survey was conducted. Stored as a plain string. May be null if no survey has been performed.
+         * @type {string}
+         * @memberof Totem
+         */
+        'site_survey_date'?: string | null;
+        /**
+         * Planned deadline date for completion of the procurement order. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'order_planned_deadline'?: string | null;
+        /**
+         * Indicates whether the procurement order has been published in the public contracts registry. May be null.
+         * @type {boolean}
+         * @memberof Totem
+         */
+        'order_registry_publication'?: boolean | null;
+        /**
+         * Indicates whether the invoice for this totem has been paid. May be null if payment status is unknown.
+         * @type {boolean}
+         * @memberof Totem
+         */
+        'invoice_paid'?: boolean | null;
+        /**
+         * Date of the initial (commissioning) technical revision. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'initial_revision'?: string | null;
+        /**
+         * Indicates whether this totem has been registered as a fixed asset in the accounting system. May be null.
+         * @type {boolean}
+         * @memberof Totem
+         */
+        'asset_registered'?: boolean | null;
+        /**
+         * Fixed asset register number assigned to this totem. May be null if not yet registered.
+         * @type {string}
+         * @memberof Totem
+         */
+        'asset_number'?: string | null;
+        /**
+         * Indicates whether this totem is covered by an insurance policy. May be null.
+         * @type {boolean}
+         * @memberof Totem
+         */
+        'insurance'?: boolean | null;
+        /**
+         * Indicates whether the totem has been formally handed over to the OZP (public space department) for ongoing maintenance. May be null.
+         * @type {boolean}
+         * @memberof Totem
+         */
+        'handed_over_to_ozp'?: boolean | null;
+        /**
+         * List of documentation items submitted to ROPID as part of the handover package. May be null.
+         * @type {Array<string>}
+         * @memberof Totem
+         */
+        'ropid_documentation_submitted'?: Array<string> | null;
+        /**
+         * Date on which the documentation package was handed over to ROPID. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'ropid_documentation_handover_date'?: string | null;
+        /**
+         * Name of the street where this totem is located. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'street_name'?: string | null;
+        /**
+         * Exit identifier (e.g. metro station exit letter or number) nearest to this totem\'s installation point. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'exit_number'?: string | null;
+        /**
+         * Prague Public Transit (DPP) internal priority rank for this totem. Lower values indicate higher priority. May be null.
+         * @type {number}
+         * @memberof Totem
+         */
+        'dpp_priority'?: number | null;
+        /**
+         * Current state of the insurance coverage for this totem (e.g. ACTIVE, EXPIRED, NOT_REQUIRED). May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'insurance_state'?: string | null;
+        /**
+         * Free-text comments or operational remarks about this totem. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'comments'?: string | null;
+        /**
+         * Node identifier in the ASW (automated stop information system) associated with this totem\'s location. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'asw_node_id'?: string | null;
+        /**
+         * Stop identifier in the ASW system linked to this totem. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'asw_stop_id'?: string | null;
+        /**
+         * Rated power consumption of this totem in watts. May be null if not measured.
+         * @type {number}
+         * @memberof Totem
+         */
+        'power_consumption_watt'?: number | null;
+        /**
+         * Element number assigned within the THMP (Technical Management of Public Infrastructure) register. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'thmp_element_number'?: string | null;
+        /**
+         * Identifier or reference of the electricity supply contract for this totem. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'electricity_supply_contract'?: string | null;
+        /**
+         * Scheduled cleaning frequency for this totem (e.g. weekly, monthly, quarterly). May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'cleaning_frequency'?: string | null;
+        /**
+         * Annual electricity consumption cost for this totem in Czech crowns, excluding VAT. May be null.
+         * @type {number}
+         * @memberof Totem
+         */
+        'electricity_consumption_price'?: number | null;
+        /**
+         * Element identifier assigned by ROPID in their own internal register. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'ropid_element_id'?: string | null;
+        /**
+         * Construction or mounting type of the totem (e.g. STANDALONE, POLE_MOUNTED, WALL_MOUNTED). May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'construction_type'?: string | null;
+        /**
+         * Total production price of this totem unit, excluding VAT (Czech crowns). May be null.
+         * @type {number}
+         * @memberof Totem
+         */
+        'production_price_without_vat'?: number | null;
+        /**
+         * Manufacturer\'s serial number of this totem unit. May be null.
+         * @type {string}
+         * @memberof Totem
+         */
+        'serial_number'?: string | null;
+    }
+    
+    export const TotemKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type TotemKindEnum = typeof TotemKindEnum[keyof typeof TotemKindEnum];
+    
+    
+        /**
+     * Writable base fields for the Totem element type. Extends ElementBase via allOf, adding 51 Totem-specific properties. No id or timestamps (those come from ElementReadOnly). Used for create/update request bodies and composed into Totem.
+     * @export
+     * @interface TotemBase
+     */
+    export interface TotemBase {
+        /**
+         * Unique document identifier sourced from the upstream CMS (Strapi). Used as the stable external reference for deduplication.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'document_id': string;
+        /**
+         * Optional external UUID assigned to the physical element by the field operations team. May be null for elements not yet assigned.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'uid'?: string | null;
+        /**
+         * Discriminator field identifying the element type. Determines which typed schema applies (Totem, InformationPanel, DisplayCase, Obelisk, Signpost).
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'kind': TotemBaseKindEnum;
+        /**
+         * Human-readable name of the element. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'name'?: string | null;
+        /**
+         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'state'?: string | null;
+        /**
+         * Organization or entity that owns the element. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'owner'?: string | null;
+        /**
+         * Organization or entity that manages the element. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'manager'?: string | null;
+        /**
+         * Prague city district where the element is physically located. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'city_district'?: string | null;
+        /**
+         * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof TotemBase
+         */
+        'lat'?: number | null;
+        /**
+         * WGS-84 longitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
+         * @type {number}
+         * @memberof TotemBase
+         */
+        'lon'?: number | null;
+        /**
+         * URL to an external map view showing the element location. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'map_link'?: string | null;
+        /**
+         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'planned_year_of_realization'?: string | null;
+        /**
+         * Free-text operational note attached to the element by field staff. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'note'?: string | null;
+        /**
+         * Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown.
+         * @type {boolean}
+         * @memberof TotemBase
+         */
+        'handover'?: boolean | null;
+        /**
+         * Date on which the element was formally handed over to the maintenance team. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'handover_date'?: string | null;
+        /**
+         * Physical size of the totem\'s display panel (width x height in mm). May be null if not yet specified.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'panel_size'?: string | null;
+        /**
+         * Named locality or area where the totem is installed. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'locality'?: string | null;
+        /**
+         * List of icon identifiers displayed on the totem face (e.g. transit mode icons). May be null if no icons are configured.
+         * @type {Array<string>}
+         * @memberof TotemBase
+         */
+        'displayed_icon'?: Array<string> | null;
+        /**
+         * Transit line identifiers served at or referenced by this totem. May be null.
+         * @type {Array<string>}
+         * @memberof TotemBase
+         */
+        'line'?: Array<string> | null;
+        /**
+         * Installation or operational priority rank for this totem. Integer value; lower numbers indicate higher priority. May be null.
+         * @type {number}
+         * @memberof TotemBase
+         */
+        'priority'?: number | null;
+        /**
+         * Free-text record of the site survey result or reference. May be null if no survey has been conducted.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'site_survey'?: string | null;
+        /**
+         * Height at which the totem is or will be installed. Stored as a string to accommodate unit suffixes. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'installation_height'?: string | null;
+        /**
+         * Identifier of the street light pole to which the totem is attached, if applicable. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'street_light_number'?: string | null;
+        /**
+         * Record or date of street light replacement associated with this totem installation. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'street_light_replacement'?: string | null;
+        /**
+         * Technical verification (TV) number assigned to this totem. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'tv_number'?: string | null;
+        /**
+         * Indicates whether a building permit has been obtained for this totem installation. May be null if status is unknown.
+         * @type {boolean}
+         * @memberof TotemBase
+         */
+        'building_permit'?: boolean | null;
+        /**
+         * Current state of the building permit process (e.g. PENDING, GRANTED, NOT_REQUIRED). May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'building_permit_state'?: string | null;
+        /**
+         * Free-text note describing the precise physical placement of the totem at its site. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'location_note'?: string | null;
+        /**
+         * Reference or summary of the formal site survey report. May be null if no report exists.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'site_survey_report'?: string | null;
+        /**
+         * Current state of the procurement order for this totem (e.g. DRAFT, SUBMITTED, IN_PROGRESS, COMPLETED). May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'order_state'?: string | null;
+        /**
+         * Procurement order number associated with this totem. May be null if no order has been raised.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'order_number'?: string | null;
+        /**
+         * Projected design/engineering cost for this totem, excluding VAT (Czech crowns). May be null.
+         * @type {number}
+         * @memberof TotemBase
+         */
+        'design_price_without_vat'?: number | null;
+        /**
+         * Actual realization (installation) cost for this totem, excluding VAT (Czech crowns). May be null.
+         * @type {number}
+         * @memberof TotemBase
+         */
+        'realization_price_without_vat'?: number | null;
+        /**
+         * Date on which the manufacturer or installer warranty expires. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'warranty_end'?: string | null;
+        /**
+         * Scheduled date of the next technical revision or inspection. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'next_revision'?: string | null;
+        /**
+         * URL or value encoded in the QR code affixed to this totem for field identification. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'qr_code'?: string | null;
+        /**
+         * Name of the supplier or manufacturer of this totem. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'supplier'?: string | null;
+        /**
+         * Name of the public transport stop associated with this totem. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'stop_name'?: string | null;
+        /**
+         * List of transport mode types at the associated stop (e.g. bus, tram, metro). May be null.
+         * @type {Array<string>}
+         * @memberof TotemBase
+         */
+        'stop_type'?: Array<string> | null;
+        /**
+         * Date on which the site survey was conducted. Stored as a plain string. May be null if no survey has been performed.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'site_survey_date'?: string | null;
+        /**
+         * Planned deadline date for completion of the procurement order. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'order_planned_deadline'?: string | null;
+        /**
+         * Indicates whether the procurement order has been published in the public contracts registry. May be null.
+         * @type {boolean}
+         * @memberof TotemBase
+         */
+        'order_registry_publication'?: boolean | null;
+        /**
+         * Indicates whether the invoice for this totem has been paid. May be null if payment status is unknown.
+         * @type {boolean}
+         * @memberof TotemBase
+         */
+        'invoice_paid'?: boolean | null;
+        /**
+         * Date of the initial (commissioning) technical revision. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'initial_revision'?: string | null;
+        /**
+         * Indicates whether this totem has been registered as a fixed asset in the accounting system. May be null.
+         * @type {boolean}
+         * @memberof TotemBase
+         */
+        'asset_registered'?: boolean | null;
+        /**
+         * Fixed asset register number assigned to this totem. May be null if not yet registered.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'asset_number'?: string | null;
+        /**
+         * Indicates whether this totem is covered by an insurance policy. May be null.
+         * @type {boolean}
+         * @memberof TotemBase
+         */
+        'insurance'?: boolean | null;
+        /**
+         * Indicates whether the totem has been formally handed over to the OZP (public space department) for ongoing maintenance. May be null.
+         * @type {boolean}
+         * @memberof TotemBase
+         */
+        'handed_over_to_ozp'?: boolean | null;
+        /**
+         * List of documentation items submitted to ROPID as part of the handover package. May be null.
+         * @type {Array<string>}
+         * @memberof TotemBase
+         */
+        'ropid_documentation_submitted'?: Array<string> | null;
+        /**
+         * Date on which the documentation package was handed over to ROPID. ISO 8601 date. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'ropid_documentation_handover_date'?: string | null;
+        /**
+         * Name of the street where this totem is located. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'street_name'?: string | null;
+        /**
+         * Exit identifier (e.g. metro station exit letter or number) nearest to this totem\'s installation point. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'exit_number'?: string | null;
+        /**
+         * Prague Public Transit (DPP) internal priority rank for this totem. Lower values indicate higher priority. May be null.
+         * @type {number}
+         * @memberof TotemBase
+         */
+        'dpp_priority'?: number | null;
+        /**
+         * Current state of the insurance coverage for this totem (e.g. ACTIVE, EXPIRED, NOT_REQUIRED). May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'insurance_state'?: string | null;
+        /**
+         * Free-text comments or operational remarks about this totem. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'comments'?: string | null;
+        /**
+         * Node identifier in the ASW (automated stop information system) associated with this totem\'s location. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'asw_node_id'?: string | null;
+        /**
+         * Stop identifier in the ASW system linked to this totem. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'asw_stop_id'?: string | null;
+        /**
+         * Rated power consumption of this totem in watts. May be null if not measured.
+         * @type {number}
+         * @memberof TotemBase
+         */
+        'power_consumption_watt'?: number | null;
+        /**
+         * Element number assigned within the THMP (Technical Management of Public Infrastructure) register. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'thmp_element_number'?: string | null;
+        /**
+         * Identifier or reference of the electricity supply contract for this totem. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'electricity_supply_contract'?: string | null;
+        /**
+         * Scheduled cleaning frequency for this totem (e.g. weekly, monthly, quarterly). May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'cleaning_frequency'?: string | null;
+        /**
+         * Annual electricity consumption cost for this totem in Czech crowns, excluding VAT. May be null.
+         * @type {number}
+         * @memberof TotemBase
+         */
+        'electricity_consumption_price'?: number | null;
+        /**
+         * Element identifier assigned by ROPID in their own internal register. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'ropid_element_id'?: string | null;
+        /**
+         * Construction or mounting type of the totem (e.g. STANDALONE, POLE_MOUNTED, WALL_MOUNTED). May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'construction_type'?: string | null;
+        /**
+         * Total production price of this totem unit, excluding VAT (Czech crowns). May be null.
+         * @type {number}
+         * @memberof TotemBase
+         */
+        'production_price_without_vat'?: number | null;
+        /**
+         * Manufacturer\'s serial number of this totem unit. May be null.
+         * @type {string}
+         * @memberof TotemBase
+         */
+        'serial_number'?: string | null;
+    }
+    
+    export const TotemBaseKindEnum = {
+        Totem: 'totem',
+        InformationPanel: 'information_panel',
+        DisplayCase: 'display_case',
+        Obelisk: 'obelisk',
+        Signpost: 'signpost'
+    } as const;
+    
+    export type TotemBaseKindEnum = typeof TotemBaseKindEnum[keyof typeof TotemBaseKindEnum];
+    
+    
+        /**
+     * 
+     * @export
+     * @interface TransferboardsDeparture
+     */
+    export interface TransferboardsDeparture {
+        /**
+         * 
+         * @type {TransferboardsDepartureDepartureTimestamp}
+         * @memberof TransferboardsDeparture
+         */
+        'departure_timestamp': TransferboardsDepartureDepartureTimestamp;
+        /**
+         * 
+         * @type {TransferboardsDepartureRoute}
+         * @memberof TransferboardsDeparture
+         */
+        'route': TransferboardsDepartureRoute;
+        /**
+         * 
+         * @type {V3PidTransferboardsGet200ResponseDeparturesInnerStop}
+         * @memberof TransferboardsDeparture
+         */
+        'stop': V3PidTransferboardsGet200ResponseDeparturesInnerStop;
+        /**
+         * 
+         * @type {TransferboardsDepartureTrip}
+         * @memberof TransferboardsDeparture
+         */
+        'trip': TransferboardsDepartureTrip;
+        /**
+         * 
+         * @type {Array<string>}
+         * @memberof TransferboardsDeparture
+         */
+        'icons': Array<TransferboardsDepartureIconsEnum>;
+        /**
+         * 
+         * @type {TransferboardsDepartureSubstitutionText}
+         * @memberof TransferboardsDeparture
+         */
+        'substitution_text'?: TransferboardsDepartureSubstitutionText;
+    }
+    
+    export const TransferboardsDepartureIconsEnum = {
+        Metro: 'metro',
+        Tram: 'tram',
+        Bus: 'bus',
+        Trolleybus: 'trolleybus',
+        Train: 'train',
+        Funicular: 'funicular',
+        Aerial: 'aerial',
+        Ferry: 'ferry',
+        Airport: 'airport',
+        AirportBus: 'airport_bus',
+        AirportTrolleybus: 'airport_trolleybus',
+        AirportTrain: 'airport_train',
+        A: 'a',
+        B: 'b',
+        C: 'c',
+        D: 'd',
+        SBahn: 's_bahn',
+        Space: 'space'
+    } as const;
+    
+    export type TransferboardsDepartureIconsEnum = typeof TransferboardsDepartureIconsEnum[keyof typeof TransferboardsDepartureIconsEnum];
+    
+    
+        /**
+     * 
+     * @export
+     * @interface TransferboardsDepartureDepartureTimestamp
+     */
+    export interface TransferboardsDepartureDepartureTimestamp {
+        /**
+         * 
+         * @type {Array<string>}
+         * @memberof TransferboardsDepartureDepartureTimestamp
+         */
+        'minutes': Array<string>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface TransferboardsDepartureRoute
+     */
+    export interface TransferboardsDepartureRoute {
+        /**
+         * 
+         * @type {string}
+         * @memberof TransferboardsDepartureRoute
+         */
+        'short_name': string;
+        /**
+         * 
+         * @type {number}
+         * @memberof TransferboardsDepartureRoute
+         */
+        'type': number;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface TransferboardsDepartureSubstitutionText
+     */
+    export interface TransferboardsDepartureSubstitutionText {
+        /**
+         * 
+         * @type {string}
+         * @memberof TransferboardsDepartureSubstitutionText
+         */
+        'cs': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof TransferboardsDepartureSubstitutionText
+         */
+        'en'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface TransferboardsDepartureTrip
+     */
+    export interface TransferboardsDepartureTrip {
+        /**
+         * If more than one trips are available, the first one is taken. Trips are grouped by direction_id.
+         * @type {string}
+         * @memberof TransferboardsDepartureTrip
+         */
+        'headsign': string;
+        /**
+         * If more than one trips are available, the first one is taken. Trips are grouped by direction_id.
+         * @type {string}
+         * @memberof TransferboardsDepartureTrip
+         */
+        'id': string;
+        /**
+         * True if the vehicle being used on this trip is wheelchair accessible. Metro trips are deemed accessible if the station is accessible.
+         * @type {boolean}
+         * @memberof TransferboardsDepartureTrip
+         */
+        'is_wheelchair_accessible': boolean | null;
+        /**
+         * True if the transfer is marked as guaranteed and it can be waiting for current arriving trip identified in request query parameters.
+         * @type {boolean}
+         * @memberof TransferboardsDepartureTrip
+         */
+        'is_guaranteed_transfer': boolean;
+    }
     
         /**
      * 
@@ -2471,7 +6464,7 @@ export namespace GolemioPublicTransportApi {
          */
         'last_stop_sequence'?: number | null;
         /**
-         * time when vehicle send last update
+         * Transmission time of the last message from the vehicle. Corresponds to the lat/lng position reported in the same message. 
          * @type {string}
          * @memberof V2PublicVehiclepositionsVehicleIdGet200Response
          */
@@ -2642,6 +6635,12 @@ export namespace GolemioPublicTransportApi {
          * @memberof V3PidInfotextsGet200ResponseInner
          */
         'id': string;
+        /**
+         * 
+         * @type {RepeatOnlyTimes}
+         * @memberof V3PidInfotextsGet200ResponseInner
+         */
+        'repeat': RepeatOnlyTimes;
     }
     
     export const V3PidInfotextsGet200ResponseInnerDisplayTypeEnum = {
@@ -2870,25 +6869,25 @@ export namespace GolemioPublicTransportApi {
          * @type {string}
          * @memberof V4PidTransferboardsGet200Response
          */
-        'platform_code': string | null;
+        'stop_name': string | null;
         /**
          * 
          * @type {string}
          * @memberof V4PidTransferboardsGet200Response
          */
-        'stop_name': string | null;
+        'platform_code': string | null;
         /**
          * 
-         * @type {Array<string | null>}
+         * @type {Array<string>}
          * @memberof V4PidTransferboardsGet200Response
          */
-        'icons'?: Array<V4PidTransferboardsGet200ResponseIconsEnum | null>;
+        'icons': Array<V4PidTransferboardsGet200ResponseIconsEnum>;
         /**
          * List of departures from the stop. The list is sorted by: - route type - subway and then other   - subway is sorted alphabetically, then by departure time, then by direction id - departure time 
-         * @type {Array<V4PidTransferboardsGet200ResponseDeparturesInner>}
+         * @type {Array<TransferboardsDeparture>}
          * @memberof V4PidTransferboardsGet200Response
          */
-        'departures': Array<V4PidTransferboardsGet200ResponseDeparturesInner>;
+        'departures': Array<TransferboardsDeparture>;
         /**
          * 
          * @type {Array<V4PidTransferboardsGet200ResponseInfotextsInner>}
@@ -2920,154 +6919,6 @@ export namespace GolemioPublicTransportApi {
     
     export type V4PidTransferboardsGet200ResponseIconsEnum = typeof V4PidTransferboardsGet200ResponseIconsEnum[keyof typeof V4PidTransferboardsGet200ResponseIconsEnum];
     
-    
-        /**
-     * 
-     * @export
-     * @interface V4PidTransferboardsGet200ResponseDeparturesInner
-     */
-    export interface V4PidTransferboardsGet200ResponseDeparturesInner {
-        /**
-         * 
-         * @type {V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
-         */
-        'departure_timestamp': V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp;
-        /**
-         * 
-         * @type {V4PidTransferboardsGet200ResponseDeparturesInnerRoute}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
-         */
-        'route': V4PidTransferboardsGet200ResponseDeparturesInnerRoute;
-        /**
-         * 
-         * @type {V3PidTransferboardsGet200ResponseDeparturesInnerStop}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
-         */
-        'stop'?: V3PidTransferboardsGet200ResponseDeparturesInnerStop;
-        /**
-         * 
-         * @type {V4PidTransferboardsGet200ResponseDeparturesInnerTrip}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
-         */
-        'trip': V4PidTransferboardsGet200ResponseDeparturesInnerTrip;
-        /**
-         * 
-         * @type {Array<string | null>}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
-         */
-        'icons'?: Array<V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum | null>;
-        /**
-         * 
-         * @type {V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInner
-         */
-        'substitution_text'?: V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText;
-    }
-    
-    export const V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum = {
-        Metro: 'metro',
-        Tram: 'tram',
-        Bus: 'bus',
-        Trolleybus: 'trolleybus',
-        Train: 'train',
-        Funicular: 'funicular',
-        Aerial: 'aerial',
-        Ferry: 'ferry',
-        Airport: 'airport',
-        AirportBus: 'airport_bus',
-        AirportTrolleybus: 'airport_trolleybus',
-        AirportTrain: 'airport_train',
-        A: 'a',
-        B: 'b',
-        C: 'c',
-        D: 'd',
-        SBahn: 's_bahn',
-        Space: 'space'
-    } as const;
-    
-    export type V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum = typeof V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum[keyof typeof V4PidTransferboardsGet200ResponseDeparturesInnerIconsEnum];
-    
-    
-        /**
-     * 
-     * @export
-     * @interface V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp
-     */
-    export interface V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp {
-        /**
-         * 
-         * @type {Array<string | null>}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerDepartureTimestamp
-         */
-        'minutes': Array<string | null>;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V4PidTransferboardsGet200ResponseDeparturesInnerRoute
-     */
-    export interface V4PidTransferboardsGet200ResponseDeparturesInnerRoute {
-        /**
-         * 
-         * @type {string}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerRoute
-         */
-        'short_name': string | null;
-        /**
-         * 
-         * @type {number}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerRoute
-         */
-        'type': number | null;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText
-     */
-    export interface V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText {
-        /**
-         * 
-         * @type {string}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText
-         */
-        'cs': string;
-        /**
-         * 
-         * @type {string}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText
-         */
-        'en'?: string | null;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V4PidTransferboardsGet200ResponseDeparturesInnerTrip
-     */
-    export interface V4PidTransferboardsGet200ResponseDeparturesInnerTrip {
-        /**
-         * If more then one trips are available, the first one is taken. Trips are grouped by direction_id.
-         * @type {string}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerTrip
-         */
-        'headsign': string;
-        /**
-         * If more then one trips are available, the first one is taken. Trips are grouped by direction_id.
-         * @type {string}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerTrip
-         */
-        'id': string;
-        /**
-         * True if the vehicle being used on this trip is wheelchair accessible. Metro trips are deemed accessible if the station is accessible.
-         * @type {boolean}
-         * @memberof V4PidTransferboardsGet200ResponseDeparturesInnerTrip
-         */
-        'is_wheelchair_accessible': boolean;
-    }
     
         /**
      * 
@@ -3115,32 +6966,6 @@ export namespace GolemioPublicTransportApi {
          * @memberof V4PidTransferboardsGet200ResponseInfotextsInnerText
          */
         'en'?: string;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V4PidTransferboardsGet400Response
-     */
-    export interface V4PidTransferboardsGet400Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V4PidTransferboardsGet400Response
-         */
-        'error_message': string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V4PidTransferboardsGet400Response
-         */
-        'error_status': number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V4PidTransferboardsGet400Response
-         */
-        'error_info'?: string | null;
     }
     
         /**
@@ -3365,7 +7190,7 @@ export namespace GolemioPublicTransportApi {
          */
         'is_canceled': boolean | null;
         /**
-         * Time at which the position was sent from the vehicle (UTC)
+         * Transmission time of the message from the vehicle (UTC). Corresponds to the lat/lng position reported in the same message. 
          * @type {string}
          * @memberof VehiclepositionPosition
          */
@@ -3658,6 +7483,555 @@ export namespace GolemioPublicTransportApi {
         'description_en': string;
     }
     
+        
+        
+                        /**
+         * @export
+         */
+        export const GetFyprElementDetailKindEnum = {
+                DisplayCases: 'display-cases',
+            InformationPanels: 'information-panels',
+            Obelisks: 'obelisks',
+            Signposts: 'signposts',
+            Totems: 'totems'
+            } as const;
+        export type GetFyprElementDetailKindEnum = typeof GetFyprElementDetailKindEnum[keyof typeof GetFyprElementDetailKindEnum];
+                    
+        
+        
+                
+        
+        
+                        
+        
+        /**
+         * Query parameters for listDisplayCases operation in FYPRV1Api.
+         * @export
+         * @interface FYPRV1ApiListDisplayCasesQueryParams
+         */
+        export interface FYPRV1ApiListDisplayCasesQueryParams {
+            //limit
+            /**
+             * Limits number of retrieved items.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListDisplayCases
+             */
+            limit?: number
+        
+                //offset
+            /**
+             * Offset for pagination. The default value is 0.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListDisplayCases
+             */
+            offset?: number
+            }
+        
+        
+                
+        
+        
+                        
+        
+        /**
+         * Query parameters for listInformationPanels operation in FYPRV1Api.
+         * @export
+         * @interface FYPRV1ApiListInformationPanelsQueryParams
+         */
+        export interface FYPRV1ApiListInformationPanelsQueryParams {
+            //limit
+            /**
+             * Limits number of retrieved items.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListInformationPanels
+             */
+            limit?: number
+        
+                //offset
+            /**
+             * Offset for pagination. The default value is 0.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListInformationPanels
+             */
+            offset?: number
+            }
+        
+        
+                        
+        
+        /**
+         * Query parameters for listObelisks operation in FYPRV1Api.
+         * @export
+         * @interface FYPRV1ApiListObelisksQueryParams
+         */
+        export interface FYPRV1ApiListObelisksQueryParams {
+            //limit
+            /**
+             * Limits number of retrieved items.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListObelisks
+             */
+            limit?: number
+        
+                //offset
+            /**
+             * Offset for pagination. The default value is 0.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListObelisks
+             */
+            offset?: number
+            }
+        
+        
+                        
+        
+        /**
+         * Query parameters for listSignposts operation in FYPRV1Api.
+         * @export
+         * @interface FYPRV1ApiListSignpostsQueryParams
+         */
+        export interface FYPRV1ApiListSignpostsQueryParams {
+            //limit
+            /**
+             * Limits number of retrieved items.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListSignposts
+             */
+            limit?: number
+        
+                //offset
+            /**
+             * Offset for pagination. The default value is 0.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListSignposts
+             */
+            offset?: number
+            }
+        
+        
+                        
+        
+        /**
+         * Query parameters for listTotems operation in FYPRV1Api.
+         * @export
+         * @interface FYPRV1ApiListTotemsQueryParams
+         */
+        export interface FYPRV1ApiListTotemsQueryParams {
+            //limit
+            /**
+             * Limits number of retrieved items.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListTotems
+             */
+            limit?: number
+        
+                //offset
+            /**
+             * Offset for pagination. The default value is 0.
+             * @type     {number}    
+             * @memberof FYPRV1ApiListTotems
+             */
+            offset?: number
+            }
+        
+        
+            
+        /**
+         * FYPRV1Api - object-oriented interface
+         * @export
+         * @class FYPRV1Api
+         * @extends {BaseAPI}
+         */
+        export class FYPRV1Api extends BaseAPI {
+        
+            constructor(protected override configuration: GolemioPublicTransportApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
+                super(configuration, configuration.basePath, axios);
+            }
+        
+            /**
+             * 
+             * @summary GET FYPR element by kind and id
+        
+             * @param     {KindEnum}     kind Kind of the FYPR element.
+             * @param     {string}     id UUID of the element to retrieve.
+                 * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof FYPRV1Api
+             */
+            
+            public async getFyprElementDetail(
+                kind: KindEnum,
+                id: string,
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                    // verify required parameter 'kind' is not null or undefined
+                assertParamExists('getFyprElementDetail', 'kind', kind)
+                assertParamExists('getFyprElementDetail', 'id', id)
+                
+                        // verify required parameter 'id' is not null or undefined
+                assertParamExists('getFyprElementDetail', 'kind', kind)
+                assertParamExists('getFyprElementDetail', 'id', id)
+                
+                    const localVarPath = `/v1/fypr/elements/{kind}/{id}`
+                    .replace(`{${"kind"}}`, encodeURIComponent(String(kind)))
+                    .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                    
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<GetFyprElementDetail200Response>(axiosRequestConfig);
+            }
+        
+                /**
+             * 
+             * @summary GET FYPR metadata and field translations per kind
+        
+                 * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof FYPRV1Api
+             */
+            
+            public async getFyprMetadata(
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                const localVarPath = `/v1/fypr/metadata`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                    
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<GetFyprMetadata200Response>(axiosRequestConfig);
+            }
+        
+                /**
+             * 
+             * @summary GET Display Cases
+        
+                 * @param     {FYPRV1ApiListDisplayCasesQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof FYPRV1Api
+             */
+            
+            public async listDisplayCases(
+                queryParams: FYPRV1ApiListDisplayCasesQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                                const localVarPath = `/v1/fypr/elements/display-cases`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                        if (queryParams.offset !== undefined) {
+                                requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<Array<DisplayCase>>(axiosRequestConfig);
+            }
+        
+                /**
+             * 
+             * @summary GET FYPR links to elements kinds
+        
+                 * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof FYPRV1Api
+             */
+            
+            public async listFyprElementsKinds(
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                const localVarPath = `/v1/fypr/elements`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                    
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<ListFyprElementsKinds200Response>(axiosRequestConfig);
+            }
+        
+                /**
+             * 
+             * @summary GET Information Panels
+        
+                 * @param     {FYPRV1ApiListInformationPanelsQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof FYPRV1Api
+             */
+            
+            public async listInformationPanels(
+                queryParams: FYPRV1ApiListInformationPanelsQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                                const localVarPath = `/v1/fypr/elements/information-panels`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                        if (queryParams.offset !== undefined) {
+                                requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<Array<InformationPanel>>(axiosRequestConfig);
+            }
+        
+                /**
+             * 
+             * @summary GET Obelisks
+        
+                 * @param     {FYPRV1ApiListObelisksQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof FYPRV1Api
+             */
+            
+            public async listObelisks(
+                queryParams: FYPRV1ApiListObelisksQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                                const localVarPath = `/v1/fypr/elements/obelisks`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                        if (queryParams.offset !== undefined) {
+                                requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<Array<Obelisk>>(axiosRequestConfig);
+            }
+        
+                /**
+             * 
+             * @summary GET Signposts
+        
+                 * @param     {FYPRV1ApiListSignpostsQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof FYPRV1Api
+             */
+            
+            public async listSignposts(
+                queryParams: FYPRV1ApiListSignpostsQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                                const localVarPath = `/v1/fypr/elements/signposts`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                        if (queryParams.offset !== undefined) {
+                                requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<Array<Signpost>>(axiosRequestConfig);
+            }
+        
+                /**
+             * 
+             * @summary GET Totems
+        
+                 * @param     {FYPRV1ApiListTotemsQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof FYPRV1Api
+             */
+            
+            public async listTotems(
+                queryParams: FYPRV1ApiListTotemsQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                                const localVarPath = `/v1/fypr/elements/totems`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                        if (queryParams.offset !== undefined) {
+                                requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<Array<Totem>>(axiosRequestConfig);
+            }
+            }
         
         
                 
@@ -4795,7 +9169,7 @@ export namespace GolemioPublicTransportApi {
             Missing: 'missing'
             } as const;
         export type V2PidDepartureboardsGetSkipEnum = typeof V2PidDepartureboardsGetSkipEnum[keyof typeof V2PidDepartureboardsGetSkipEnum];
-                            
+                                
         
         /**
          * Query parameters for v2PidDepartureboardsGet operation in PIDDepartureBoardsV2Api.
@@ -4938,6 +9312,14 @@ export namespace GolemioPublicTransportApi {
              * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsGet
              */
             offset?: number
+        
+                //appendHeadsignsLimit
+            /**
+             * Number of stops before route switch at which headsign is enriched with continuation info. When set and a departure has route-switch data, headsign becomes &#x60;&amp;lt;headsign&amp;gt; → &amp;lt;next_route&amp;gt; &amp;lt;next_headsign&amp;gt;&#x60;.
+             * @type     {number}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsGet
+             */
+            appendHeadsignsLimit?: number
             }
         
         
@@ -4969,7 +9351,7 @@ export namespace GolemioPublicTransportApi {
                 options: AxiosRequestConfig = {}
             ) {
         
-                                                                                                                                                        const localVarPath = `/v2/pid/departureboards`;
+                                                                                                                                                                const localVarPath = `/v2/pid/departureboards`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;
@@ -5050,6 +9432,10 @@ export namespace GolemioPublicTransportApi {
         
                         if (queryParams.offset !== undefined) {
                                 requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                        if (queryParams.appendHeadsignsLimit !== undefined) {
+                                requestQueryParameter['appendHeadsignsLimit'] = queryParams.appendHeadsignsLimit;
                     }
         
                 
@@ -5349,7 +9735,7 @@ export namespace GolemioPublicTransportApi {
         
                 //routeTypeisEnumRouteTypeEnum
             /**
-             * Transport type of the route in which the transfer is planned. This parameter is required to distinguish between different vehicle types, as trams and buses can share the same registration number. The value is represented by the following enum from GTFS: - 0: Tram - 1: Subway - 2: Train - 3: Bus - 4: Ferry - 7: Funicular - 11: Trolleybus For example, if you want to get a tram with registration number \&quot;1001\&quot;, use routeType&#x3D;0. For a bus with the same registration number, use routeType&#x3D;3. 
+             * Transport type of the route in which the transfer is planned. This parameter is required to distinguish between different vehicle types, as trams and buses can share the same registration number. The value is represented by the following enum from GTFS: - 0: Tram - 1: Subway - 2: Train - 3: Bus - 4: Ferry - 7: Funicular - 11: Trolleybus For example, if you want to get a tram with registration number \&quot;1001\&quot;, use routeType&#x3D;0. For a bus with the same registration number, use routeType&#x3D;3. When routeType&#x3D;3 is used and no vehicle position is found, the system automatically falls back to looking up the vehicle as a trolleybus. 
              * @type     {0 | 1 | 2 | 3 | 4 | 7 | 11}    
              * @memberof PIDDepartureBoardsV4ApiV4PidTransferboardsGet
              */
@@ -5834,7 +10220,7 @@ export namespace GolemioPublicTransportApi {
         
                 //minutesBefore
             /**
-             * Set the starting point of the departure retrieval window, in minutes, relative to now (or to timeFrom, if used). Positive values will return departures starting earlier in the past. Negative values will return departures starting later in the future. This setting helps account for walking time to the stop. Example: 2 returns departures that left 2 minutes ago. -10 returns departures no earlier then 10 minutes from now. Default is set to 0. Maximum value is 30. Minimum value is -359.
+             * Set the starting point of the departure retrieval window, in minutes, relative to now (or to timeFrom, if used). Positive values will return departures starting earlier in the past. Negative values will return departures starting later in the future. This setting helps account for walking time to the stop. Example: 2 returns departures that left 2 minutes ago. -10 returns departures no earlier than 10 minutes from now. Default is set to 0. Maximum value is 30. Minimum value is -359.
              * @type     {number}    
              * @memberof PublicDeparturesV2ApiV2PublicDepartureboardsGet
              */
@@ -6099,7 +10485,7 @@ export namespace GolemioPublicTransportApi {
         export interface PublicVehiclePositionsV2ApiV2PublicVehiclepositionsGetQueryParams {
             //boundingBox
             /**
-             * Filter by bounding box in format \&quot;topLeft.lat,topLeft.lon,bottomRight.lat,bottomRight.lon\&quot;. Latitude must be in range -90 to 90, longitude in range -180 to 180. Polygons that fit only partialy to selected bounding box are included 
+             * Filter by bounding box in format \&quot;topLeft.lat,topLeft.lon,bottomRight.lat,bottomRight.lon\&quot;. Latitude must be in range -85.05112878 to 85.05112878 (supported by Redis GEO commands), longitude in range -180 to 180. Polygons that fit only partially to selected bounding box are included. 
              * @type     {string}    
              * @memberof PublicVehiclePositionsV2ApiV2PublicVehiclepositionsGet
              */

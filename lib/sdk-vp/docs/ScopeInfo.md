@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **delay** | **number** | Delay of the vehicle in seconds. | [optional] [default to undefined]
 **state_position** | [**StatePosition**](StatePosition.md) |  | [optional] [default to undefined]
 **last_stop_sequence** | **number** | index of last stop passed by the vehicle | [optional] [default to undefined]
-**origin_timestamp** | **string** | time when vehicle send last update | [optional] [default to undefined]
+**origin_timestamp** | **string** | Transmission time of the last message from the vehicle. Corresponds to the lat/lng position reported in the same message.  | [optional] [default to undefined]
 
 ## Example
 

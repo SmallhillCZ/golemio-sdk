@@ -1,4 +1,4 @@
-# V4PidTransferboardsGet400Response
+# ListDisplayCases400Response
 
 
 ## Properties
@@ -12,9 +12,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { V4PidTransferboardsGet400Response } from 'golemio-public-transport-api';
+import { ListDisplayCases400Response } from 'golemio-public-transport-api';
 
-const instance: V4PidTransferboardsGet400Response = {
+const instance: ListDisplayCases400Response = {
     error_message,
     error_status,
     error_info,

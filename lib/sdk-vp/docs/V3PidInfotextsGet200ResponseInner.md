@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **priority** | **string** | Priority of the infotext. If multiple infotexts are active for the same stop, the ones with higher priority will be displayed. Mapped from the VYMI (JIS) system\&#39;s severity level in the following way: - \&quot;INFO\&quot; -&gt; \&quot;low\&quot; - \&quot;WARNING\&quot; -&gt; \&quot;normal\&quot; - \&quot;SEVERE\&quot; -&gt; \&quot;high\&quot;  | [default to undefined]
 **related_stops** | [**Array&lt;V3PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner&gt;**](V3PidInfotextsGet200ResponseInnerAllOfRelatedStopsInner.md) |  | [default to undefined]
 **id** | **string** | VYMI (JIS) Infotexts identifier. | [default to undefined]
+**repeat** | [**RepeatOnlyTimes**](RepeatOnlyTimes.md) |  | [default to undefined]
 
 ## Example
 
@@ -28,6 +29,7 @@ const instance: V3PidInfotextsGet200ResponseInner = {
     priority,
     related_stops,
     id,
+    repeat,
 };
 ```
 

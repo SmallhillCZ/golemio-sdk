@@ -39,6 +39,7 @@ let skip: 'canceled' | 'atStop' | 'untracked' | 'missing'; //Filters out trips m
 let limit: number; //Limits the number of items in response. The maximum is 1000 (default value is 20). (optional) (default to undefined)
 let total: number; //Sets the number of items that will be queried. Use in conjunction with `offset`. Up to `total - offset`, but not more than `limit` items will be then returned. If unset, is same as `limit`. The maximum is 1000 (default value is 20). (optional) (default to undefined)
 let offset: number; //Number of the initial departures that are skipped. Useful for multi-page displays. (optional) (default to undefined)
+let appendHeadsignsLimit: number; //Number of stops before route switch at which headsign is enriched with continuation info. When set and a departure has route-switch data, headsign becomes `&lt;headsign&gt; → &lt;next_route&gt; &lt;next_headsign&gt;`. (optional) (default to undefined)
 
 const { status, data } = await apiInstance.v2PidDepartureboardsGet(
     ids,
@@ -57,7 +58,8 @@ const { status, data } = await apiInstance.v2PidDepartureboardsGet(
     skip,
     limit,
     total,
-    offset
+    offset,
+    appendHeadsignsLimit
 );
 ```
 
@@ -82,6 +84,7 @@ const { status, data } = await apiInstance.v2PidDepartureboardsGet(
 | **limit** | [**number**] | Limits the number of items in response. The maximum is 1000 (default value is 20). | (optional) defaults to undefined|
 | **total** | [**number**] | Sets the number of items that will be queried. Use in conjunction with &#x60;offset&#x60;. Up to &#x60;total - offset&#x60;, but not more than &#x60;limit&#x60; items will be then returned. If unset, is same as &#x60;limit&#x60;. The maximum is 1000 (default value is 20). | (optional) defaults to undefined|
 | **offset** | [**number**] | Number of the initial departures that are skipped. Useful for multi-page displays. | (optional) defaults to undefined|
+| **appendHeadsignsLimit** | [**number**] | Number of stops before route switch at which headsign is enriched with continuation info. When set and a departure has route-switch data, headsign becomes &#x60;&amp;lt;headsign&amp;gt; → &amp;lt;next_route&amp;gt; &amp;lt;next_headsign&amp;gt;&#x60;. | (optional) defaults to undefined|
 
 
 ### Return type
@@ -101,7 +104,7 @@ const { status, data } = await apiInstance.v2PidDepartureboardsGet(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Can return empty data in departures property (empty array []) if no departures were found |  * Cache-Control - Cache control directive for caching proxies <br>  |
+|**200** | Can return empty data in departures property (empty array []) if no departures were found |  * Cache-Control - Cache control directive for caching proxies <br>  * X-Golemio-Preset-Metadata - Preset metadata indicating air condition possibility (1&#x3D;possible, 0&#x3D;not possible) <br>  |
 |**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
 |**404** | Not found |  -  |
 

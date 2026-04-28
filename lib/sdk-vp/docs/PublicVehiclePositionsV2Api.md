@@ -24,7 +24,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new PublicVehiclePositionsV2Api(configuration);
 
-let boundingBox: string; //Filter by bounding box in format \"topLeft.lat,topLeft.lon,bottomRight.lat,bottomRight.lon\". Latitude must be in range -90 to 90, longitude in range -180 to 180. Polygons that fit only partialy to selected bounding box are included  (optional) (default to undefined)
+let boundingBox: string; //Filter by bounding box in format \"topLeft.lat,topLeft.lon,bottomRight.lat,bottomRight.lon\". Latitude must be in range -85.05112878 to 85.05112878 (supported by Redis GEO commands), longitude in range -180 to 180. Polygons that fit only partially to selected bounding box are included.  (optional) (default to undefined)
 let routeShortName: Array<string>; //Filter by short name of route. URL: `?routeShortName=381&routeShortName=X1` (optional) (default to undefined)
 let routeType: Array<'tram' | 'metro' | 'train' | 'bus' | 'ferry' | 'funicular' | 'trolleybus'>; //filter by transport type (optional) (default to undefined)
 let acceptEncoding: 'gzip' | 'identity'; //Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the `identity` value can be used to opt out of the default compression). (optional) (default to undefined)
@@ -41,7 +41,7 @@ const { status, data } = await apiInstance.v2PublicVehiclepositionsGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **boundingBox** | [**string**] | Filter by bounding box in format \&quot;topLeft.lat,topLeft.lon,bottomRight.lat,bottomRight.lon\&quot;. Latitude must be in range -90 to 90, longitude in range -180 to 180. Polygons that fit only partialy to selected bounding box are included  | (optional) defaults to undefined|
+| **boundingBox** | [**string**] | Filter by bounding box in format \&quot;topLeft.lat,topLeft.lon,bottomRight.lat,bottomRight.lon\&quot;. Latitude must be in range -85.05112878 to 85.05112878 (supported by Redis GEO commands), longitude in range -180 to 180. Polygons that fit only partially to selected bounding box are included.  | (optional) defaults to undefined|
 | **routeShortName** | **Array&lt;string&gt;** | Filter by short name of route. URL: &#x60;?routeShortName&#x3D;381&amp;routeShortName&#x3D;X1&#x60; | (optional) defaults to undefined|
 | **routeType** | **Array<&#39;tram&#39; &#124; &#39;metro&#39; &#124; &#39;train&#39; &#124; &#39;bus&#39; &#124; &#39;ferry&#39; &#124; &#39;funicular&#39; &#124; &#39;trolleybus&#39;>** | filter by transport type | (optional) defaults to undefined|
 | **acceptEncoding** | [**&#39;gzip&#39; | &#39;identity&#39;**]**Array<&#39;gzip&#39; &#124; &#39;identity&#39;>** | Indicate the content encoding (usually a compression algorithm) that the client can understand. See [mdn](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) for more details. Note that for this endpoint, if no value is given, gzip compression will be used by default (the &#x60;identity&#x60; value can be used to opt out of the default compression). | (optional) defaults to undefined|

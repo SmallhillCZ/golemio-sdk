@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **direction** | **string** | The equivalent of arrows that are printed on stop signs. Indicates the direction the vehicle will continue at stops where routes split up relative to the direction of motion of the vehicle. Valid values: &#x60;null&#x60; (do not display the arrow), &#x60;top&#x60;, &#x60;top-right&#x60;, &#x60;right&#x60;, &#x60;bottom-right&#x60;, &#x60;bottom&#x60;, &#x60;bottom-left&#x60;, &#x60;left&#x60;, &#x60;top-left&#x60;. | [default to undefined]
-**headsign** | **string** | Trip headsign (usually the final stop). | [default to undefined]
+**headsign** | **string** | Trip headsign (usually the final stop). When the &#x60;appendHeadsignsLimit&#x60; parameter is used and the departure has route-switch data, this field may contain appended continuation info in the form &#x60;&amp;lt;headsign&amp;gt; → &amp;lt;next_route&amp;gt; &amp;lt;next_headsign&amp;gt;&#x60;. | [default to undefined]
 **id** | **string** | GTFS trip ID. | [default to undefined]
 **is_at_stop** | **boolean** | True if vehicle is physically present in the stop. Applicable only to connections with delay available. | [default to undefined]
 **is_canceled** | **boolean** | True if the trip is canceled. | [default to undefined]

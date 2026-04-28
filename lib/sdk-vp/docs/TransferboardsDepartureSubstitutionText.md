@@ -1,4 +1,4 @@
-# V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText
+# TransferboardsDepartureSubstitutionText
 
 
 ## Properties
@@ -11,9 +11,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText } from 'golemio-public-transport-api';
+import { TransferboardsDepartureSubstitutionText } from 'golemio-public-transport-api';
 
-const instance: V4PidTransferboardsGet200ResponseDeparturesInnerSubstitutionText = {
+const instance: TransferboardsDepartureSubstitutionText = {
     cs,
     en,
 };

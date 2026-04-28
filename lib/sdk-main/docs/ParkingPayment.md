@@ -5,7 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**properties** | [**ParkingPaymentProperties**](ParkingPaymentProperties.md) |  | [optional] [default to undefined]
+**web_url** | **string** |  | [optional] [default to undefined]
+**android_url** | **string** |  | [optional] [default to undefined]
+**ios_url** | **string** |  | [optional] [default to undefined]
+**discovery_url** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -13,7 +16,10 @@ Name | Type | Description | Notes
 import { ParkingPayment } from 'golemio-api';
 
 const instance: ParkingPayment = {
-    properties,
+    web_url,
+    android_url,
+    ios_url,
+    discovery_url,
 };
 ```
 

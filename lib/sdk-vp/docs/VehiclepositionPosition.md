@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **last_stop** | [**VehiclepositionPositionLastStop**](VehiclepositionPositionLastStop.md) |  | [optional] [default to undefined]
 **next_stop** | [**VehiclepositionPositionNextStop**](VehiclepositionPositionNextStop.md) |  | [optional] [default to undefined]
 **is_canceled** | **boolean** | True, if the trip was canceled. Other fields about the position have non-defined values in case this value is true | [default to undefined]
-**origin_timestamp** | **string** | Time at which the position was sent from the vehicle (UTC) | [default to undefined]
+**origin_timestamp** | **string** | Transmission time of the message from the vehicle (UTC). Corresponds to the lat/lng position reported in the same message.  | [default to undefined]
 **speed** | **number** | Current speed of the vehicle (kilometers per hour) | [optional] [default to undefined]
 **shape_dist_traveled** | **string** | Number of kilometers traveled on the route | [optional] [default to undefined]
 **tracking** | **boolean** | True if trip is tracked, meaning that trip is on its track. | [optional] [default to undefined]

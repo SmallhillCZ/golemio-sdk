@@ -179,7 +179,6 @@ docs/ParkingMachineProperties.md
 docs/ParkingMeasurement.md
 docs/ParkingOccupancyMeasurement.md
 docs/ParkingPayment.md
-docs/ParkingPaymentProperties.md
 docs/ParkingPeriodsOfTime.md
 docs/ParkingPeriodsOfTimeWithDuration.md
 docs/ParkingProhibitions.md
@@ -189,7 +188,6 @@ docs/ParkingPropertiesContact.md
 docs/ParkingPropertiesEntrances.md
 docs/ParkingPropertiesSpace.md
 docs/ParkingReservation.md
-docs/ParkingReservationProperties.md
 docs/ParkingSource.md
 docs/ParkingSourceContact.md
 docs/ParkingSpace.md

@@ -5394,19 +5394,19 @@ export namespace GolemioApi {
          * @type {string}
          * @memberof ParkingAddress
          */
-        'country'?: string | null;
+        'address_country'?: string | null;
         /**
          * Locality of the parking location.
          * @type {string}
          * @memberof ParkingAddress
          */
-        'locality'?: string | null;
+        'address_locality'?: string | null;
         /**
          * Region of the parking location.
          * @type {string}
          * @memberof ParkingAddress
          */
-        'region'?: string | null;
+        'address_region'?: string | null;
         /**
          * Postal code of the parking location.
          * @type {string}
@@ -5419,12 +5419,6 @@ export namespace GolemioApi {
          * @memberof ParkingAddress
          */
         'street_address'?: string | null;
-        /**
-         * Area of the parking lot in square meters.
-         * @type {number}
-         * @memberof ParkingAddress
-         */
-        'area'?: number;
         /**
          * 
          * @type {string}
@@ -6031,40 +6025,26 @@ export namespace GolemioApi {
     export interface ParkingPayment {
         /**
          * 
-         * @type {ParkingPaymentProperties}
-         * @memberof ParkingPayment
-         */
-        'properties'?: ParkingPaymentProperties;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface ParkingPaymentProperties
-     */
-    export interface ParkingPaymentProperties {
-        /**
-         * 
          * @type {string}
-         * @memberof ParkingPaymentProperties
+         * @memberof ParkingPayment
          */
         'web_url'?: string | null;
         /**
          * 
          * @type {string}
-         * @memberof ParkingPaymentProperties
+         * @memberof ParkingPayment
          */
         'android_url'?: string | null;
         /**
          * 
          * @type {string}
-         * @memberof ParkingPaymentProperties
+         * @memberof ParkingPayment
          */
         'ios_url'?: string | null;
         /**
          * 
          * @type {string}
-         * @memberof ParkingPaymentProperties
+         * @memberof ParkingPayment
          */
         'discovery_url'?: string | null;
     }
@@ -6377,6 +6357,18 @@ export namespace GolemioApi {
          * @memberof ParkingProperties
          */
         'has_occupancy_info'?: boolean;
+        /**
+         * Area of the parking lot in square meters.
+         * @type {number}
+         * @memberof ParkingProperties
+         */
+        'area'?: number | null;
+        /**
+         * 
+         * @type {ParkingAddress}
+         * @memberof ParkingProperties
+         */
+        'address'?: ParkingAddress;
     }
     
     export const ParkingPropertiesPrimarySourceEnum = {
@@ -6507,57 +6499,43 @@ export namespace GolemioApi {
     export interface ParkingReservation {
         /**
          * 
-         * @type {ParkingReservationProperties}
+         * @type {string}
          * @memberof ParkingReservation
          */
-        'properties'?: ParkingReservationProperties;
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface ParkingReservationProperties
-     */
-    export interface ParkingReservationProperties {
+        'reservation_type'?: ParkingReservationReservationTypeEnum | null;
         /**
          * 
          * @type {string}
-         * @memberof ParkingReservationProperties
-         */
-        'reservation_type'?: ParkingReservationPropertiesReservationTypeEnum | null;
-        /**
-         * 
-         * @type {string}
-         * @memberof ParkingReservationProperties
+         * @memberof ParkingReservation
          */
         'web_url'?: string | null;
         /**
          * 
          * @type {string}
-         * @memberof ParkingReservationProperties
+         * @memberof ParkingReservation
          */
         'android_url'?: string | null;
         /**
          * 
          * @type {string}
-         * @memberof ParkingReservationProperties
+         * @memberof ParkingReservation
          */
         'ios_url'?: string | null;
         /**
          * 
          * @type {string}
-         * @memberof ParkingReservationProperties
+         * @memberof ParkingReservation
          */
         'discovery_url'?: string | null;
     }
     
-    export const ParkingReservationPropertiesReservationTypeEnum = {
+    export const ParkingReservationReservationTypeEnum = {
         Possible: 'possible',
         NotPossible: 'not_possible',
         Required: 'required'
     } as const;
     
-    export type ParkingReservationPropertiesReservationTypeEnum = typeof ParkingReservationPropertiesReservationTypeEnum[keyof typeof ParkingReservationPropertiesReservationTypeEnum];
+    export type ParkingReservationReservationTypeEnum = typeof ParkingReservationReservationTypeEnum[keyof typeof ParkingReservationReservationTypeEnum];
     
     
         /**
@@ -14316,7 +14294,8 @@ export namespace GolemioApi {
             KissAndRide: 'kiss_and_ride',
             ParkAndRide: 'park_and_ride',
             ParkSharing: 'park_sharing',
-            Zone: 'zone'
+            Zone: 'zone',
+            None: 'none'
             } as const;
         export type V3ParkingGetParkingPolicyEnum = typeof V3ParkingGetParkingPolicyEnum[keyof typeof V3ParkingGetParkingPolicyEnum];
                                     
@@ -14377,8 +14356,8 @@ export namespace GolemioApi {
         
                 //parkingPolicyisEnumParkingPolicyEnum
             /**
-             * Filter by parking policy. For multiple values use with square brackets &#x60;parkingPolicy[]&#x60;
-             * @type     {Array<'commercial' | 'customer_only' | 'kiss_and_ride' | 'park_and_ride' | 'park_sharing' | 'zone'>}    
+             * Filter by parking policy. Use \&quot;none\&quot; to filter parkings without a policy (parking_policy is null). For multiple values use with square brackets &#x60;parkingPolicy[]&#x60;
+             * @type     {Array<'commercial' | 'customer_only' | 'kiss_and_ride' | 'park_and_ride' | 'park_sharing' | 'zone' | 'none'>}    
              * @memberof ParkingV3ApiV3ParkingGet
              */
             parkingPolicy?: Array<V3ParkingGetParkingPolicyEnum>

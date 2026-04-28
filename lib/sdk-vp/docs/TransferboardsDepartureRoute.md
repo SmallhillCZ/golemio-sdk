@@ -1,4 +1,4 @@
-# V4PidTransferboardsGet200ResponseDeparturesInnerRoute
+# TransferboardsDepartureRoute
 
 
 ## Properties
@@ -11,9 +11,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { V4PidTransferboardsGet200ResponseDeparturesInnerRoute } from 'golemio-public-transport-api';
+import { TransferboardsDepartureRoute } from 'golemio-public-transport-api';
 
-const instance: V4PidTransferboardsGet200ResponseDeparturesInnerRoute = {
+const instance: TransferboardsDepartureRoute = {
     short_name,
     type,
 };

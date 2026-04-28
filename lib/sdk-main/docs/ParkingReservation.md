@@ -5,7 +5,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**properties** | [**ParkingReservationProperties**](ParkingReservationProperties.md) |  | [optional] [default to undefined]
+**reservation_type** | **string** |  | [optional] [default to undefined]
+**web_url** | **string** |  | [optional] [default to undefined]
+**android_url** | **string** |  | [optional] [default to undefined]
+**ios_url** | **string** |  | [optional] [default to undefined]
+**discovery_url** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -13,7 +17,11 @@ Name | Type | Description | Notes
 import { ParkingReservation } from 'golemio-api';
 
 const instance: ParkingReservation = {
-    properties,
+    reservation_type,
+    web_url,
+    android_url,
+    ios_url,
+    discovery_url,
 };
 ```
 

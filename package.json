@@ -1,51 +1,52 @@
 {
-  "name": "golemio-sdk",
-  "version": "2.2.0",
-  "exports": {
-    "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js",
-    "default": "./dist/esm/index.js"
-  },
-  "scripts": {
-    "pregenerate": "rm -fr lib/sdk-main lib/sdk-vp",
-    "generate": "openapi-generator-cli generate",
-    "build": "rm -fr ./dist && npm run build:commonjs && npm run build:esm",
-    "build:commonjs": "tsc",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "release": "git switch release && git merge master --ff-only && git push --follow-tags && git switch master",
-    "release:patch": "git switch master && git pull && npm version patch && git push && npm run release",
-    "release:minor": "git switch master && git pull && npm version minor && git push && npm run release",
-    "release:major": "git switch master && git pull && npm version major && git push && npm run release"
-  },
-  "author": {
-    "email": "martin.kopecek@smallhill.cz",
-    "name": "Martin Kopeček"
-  },
-  "license": "MIT",
-  "description": "TypeScript SDK for api.golemio.cz",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SmallhillCZ/golemio-sdk.git"
-  },
-  "keywords": [
-    "golemio",
-    "prague",
-    "api"
-  ],
-  "bugs": {
-    "url": "https://github.com/SmallhillCZ/golemio-sdk/issues"
-  },
-  "homepage": "https://github.com/SmallhillCZ/golemio-sdk#readme",
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "@openapitools/openapi-generator-cli": "^2.25.2",
-    "axios": "^1.13.2"
-  },
-  "files": [
-    "dist",
-    "LICENSE",
-    "README.md"
-  ]
+	"name": "golemio-sdk",
+	"version": "2.2.0",
+	"exports": {
+		"import": "./dist/esm/index.js",
+		"require": "./dist/cjs/index.js",
+		"default": "./dist/esm/index.js"
+	},
+	"scripts": {
+		"pregenerate": "rm -fr lib/sdk-main lib/sdk-vp",
+		"generate": "openapi-generator-cli generate",
+		"build": "rm -fr ./dist && npm run build:commonjs && npm run build:esm",
+		"build:commonjs": "tsc",
+		"build:esm": "tsc -p tsconfig.esm.json",
+		"prepare": "npm run generate && npm run build",
+		"release": "git switch release && git merge master --ff-only && git push --follow-tags && git switch master",
+		"release:patch": "git switch master && git pull && npm version patch && git push && npm run release",
+		"release:minor": "git switch master && git pull && npm version minor && git push && npm run release",
+		"release:major": "git switch master && git pull && npm version major && git push && npm run release"
+	},
+	"author": {
+		"email": "martin.kopecek@smallhill.cz",
+		"name": "Martin Kopeček"
+	},
+	"license": "MIT",
+	"description": "TypeScript SDK for api.golemio.cz",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SmallhillCZ/golemio-sdk.git"
+	},
+	"keywords": [
+		"golemio",
+		"prague",
+		"api"
+	],
+	"bugs": {
+		"url": "https://github.com/SmallhillCZ/golemio-sdk/issues"
+	},
+	"homepage": "https://github.com/SmallhillCZ/golemio-sdk#readme",
+	"devDependencies": {
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"@openapitools/openapi-generator-cli": "^2.25.2",
+		"axios": "^1.13.2"
+	},
+	"files": [
+		"dist",
+		"LICENSE",
+		"README.md"
+	]
 }

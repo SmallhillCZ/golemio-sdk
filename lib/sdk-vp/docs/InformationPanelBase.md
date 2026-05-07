@@ -59,7 +59,7 @@ Name | Type | Description | Notes
 **voice_day** | **string** | Voice announcement schedule for daytime operation. May be null. | [optional] [default to undefined]
 **voice_night** | **string** | Voice announcement schedule for night-time operation. May be null. | [optional] [default to undefined]
 **templates** | **string** | Display template identifier or name used to render content on this panel. May be null. | [optional] [default to undefined]
-**preset** | **string** | Preset configuration profile applied to this panel. May be null. | [optional] [default to undefined]
+**presets** | **Array&lt;string&gt;** | Presets assigned to this panel. | [optional] [default to undefined]
 **data_source** | **string** | Identifier of the data source feeding real-time information to this panel. May be null. | [optional] [default to undefined]
 **imsi** | **string** | IMSI (International Mobile Subscriber Identity) of the SIM card installed in this panel. May be null. | [optional] [default to undefined]
 **connection_point** | **string** | Identifier of the electrical or network connection point used by this panel. May be null. | [optional] [default to undefined]
@@ -91,7 +91,7 @@ Name | Type | Description | Notes
 **cleaning_frequency** | **string** | Scheduled cleaning frequency for this panel. May be null. | [optional] [default to undefined]
 **electricity_consumption_price** | **number** | Unit price per kWh charged under the electricity supply contract. Decimal values are permitted. May be null. | [optional] [default to undefined]
 **construction_type** | **string** | Type of physical construction used for this panel (e.g. pole_mounted, wall_mounted, freestanding). May be null. | [optional] [default to undefined]
-**panel_size** | **string** | Display dimensions of the panel in centimetres (width x height). May be null. | [optional] [default to undefined]
+**panel_size** | **number** | Count of rows for text or data on the panel. The source system stores this with a \&quot;v\&quot; prefix which is stripped on output. May be null. | [optional] [default to undefined]
 **design_price_without_vat** | **number** | Contracted price for the design phase excluding VAT, in CZK. May be null. | [optional] [default to undefined]
 **production_price_without_vat** | **number** | Contracted price for the production phase excluding VAT, in CZK. May be null. | [optional] [default to undefined]
 **realization_price_without_vat** | **number** | Contracted price for the realization phase excluding VAT, in CZK. May be null. | [optional] [default to undefined]
@@ -103,6 +103,8 @@ Name | Type | Description | Notes
 **owner_contact** | **string** | Contact information for the element owner. May be null. | [optional] [default to undefined]
 **connectivity_internet** | **string** | Internet connectivity type or provider for the panel. May be null. | [optional] [default to undefined]
 **phone_number** | **string** | Phone number associated with the panel\&#39;s SIM or connectivity. May be null. | [optional] [default to undefined]
+**jis_graphic** | **boolean** | Whether this panel uses JIS (Jednotný Informační Systém) graphics. Sourced from the Strapi boolean field grafika_jis. May be null if not yet set in the source system. | [optional] [default to undefined]
+**supported_functions** | **Array&lt;string&gt;** | List of functions supported by this panel, derived from a multiselect field in Strapi (podporovane_funkce). May be null. | [optional] [default to undefined]
 
 ## Example
 
@@ -163,7 +165,7 @@ const instance: InformationPanelBase = {
     voice_day,
     voice_night,
     templates,
-    preset,
+    presets,
     data_source,
     imsi,
     connection_point,
@@ -207,6 +209,8 @@ const instance: InformationPanelBase = {
     owner_contact,
     connectivity_internet,
     phone_number,
+    jis_graphic,
+    supported_functions,
 };
 ```
 

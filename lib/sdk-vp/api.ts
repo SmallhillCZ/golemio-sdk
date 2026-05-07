@@ -1973,11 +1973,11 @@ export namespace GolemioPublicTransportApi {
          */
         'templates'?: string | null;
         /**
-         * Preset configuration profile applied to this panel. May be null.
-         * @type {string}
+         * Presets assigned to this panel.
+         * @type {Array<string>}
          * @memberof InformationPanel
          */
-        'preset'?: string | null;
+        'presets'?: Array<string> | null;
         /**
          * Identifier of the data source feeding real-time information to this panel. May be null.
          * @type {string}
@@ -2165,11 +2165,11 @@ export namespace GolemioPublicTransportApi {
          */
         'construction_type'?: string | null;
         /**
-         * Display dimensions of the panel in centimetres (width x height). May be null.
-         * @type {string}
+         * Count of rows for text or data on the panel. The source system stores this with a \"v\" prefix which is stripped on output. May be null.
+         * @type {number}
          * @memberof InformationPanel
          */
-        'panel_size'?: string | null;
+        'panel_size'?: number | null;
         /**
          * Contracted price for the design phase excluding VAT, in CZK. May be null.
          * @type {number}
@@ -2236,6 +2236,18 @@ export namespace GolemioPublicTransportApi {
          * @memberof InformationPanel
          */
         'phone_number'?: string | null;
+        /**
+         * Whether this panel uses JIS (Jednotný Informační Systém) graphics. Sourced from the Strapi boolean field grafika_jis. May be null if not yet set in the source system.
+         * @type {boolean}
+         * @memberof InformationPanel
+         */
+        'jis_graphic'?: boolean | null;
+        /**
+         * List of functions supported by this panel, derived from a multiselect field in Strapi (podporovane_funkce). May be null.
+         * @type {Array<string>}
+         * @memberof InformationPanel
+         */
+        'supported_functions'?: Array<string> | null;
     }
     
     export const InformationPanelKindEnum = {
@@ -2574,11 +2586,11 @@ export namespace GolemioPublicTransportApi {
          */
         'templates'?: string | null;
         /**
-         * Preset configuration profile applied to this panel. May be null.
-         * @type {string}
+         * Presets assigned to this panel.
+         * @type {Array<string>}
          * @memberof InformationPanelBase
          */
-        'preset'?: string | null;
+        'presets'?: Array<string> | null;
         /**
          * Identifier of the data source feeding real-time information to this panel. May be null.
          * @type {string}
@@ -2766,11 +2778,11 @@ export namespace GolemioPublicTransportApi {
          */
         'construction_type'?: string | null;
         /**
-         * Display dimensions of the panel in centimetres (width x height). May be null.
-         * @type {string}
+         * Count of rows for text or data on the panel. The source system stores this with a \"v\" prefix which is stripped on output. May be null.
+         * @type {number}
          * @memberof InformationPanelBase
          */
-        'panel_size'?: string | null;
+        'panel_size'?: number | null;
         /**
          * Contracted price for the design phase excluding VAT, in CZK. May be null.
          * @type {number}
@@ -2837,6 +2849,18 @@ export namespace GolemioPublicTransportApi {
          * @memberof InformationPanelBase
          */
         'phone_number'?: string | null;
+        /**
+         * Whether this panel uses JIS (Jednotný Informační Systém) graphics. Sourced from the Strapi boolean field grafika_jis. May be null if not yet set in the source system.
+         * @type {boolean}
+         * @memberof InformationPanelBase
+         */
+        'jis_graphic'?: boolean | null;
+        /**
+         * List of functions supported by this panel, derived from a multiselect field in Strapi (podporovane_funkce). May be null.
+         * @type {Array<string>}
+         * @memberof InformationPanelBase
+         */
+        'supported_functions'?: Array<string> | null;
     }
     
     export const InformationPanelBaseKindEnum = {
@@ -7531,7 +7555,7 @@ export namespace GolemioPublicTransportApi {
                 
         
         
-                        
+                            
         
         /**
          * Query parameters for listInformationPanels operation in FYPRV1Api.
@@ -7554,6 +7578,14 @@ export namespace GolemioPublicTransportApi {
              * @memberof FYPRV1ApiListInformationPanels
              */
             offset?: number
+        
+                //jis
+            /**
+             * Filter by JIS graphic flag. When true, returns only JIS panels; when false, returns only non-JIS panels. Panels with a null jis_graphic value are excluded when this parameter is provided. Omit to return all panels regardless of JIS status.
+             * @type     {boolean}    
+             * @memberof FYPRV1ApiListInformationPanels
+             */
+            jis?: boolean
             }
         
         
@@ -7847,7 +7879,7 @@ export namespace GolemioPublicTransportApi {
                 options: AxiosRequestConfig = {}
             ) {
         
-                                const localVarPath = `/v1/fypr/elements/information-panels`;
+                                        const localVarPath = `/v1/fypr/elements/information-panels`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;
@@ -7868,6 +7900,10 @@ export namespace GolemioPublicTransportApi {
         
                         if (queryParams.offset !== undefined) {
                                 requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                        if (queryParams.jis !== undefined) {
+                                requestQueryParameter['jis'] = queryParams.jis;
                     }
         
                 
@@ -9323,6 +9359,170 @@ export namespace GolemioPublicTransportApi {
             }
         
         
+                                                                            /**
+         * @export
+         */
+        export const V2PidDepartureboardsXmlGetSkipEnum = {
+                Canceled: 'canceled',
+            AtStop: 'atStop',
+            Untracked: 'untracked',
+            Missing: 'missing'
+            } as const;
+        export type V2PidDepartureboardsXmlGetSkipEnum = typeof V2PidDepartureboardsXmlGetSkipEnum[keyof typeof V2PidDepartureboardsXmlGetSkipEnum];
+                                
+        
+        /**
+         * Query parameters for v2PidDepartureboardsXmlGet operation in PIDDepartureBoardsV2Api.
+         * @export
+         * @interface PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGetQueryParams
+         */
+        export interface PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGetQueryParams {
+            //ids
+            /**
+             * Get result by GTFS stop_id. Can be used to retrive individual stops and to separate departures of Prague and intercity routes, even if they depart from the same physical stop. A list of GTFS stops can be found in &#x60;stops.txt&#x60; file of the [GTFS feed](https://opendata.praha.eu/datasets/https%3A%2F%2Fapi.opendata.praha.eu%2Flod%2Fcatalog%2F9a6a1d8e-45b9-41de-b9ae-0bcec7126876).
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            ids?: string
+        
+                //aswIds
+            /**
+             * Get result by ASW ID. First part of the number represents the whole node. Usually it groups the stops of the same name or all stops associated with a metro station. Also returns related train stations in the node. The second part of the number is optional and represents individual stops in the node. Use &#x60;_&#x60; instead of &#x60;/&#x60; as a separator or encode the slash sign with &#x60;%2F&#x60;. A list of ASW IDs can be found in [Prague Open data](https://opendata.praha.eu/datasets/https%3A%2F%2Fapi.opendata.praha.eu%2Flod%2Fcatalog%2F6ac8381f-ea19-4ea9-8949-92076809dc5a). ⚠️ Note: combination with &#x60;includeMetroTrains&#x60; is currently not supported, see [issue pid#222](https://gitlab.com/operator-ict/golemio/code/modules/pid/-/issues/222).
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            aswIds?: string
+        
+                //cisIds
+            /**
+             * Get result by CIS ID. A list of CIS IDs can be found in [Prague Open data](https://opendata.praha.eu/datasets/https%3A%2F%2Fapi.opendata.praha.eu%2Flod%2Fcatalog%2F6ac8381f-ea19-4ea9-8949-92076809dc5a).
+             * @type     {number}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            cisIds?: number
+        
+                //names
+            /**
+             * Get results by exact name of stop (case and whitespace sensitive). May return stops of the same name from different towns. Using &#x60;names&#x60; in combination with other identifiers will return an intersection of stops with &#x60;names&#x60; and stops of ASW, CIS or GTFS identifiers in the same node. Use this feature to filter out a subset of stops of the same name while guaranteeing them to be from the desired node only.
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            names?: string
+        
+                //minutesBefore
+            /**
+             * Set the start of interval from which to retrieve departures. Positive numbers are set in past relative to the time of request or &#x60;timeFrom&#x60; timestamp, negative numbers set the start in the future. Use to compensate for walking distance to a stop. Default is set to 0. Maximum value is 30 because of implemented data retention. Minimum value is -4320 (0 - 3 days GTFS calendar maximum).
+             * @type     {number}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            minutesBefore?: number
+        
+                //minutesAfter
+            /**
+             * Set the end of interval from which to retrieve departures. Positive numbers are set in future relative to the time of request or &#x60;timeFrom&#x60; timestamp, negative are in the past. The sum of minutesBefore and minutesAfter must be larger than zero. Default is set to 180. Maximum value is 4320 (GTFS calendar maximum). Minimum value is -4350 (0 - 3 days GTFS calendar maximum - 30 minutes data retention).
+             * @type     {number}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            minutesAfter?: number
+        
+                //timeFrom
+            /**
+             * Set initial timestamp for time interval given by &#x60;minutesBefore&#x60; and &#x60;minutesAfter&#x60;. Use to simulate query time different from now. Use ISO 8601 time format and URL encoded symbols - &#x60;%3A&#x60; for &#x60;:&#x60;, &#x60;%2B&#x60; for &#x60;.&#x60;, &#x60;%2F&#x60; for &#x60;+&#x60;. Time zone is set according to the &#x60;preferredTimezone&#x60; parameter. Applicable range is -6 hours +2 days from now.
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            timeFrom?: string
+        
+                //includeMetroTrains
+            /**
+             * When selecting a node by &#x60;name&#x60;, when &#x60;true&#x60;, will include metro and/or train stops that are a member of the same node. I.e. when querying _Na Knížecí_, setting this to &#x60;true&#x60; will add the metro station _Anděl_ to results as well because both have the same ASW node number 1040. ⚠️ Note: combination with &#x60;aswIds&#x60; is currently not supported, see [issue pid#222](https://gitlab.com/operator-ict/golemio/code/modules/pid/-/issues/222).
+             * @type     {boolean}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            includeMetroTrains?: boolean
+        
+                //airCondition
+            /**
+             * Enrich departures with vehicle air condition information. Setting to &#x60;false&#x60; will force all items to be &#x60;null&#x60;. Useful for disabling the indication of air condition during cold season.
+             * @type     {boolean}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            airCondition?: boolean
+        
+                //preferredTimezone
+            /**
+             * Preferred timezone offset as defined in the IANA Time zone database in the form of Country/City (use an URL encoded slash sign &#x60;%2F&#x60; or use an underscore _ symbol), default is Europe/Prague
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            preferredTimezone?: string
+        
+                //mode
+            /**
+             * Only &#x60;departures&#x60; is supported for this XML endpoint; other values return 400. Valid entries: &#x60;departures&#x60; (default), &#x60;arrivals&#x60;, &#x60;mixed&#x60;.
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            mode?: string
+        
+                //order
+            /**
+             * Valid entries: &#x60;real&#x60; (default), &#x60;timetable&#x60;. Order results by predicted time including trip delay or by timetable time.
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            order?: string
+        
+                //filter
+            /**
+             * Valid entries: &#x60;none&#x60; (default), &#x60;routeOnce&#x60;, &#x60;routeOnceFill&#x60;, &#x60;routeHeadingOnce&#x60;, &#x60;routeHeadingOnceFill&#x60;, &#x60;routeHeadingOnceNoGap&#x60;, &#x60;routeHeadingOnceNoGapFill&#x60;. Defines how should be the list of departures returned. &#x60;none&#x60; returns all departures within the time and item limit. &#x60;routeOnce&#x60; returns exactly one occurence of departure for each &#x60;route_id&#x60;. Works best when querying a single stop. &#x60;routeHeadingOnce&#x60; returns one entry for each pair of &#x60;route_id&#x60; and &#x60;trip_headsign&#x60;, i.e. returns departures for routes that have multiple end stops. Works well when quering one or more stops in a node. &#x60;...NoGap&#x60; will ensure that departures with a distinct trip headsign will not be displayed if they should arrive too far in the future. &#x60;...Fill&#x60; attributes will behave the same as their namesakes but afterwards will fill the rest of request up to &#x60;total/limit&#x60; with further departures. Use to have every line/destination represented and have the display filled with departures at the same time.
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            filter?: string
+        
+                //skipisEnumSkipEnum
+            /**
+             * Filters out trips matching the given states. Multiple filters can be applied using array syntax, e.g., &#x60;&amp;skip[]&#x3D;canceled&amp;skip[]&#x3D;atStop&#x60;. Using both &#x60;untracked&#x60; and &#x60;missing&#x60; will exclude all untracked vehicles, as missing vehicles are a subset of untracked vehicles. We recommend using &#x60;missing&#x60; instead of &#x60;untracked&#x60;, as skipping all untracked vehicles may result in departures not appearing in the API response until the last few minutes before departure, especially for departure boards near the starting station/stop. 
+             * @type     {'canceled' | 'atStop' | 'untracked' | 'missing'}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            skip?: V2PidDepartureboardsXmlGetSkipEnum
+        
+                //limit
+            /**
+             * Limits the number of items in response. The maximum is 1000 (default value is 20).
+             * @type     {number}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            limit?: number
+        
+                //total
+            /**
+             * Sets the number of items that will be queried. Use in conjunction with &#x60;offset&#x60;. Up to &#x60;total - offset&#x60;, but not more than &#x60;limit&#x60; items will be then returned. If unset, is same as &#x60;limit&#x60;. The maximum is 1000 (default value is 20).
+             * @type     {number}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            total?: number
+        
+                //offset
+            /**
+             * Number of the initial departures that are skipped. Useful for multi-page displays.
+             * @type     {number}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            offset?: number
+        
+                //appendHeadsignsLimit
+            /**
+             * Number of stops before route switch at which headsign is enriched with continuation info. When set and a departure has route-switch data, headsign becomes &#x60;&amp;lt;headsign&amp;gt; → &amp;lt;next_route&amp;gt; &amp;lt;next_headsign&amp;gt;&#x60;.
+             * @type     {number}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            appendHeadsignsLimit?: number
+            }
+        
+        
             
         /**
          * PIDDepartureBoardsV2Api - object-oriented interface
@@ -9448,6 +9648,121 @@ export namespace GolemioPublicTransportApi {
                 axiosRequestConfig["baseURL"] = this.configuration.basePath;
                 
                 return this.axios.request<PIDDepartureBoard>(axiosRequestConfig);
+            }
+        
+                /**
+             * **DEPRECATED.** Legacy MPVnet XML for ROPID information panels that cannot consume JSON. For new integrations use `/v2/pid/departureboards` (JSON).  UTF-8, no `<?xml ...?>` prologue. Only `mode=departures` is supported (others return 400). Same query parameters and identifier rules as the JSON endpoint (`ids` / `cisIds` / `aswIds` / `names`, at least one required, max 100 stops).  See the example response below for the exact attribute set. 
+             * @summary [DEPRECATED] GET Departure Boards (legacy MPVnet XML)
+        
+                 * @param     {PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGetQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @deprecated
+             * @throws {RequiredError}
+             * @memberof PIDDepartureBoardsV2Api
+             */
+            
+            public async v2PidDepartureboardsXmlGet(
+                queryParams: PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGetQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                                                                                                                                                                const localVarPath = `/v2/pid/departureboards/xml`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.ids !== undefined) {
+                                requestQueryParameter['ids'] = queryParams.ids;
+                    }
+        
+                        if (queryParams.aswIds !== undefined) {
+                                requestQueryParameter['aswIds'] = queryParams.aswIds;
+                    }
+        
+                        if (queryParams.cisIds !== undefined) {
+                                requestQueryParameter['cisIds'] = queryParams.cisIds;
+                    }
+        
+                        if (queryParams.names !== undefined) {
+                                requestQueryParameter['names'] = queryParams.names;
+                    }
+        
+                        if (queryParams.minutesBefore !== undefined) {
+                                requestQueryParameter['minutesBefore'] = queryParams.minutesBefore;
+                    }
+        
+                        if (queryParams.minutesAfter !== undefined) {
+                                requestQueryParameter['minutesAfter'] = queryParams.minutesAfter;
+                    }
+        
+                        if (queryParams.timeFrom !== undefined) {
+                                requestQueryParameter['timeFrom'] = queryParams.timeFrom;
+                    }
+        
+                        if (queryParams.includeMetroTrains !== undefined) {
+                                requestQueryParameter['includeMetroTrains'] = queryParams.includeMetroTrains;
+                    }
+        
+                        if (queryParams.airCondition !== undefined) {
+                                requestQueryParameter['airCondition'] = queryParams.airCondition;
+                    }
+        
+                        if (queryParams.preferredTimezone !== undefined) {
+                                requestQueryParameter['preferredTimezone'] = queryParams.preferredTimezone;
+                    }
+        
+                        if (queryParams.mode !== undefined) {
+                                requestQueryParameter['mode'] = queryParams.mode;
+                    }
+        
+                        if (queryParams.order !== undefined) {
+                                requestQueryParameter['order'] = queryParams.order;
+                    }
+        
+                        if (queryParams.filter !== undefined) {
+                                requestQueryParameter['filter'] = queryParams.filter;
+                    }
+        
+                        if (queryParams.skip !== undefined) {
+                                requestQueryParameter['skip'] = queryParams.skip;
+                    }
+        
+                        if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                        if (queryParams.total !== undefined) {
+                                requestQueryParameter['total'] = queryParams.total;
+                    }
+        
+                        if (queryParams.offset !== undefined) {
+                                requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                        if (queryParams.appendHeadsignsLimit !== undefined) {
+                                requestQueryParameter['appendHeadsignsLimit'] = queryParams.appendHeadsignsLimit;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<string>(axiosRequestConfig);
             }
             }
         

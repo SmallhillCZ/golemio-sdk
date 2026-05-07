@@ -226,10 +226,12 @@ const apiInstance = new FYPRV1Api(configuration);
 
 let limit: number; //Limits number of retrieved items. (optional) (default to 100)
 let offset: number; //Offset for pagination. The default value is 0. (optional) (default to 0)
+let jis: boolean; //Filter by JIS graphic flag. When true, returns only JIS panels; when false, returns only non-JIS panels. Panels with a null jis_graphic value are excluded when this parameter is provided. Omit to return all panels regardless of JIS status. (optional) (default to undefined)
 
 const { status, data } = await apiInstance.listInformationPanels(
     limit,
-    offset
+    offset,
+    jis
 );
 ```
 
@@ -239,6 +241,7 @@ const { status, data } = await apiInstance.listInformationPanels(
 |------------- | ------------- | ------------- | -------------|
 | **limit** | [**number**] | Limits number of retrieved items. | (optional) defaults to 100|
 | **offset** | [**number**] | Offset for pagination. The default value is 0. | (optional) defaults to 0|
+| **jis** | [**boolean**] | Filter by JIS graphic flag. When true, returns only JIS panels; when false, returns only non-JIS panels. Panels with a null jis_graphic value are excluded when this parameter is provided. Omit to return all panels regardless of JIS status. | (optional) defaults to undefined|
 
 
 ### Return type

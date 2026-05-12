@@ -27,6 +27,7 @@ export class GolemioPublicTransportApi {
         GTFSRealtimeV2Api: GolemioPublicTransportApi.GTFSRealtimeV2Api;
         GTFSStaticV2Api: GolemioPublicTransportApi.GTFSStaticV2Api;
         JISV1InternalApi: GolemioPublicTransportApi.JISV1InternalApi;
+        MVTMapsV2Api: GolemioPublicTransportApi.MVTMapsV2Api;
         PIDDepartureBoardsV2Api: GolemioPublicTransportApi.PIDDepartureBoardsV2Api;
         PIDDepartureBoardsV3Api: GolemioPublicTransportApi.PIDDepartureBoardsV3Api;
         PIDDepartureBoardsV3InternalApi: GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi;
@@ -45,6 +46,7 @@ export class GolemioPublicTransportApi {
             this.GTFSRealtimeV2Api = new GolemioPublicTransportApi.GTFSRealtimeV2Api(configuration, axios!);
             this.GTFSStaticV2Api = new GolemioPublicTransportApi.GTFSStaticV2Api(configuration, axios!);
             this.JISV1InternalApi = new GolemioPublicTransportApi.JISV1InternalApi(configuration, axios!);
+            this.MVTMapsV2Api = new GolemioPublicTransportApi.MVTMapsV2Api(configuration, axios!);
             this.PIDDepartureBoardsV2Api = new GolemioPublicTransportApi.PIDDepartureBoardsV2Api(configuration, axios!);
             this.PIDDepartureBoardsV3Api = new GolemioPublicTransportApi.PIDDepartureBoardsV3Api(configuration, axios!);
             this.PIDDepartureBoardsV3InternalApi = new GolemioPublicTransportApi.PIDDepartureBoardsV3InternalApi(configuration, axios!);
@@ -6304,6 +6306,40 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
+     * @interface V2MvtValidationGet200Response
+     */
+    export interface V2MvtValidationGet200Response {
+        /**
+         * 
+         * @type {boolean}
+         * @memberof V2MvtValidationGet200Response
+         */
+        'valid': boolean;
+        /**
+         * 
+         * @type {string}
+         * @memberof V2MvtValidationGet200Response
+         */
+        'error'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V2MvtZXYGet401Response
+     */
+    export interface V2MvtZXYGet401Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof V2MvtZXYGet401Response
+         */
+        'message'?: string;
+    }
+    
+        /**
+     * 
+     * @export
      * @interface V2PublicGtfsTripsGtfsTripIdGet200Response
      */
     export interface V2PublicGtfsTripsGtfsTripIdGet200Response {
@@ -9191,6 +9227,368 @@ export namespace GolemioPublicTransportApi {
                 axiosRequestConfig["baseURL"] = this.configuration.basePath;
                 
                 return this.axios.request<Array<EventCustomFormat>>(axiosRequestConfig);
+            }
+            }
+        
+        
+                                    
+        
+        /**
+         * Query parameters for v2MvtValidationGet operation in MVTMapsV2Api.
+         * @export
+         * @interface MVTMapsV2ApiV2MvtValidationGetQueryParams
+         */
+        export interface MVTMapsV2ApiV2MvtValidationGetQueryParams {
+            //table
+            /**
+             * Fully qualified table name (e.g. &#x60;schema.table&#x60;) to fetch data from.
+             * @type     {string}    
+             * @memberof MVTMapsV2ApiV2MvtValidationGet
+             */
+            table: string
+        
+                //geometry
+            /**
+             * Name of the geometry column in the table.
+             * @type     {string}    
+             * @memberof MVTMapsV2ApiV2MvtValidationGet
+             */
+            geometry: string
+        
+                //attributes
+            /**
+             * List of attribute columns to include in the tile features.
+             * @type     {Array<string>}    
+             * @memberof MVTMapsV2ApiV2MvtValidationGet
+             */
+            attributes: Array<string>
+        
+                //clusterPoint
+            /**
+             * Name of the column that will be used for clustering, use only if it differs from geometry. (e.g. calculating clustering for polygons can take longer and result in bigger clusters.)
+             * @type     {string}    
+             * @memberof MVTMapsV2ApiV2MvtValidationGet
+             */
+            clusterPoint?: string
+        
+                //colorAttribute
+            /**
+             * Name of the column to use for coloring features
+             * @type     {string}    
+             * @memberof MVTMapsV2ApiV2MvtValidationGet
+             */
+            colorAttribute?: string
+            }
+        
+        
+                                                            
+        
+        /**
+         * Query parameters for v2MvtZXYGet operation in MVTMapsV2Api.
+         * @export
+         * @interface MVTMapsV2ApiV2MvtZXYGetQueryParams
+         */
+        export interface MVTMapsV2ApiV2MvtZXYGetQueryParams {
+            //table
+            /**
+             * Fully qualified table name (e.g. &#x60;schema.table&#x60;) to fetch data from.
+             * @type     {string}    
+             * @memberof MVTMapsV2ApiV2MvtZXYGet
+             */
+            table: string
+        
+                //geometry
+            /**
+             * Name of the geometry column in the table.
+             * @type     {string}    
+             * @memberof MVTMapsV2ApiV2MvtZXYGet
+             */
+            geometry: string
+        
+                //attributes
+            /**
+             * List of attribute columns to include in the tile features.
+             * @type     {Array<string>}    
+             * @memberof MVTMapsV2ApiV2MvtZXYGet
+             */
+            attributes: Array<string>
+        
+                //maxZoom
+            /**
+             * Maximum zoom level at which data from this table should be rendered.
+             * @type     {number}    
+             * @memberof MVTMapsV2ApiV2MvtZXYGet
+             */
+            maxZoom: number
+        
+                //radius
+            /**
+             * Buffer radius in pixels around the tile to include features near edges.
+             * @type     {number}    
+             * @memberof MVTMapsV2ApiV2MvtZXYGet
+             */
+            radius?: number
+        
+                //clusterPoint
+            /**
+             * Name of the column that will be used for clustering, use only if it differs from geometry. (e.g. calculating clustering for polygons can take longer and result in bigger clusters.)
+             * @type     {string}    
+             * @memberof MVTMapsV2ApiV2MvtZXYGet
+             */
+            clusterPoint?: string
+        
+                //colorAttribute
+            /**
+             * Name of the column to use for coloring features
+             * @type     {string}    
+             * @memberof MVTMapsV2ApiV2MvtZXYGet
+             */
+            colorAttribute?: string
+        
+                //filter
+            /**
+             * stringified json for filter parameters
+             * @type     {string}    
+             * @memberof MVTMapsV2ApiV2MvtZXYGet
+             */
+            filter?: string
+            }
+        
+        
+            
+        /**
+         * MVTMapsV2Api - object-oriented interface
+         * @export
+         * @class MVTMapsV2Api
+         * @extends {BaseAPI}
+         */
+        export class MVTMapsV2Api extends BaseAPI {
+        
+            constructor(protected override configuration: GolemioPublicTransportApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
+                super(configuration, configuration.basePath, axios);
+            }
+        
+            /**
+             * Ensure the provided data conforms to the database schema requirements. 
+             * @summary Validate attributes of MVT request
+        
+                 * @param     {MVTMapsV2ApiV2MvtValidationGetQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof MVTMapsV2Api
+             */
+            
+            public async v2MvtValidationGet(
+                queryParams: MVTMapsV2ApiV2MvtValidationGetQueryParams,
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                    // verify required parameter 'table' is not null or undefined
+                assertParamExists('v2MvtValidationGet', 'table', queryParams.table)
+                assertParamExists('v2MvtValidationGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtValidationGet', 'attributes', queryParams.attributes)
+                
+                        // verify required parameter 'geometry' is not null or undefined
+                assertParamExists('v2MvtValidationGet', 'table', queryParams.table)
+                assertParamExists('v2MvtValidationGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtValidationGet', 'attributes', queryParams.attributes)
+                
+                        // verify required parameter 'attributes' is not null or undefined
+                assertParamExists('v2MvtValidationGet', 'table', queryParams.table)
+                assertParamExists('v2MvtValidationGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtValidationGet', 'attributes', queryParams.attributes)
+                
+                                    const localVarPath = `/v2/mvt/validation`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.table !== undefined) {
+                                requestQueryParameter['table'] = queryParams.table;
+                    }
+        
+                        if (queryParams.geometry !== undefined) {
+                                requestQueryParameter['geometry'] = queryParams.geometry;
+                    }
+        
+                    if (queryParams.attributes) {
+                            requestQueryParameter['attributes'] = queryParams.attributes;
+                        }
+            
+                        if (queryParams.clusterPoint !== undefined) {
+                                requestQueryParameter['clusterPoint'] = queryParams.clusterPoint;
+                    }
+        
+                        if (queryParams.colorAttribute !== undefined) {
+                                requestQueryParameter['colorAttribute'] = queryParams.colorAttribute;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<V2MvtValidationGet200Response>(axiosRequestConfig);
+            }
+        
+                /**
+             * Returns a Mapbox Vector Tile (MVT) containing features from the specified table and geometry column. Useful for rendering geospatial data on interactive maps at the specified zoom, x, and y tile coordinates. 
+             * @summary Get vector tile data for a specific map tile
+        
+             * @param     {number}     z Zoom level of the tile.
+             * @param     {number}     x X coordinate of the tile.
+             * @param     {number}     y Y coordinate of the tile.
+                 * @param     {MVTMapsV2ApiV2MvtZXYGetQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof MVTMapsV2Api
+             */
+            
+            public async v2MvtZXYGet(
+                z: number,
+                x: number,
+                y: number,
+                queryParams: MVTMapsV2ApiV2MvtZXYGetQueryParams,
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                    // verify required parameter 'z' is not null or undefined
+                assertParamExists('v2MvtZXYGet', 'z', z)
+                assertParamExists('v2MvtZXYGet', 'x', x)
+                assertParamExists('v2MvtZXYGet', 'y', y)
+                assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+                assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+                assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
+                
+                        // verify required parameter 'x' is not null or undefined
+                assertParamExists('v2MvtZXYGet', 'z', z)
+                assertParamExists('v2MvtZXYGet', 'x', x)
+                assertParamExists('v2MvtZXYGet', 'y', y)
+                assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+                assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+                assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
+                
+                        // verify required parameter 'y' is not null or undefined
+                assertParamExists('v2MvtZXYGet', 'z', z)
+                assertParamExists('v2MvtZXYGet', 'x', x)
+                assertParamExists('v2MvtZXYGet', 'y', y)
+                assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+                assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+                assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
+                
+                        // verify required parameter 'table' is not null or undefined
+                assertParamExists('v2MvtZXYGet', 'z', z)
+                assertParamExists('v2MvtZXYGet', 'x', x)
+                assertParamExists('v2MvtZXYGet', 'y', y)
+                assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+                assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+                assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
+                
+                        // verify required parameter 'geometry' is not null or undefined
+                assertParamExists('v2MvtZXYGet', 'z', z)
+                assertParamExists('v2MvtZXYGet', 'x', x)
+                assertParamExists('v2MvtZXYGet', 'y', y)
+                assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+                assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+                assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
+                
+                        // verify required parameter 'attributes' is not null or undefined
+                assertParamExists('v2MvtZXYGet', 'z', z)
+                assertParamExists('v2MvtZXYGet', 'x', x)
+                assertParamExists('v2MvtZXYGet', 'y', y)
+                assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+                assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+                assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
+                
+                        // verify required parameter 'maxZoom' is not null or undefined
+                assertParamExists('v2MvtZXYGet', 'z', z)
+                assertParamExists('v2MvtZXYGet', 'x', x)
+                assertParamExists('v2MvtZXYGet', 'y', y)
+                assertParamExists('v2MvtZXYGet', 'table', queryParams.table)
+                assertParamExists('v2MvtZXYGet', 'geometry', queryParams.geometry)
+                assertParamExists('v2MvtZXYGet', 'attributes', queryParams.attributes)
+                assertParamExists('v2MvtZXYGet', 'maxZoom', queryParams.maxZoom)
+                
+                                                    const localVarPath = `/v2/mvt/{z}/{x}/{y}`
+                    .replace(`{${"z"}}`, encodeURIComponent(String(z)))
+                    .replace(`{${"x"}}`, encodeURIComponent(String(x)))
+                    .replace(`{${"y"}}`, encodeURIComponent(String(y)));
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.table !== undefined) {
+                                requestQueryParameter['table'] = queryParams.table;
+                    }
+        
+                        if (queryParams.geometry !== undefined) {
+                                requestQueryParameter['geometry'] = queryParams.geometry;
+                    }
+        
+                    if (queryParams.attributes) {
+                            requestQueryParameter['attributes'] = queryParams.attributes;
+                        }
+            
+                        if (queryParams.maxZoom !== undefined) {
+                                requestQueryParameter['maxZoom'] = queryParams.maxZoom;
+                    }
+        
+                        if (queryParams.radius !== undefined) {
+                                requestQueryParameter['radius'] = queryParams.radius;
+                    }
+        
+                        if (queryParams.clusterPoint !== undefined) {
+                                requestQueryParameter['clusterPoint'] = queryParams.clusterPoint;
+                    }
+        
+                        if (queryParams.colorAttribute !== undefined) {
+                                requestQueryParameter['colorAttribute'] = queryParams.colorAttribute;
+                    }
+        
+                        if (queryParams.filter !== undefined) {
+                                requestQueryParameter['filter'] = queryParams.filter;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<File>(axiosRequestConfig);
             }
             }
         

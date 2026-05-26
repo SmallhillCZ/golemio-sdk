@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **route_name** | **string** |  | [optional] [default to undefined]
 **is_testing** | **boolean** |  | [optional] [default to undefined]
 **stops** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
+**stops_routes** | [**Array&lt;V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInner&gt;**](V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInner.md) |  | [optional] [default to undefined]
 
 ## Example
 
@@ -20,6 +21,7 @@ const instance: V3PidDeparturepresetsGet200ResponseInner = {
     route_name,
     is_testing,
     stops,
+    stops_routes,
 };
 ```
 

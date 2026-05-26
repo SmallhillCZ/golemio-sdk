@@ -6639,6 +6639,52 @@ export namespace GolemioPublicTransportApi {
          * @memberof V3PidDeparturepresetsGet200ResponseInner
          */
         'stops'?: Array<string>;
+        /**
+         * 
+         * @type {Array<V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInner>}
+         * @memberof V3PidDeparturepresetsGet200ResponseInner
+         */
+        'stops_routes'?: Array<V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInner>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInner
+     */
+    export interface V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInner {
+        /**
+         * 
+         * @type {string}
+         * @memberof V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInner
+         */
+        'stop_id'?: string;
+        /**
+         * 
+         * @type {Array<V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner>}
+         * @memberof V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInner
+         */
+        'routes'?: Array<V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner
+     */
+    export interface V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner {
+        /**
+         * 
+         * @type {number}
+         * @memberof V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner
+         */
+        'type'?: number;
+        /**
+         * 
+         * @type {string}
+         * @memberof V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner
+         */
+        'name'?: string;
     }
     
         /**

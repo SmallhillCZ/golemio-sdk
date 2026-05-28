@@ -5,6 +5,7 @@ All URIs are relative to *https://api.golemio.cz*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**v2PidDepartureboardsGet**](#v2piddepartureboardsget) | **GET** /v2/pid/departureboards | GET Departure Boards|
+|[**v2PidDepartureboardsMinimalGet**](#v2piddepartureboardsminimalget) | **GET** /v2/pid/departureboards/minimal | [DEPRECATED] GET Departure Boards Minimal|
 |[**v2PidDepartureboardsXmlGet**](#v2piddepartureboardsxmlget) | **GET** /v2/pid/departureboards/xml | [DEPRECATED] GET Departure Boards (legacy MPVnet XML)|
 
 # **v2PidDepartureboardsGet**
@@ -111,6 +112,59 @@ const { status, data } = await apiInstance.v2PidDepartureboardsGet(
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **v2PidDepartureboardsMinimalGet**
+> V2PidDepartureboardsMinimalGet200Response v2PidDepartureboardsMinimalGet()
+
+**DEPRECATED.** Minimal departure board endpoint backed entirely by Redis cache (no database queries).  Accepts one or more CIS node IDs. One CIS node may map to multiple GTFS stop IDs (e.g. platforms). All stop IDs for a node are resolved and queried together.  Response shape is a strict subset of `/v2/pid/departureboards` — `delay`, `last_stop`, and most `trip` fields are omitted.  The following parameters are hardcoded and cannot be overridden: - `limit`: 12 - `minutesAfter`: 30 - `mode`: `departures` - `filter`: `routeHeadingOnce` - `order`: `real` - `skip`: `canceled` 
+
+### Example
+
+```typescript
+import {
+    PIDDepartureBoardsV2Api,
+    Configuration
+} from 'golemio-public-transport-api';
+
+const configuration = new Configuration();
+const apiInstance = new PIDDepartureBoardsV2Api(configuration);
+
+let cisIds: number; //Get result by CIS ID. A list of CIS IDs can be found in [Prague Open data](https://opendata.praha.eu/datasets/https%3A%2F%2Fapi.opendata.praha.eu%2Flod%2Fcatalog%2F6ac8381f-ea19-4ea9-8949-92076809dc5a). (optional) (default to undefined)
+
+const { status, data } = await apiInstance.v2PidDepartureboardsMinimalGet(
+    cisIds
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **cisIds** | [**number**] | Get result by CIS ID. A list of CIS IDs can be found in [Prague Open data](https://opendata.praha.eu/datasets/https%3A%2F%2Fapi.opendata.praha.eu%2Flod%2Fcatalog%2F6ac8381f-ea19-4ea9-8949-92076809dc5a). | (optional) defaults to undefined|
+
+
+### Return type
+
+**V2PidDepartureboardsMinimalGet200Response**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Can return empty departures array if no departures were found for the given CIS IDs. |  -  |
+|**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
+|**404** | Not found — no GTFS stop IDs resolved for the given CIS IDs. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **v2PidDepartureboardsXmlGet**
 > string v2PidDepartureboardsXmlGet()
 
@@ -209,7 +263,7 @@ const { status, data } = await apiInstance.v2PidDepartureboardsXmlGet(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Single-line MPVnet XML response. Example body  &#x60;&#x60;&#x60;xml &lt;TBL cas&#x3D;\&quot;2026-03-20T15:30:00\&quot; text&#x3D;\&quot;Odjezdy poskytuje Golemio\&quot;&gt;   &lt;t id&#x3D;\&quot;458/1,458/2\&quot; zast&#x3D;\&quot;Smíchovské nádraží\&quot; zobraz_stan&#x3D;\&quot;True\&quot; stan&#x3D;\&quot;A,B\&quot;&gt;     &lt;o stan&#x3D;\&quot;A\&quot; lin&#x3D;\&quot;129\&quot; alias&#x3D;\&quot;129\&quot; spoj&#x3D;\&quot;\&quot; smer&#x3D;\&quot;Baně\&quot;        odj&#x3D;\&quot;2026-03-20T15:31:00+01:00\&quot; sled&#x3D;\&quot;true\&quot; zpoz&#x3D;\&quot;0\&quot; np&#x3D;\&quot;true\&quot; nad&#x3D;\&quot;false\&quot; dd&#x3D;\&quot;3\&quot;/&gt;     &lt;o stan&#x3D;\&quot;A\&quot; lin&#x3D;\&quot;5\&quot; alias&#x3D;\&quot;5\&quot; spoj&#x3D;\&quot;\&quot; smer&#x3D;\&quot;Slivenec\&quot;        odj&#x3D;\&quot;2026-03-20T15:31:00+01:00\&quot; sled&#x3D;\&quot;true\&quot; zpoz&#x3D;\&quot;2\&quot; np&#x3D;\&quot;false\&quot; nad&#x3D;\&quot;false\&quot;        pz&#x3D;\&quot;Plzeňka\&quot; dd&#x3D;\&quot;2\&quot;/&gt;     &lt;o stan&#x3D;\&quot;B\&quot; lin&#x3D;\&quot;B\&quot; alias&#x3D;\&quot;B\&quot; spoj&#x3D;\&quot;\&quot; smer&#x3D;\&quot;Černý Most\&quot;        odj&#x3D;\&quot;2026-03-20T15:32:00+01:00\&quot; sled&#x3D;\&quot;true\&quot; zpoz&#x3D;\&quot;1\&quot; np&#x3D;\&quot;true\&quot; nad&#x3D;\&quot;false\&quot;        pz&#x3D;\&quot;Radlická\&quot; dd&#x3D;\&quot;1\&quot;/&gt;     &lt;o stan&#x3D;\&quot;A\&quot; lin&#x3D;\&quot;X22\&quot; alias&#x3D;\&quot;X22\&quot; spoj&#x3D;\&quot;\&quot; smer&#x3D;\&quot;Nádraží Hostivař\&quot;        odj&#x3D;\&quot;2026-03-20T15:33:00+01:00\&quot; sled&#x3D;\&quot;false\&quot; zpoz&#x3D;\&quot;0\&quot; np&#x3D;\&quot;false\&quot; nad&#x3D;\&quot;true\&quot;        info&#x3D;\&quot;nejede\&quot; dd&#x3D;\&quot;7\&quot;/&gt;     &lt;i stan&#x3D;\&quot;A\&quot;&gt;Výluka tramvají na Smíchově.&lt;/i&gt;   &lt;/t&gt; &lt;/TBL&gt; &#x60;&#x60;&#x60;  |  * Cache-Control - Cache control directive for caching proxies <br>  |
+|**200** | Single-line MPVnet XML response. Example body  **Note on &#x60;&lt;t&gt;@_zast&#x60; attribute:** For MHD lines in Kolín (detected by route &#x60;short_name&#x60; starting with \&quot;MHD\&quot;), the prefix \&quot;Kolín, \&quot; is stripped from the stop name.  **Note on &#x60;&lt;i&gt;&#x60; text:** When &#x60;text_en&#x60; is set, the text is formatted as &#x60;\&quot;&lt;cz&gt; / &lt;en&gt;\&quot;&#x60; (with spaces around the slash); otherwise, only the Czech text is included.  &#x60;&#x60;&#x60;xml &lt;TBL cas&#x3D;\&quot;2026-03-20T15:30:00\&quot; text&#x3D;\&quot;Odjezdy poskytuje Golemio\&quot;&gt;   &lt;t id&#x3D;\&quot;458/1,458/2\&quot; zast&#x3D;\&quot;Smíchovské nádraží\&quot; zobraz_stan&#x3D;\&quot;True\&quot; stan&#x3D;\&quot;A,B\&quot;&gt;     &lt;o stan&#x3D;\&quot;A\&quot; lin&#x3D;\&quot;129\&quot; alias&#x3D;\&quot;129\&quot; spoj&#x3D;\&quot;\&quot; smer&#x3D;\&quot;Baně\&quot;        odj&#x3D;\&quot;2026-03-20T15:31:00+01:00\&quot; sled&#x3D;\&quot;true\&quot; zpoz&#x3D;\&quot;0\&quot; np&#x3D;\&quot;true\&quot; nad&#x3D;\&quot;false\&quot; dd&#x3D;\&quot;3\&quot; smer_c&#x3D;\&quot;0\&quot;/&gt;     &lt;o stan&#x3D;\&quot;A\&quot; lin&#x3D;\&quot;5\&quot; alias&#x3D;\&quot;5\&quot; spoj&#x3D;\&quot;\&quot; smer&#x3D;\&quot;Slivenec\&quot;        odj&#x3D;\&quot;2026-03-20T15:31:00+01:00\&quot; sled&#x3D;\&quot;true\&quot; zpoz&#x3D;\&quot;2\&quot; np&#x3D;\&quot;false\&quot; nad&#x3D;\&quot;false\&quot;        pz&#x3D;\&quot;Plzeňka\&quot; dd&#x3D;\&quot;2\&quot; smer_c&#x3D;\&quot;0\&quot;/&gt;     &lt;o stan&#x3D;\&quot;B\&quot; lin&#x3D;\&quot;B\&quot; alias&#x3D;\&quot;B\&quot; spoj&#x3D;\&quot;\&quot; smer&#x3D;\&quot;Černý Most\&quot;        odj&#x3D;\&quot;2026-03-20T15:32:00+01:00\&quot; sled&#x3D;\&quot;true\&quot; zpoz&#x3D;\&quot;1\&quot; np&#x3D;\&quot;true\&quot; nad&#x3D;\&quot;false\&quot;        pz&#x3D;\&quot;Radlická\&quot; dd&#x3D;\&quot;1\&quot; smer_c&#x3D;\&quot;0\&quot;/&gt;     &lt;o stan&#x3D;\&quot;A\&quot; lin&#x3D;\&quot;X22\&quot; alias&#x3D;\&quot;X22\&quot; spoj&#x3D;\&quot;\&quot; smer&#x3D;\&quot;Nádraží Hostivař\&quot;        odj&#x3D;\&quot;2026-03-20T15:33:00+01:00\&quot; sled&#x3D;\&quot;false\&quot; zpoz&#x3D;\&quot;0\&quot; np&#x3D;\&quot;false\&quot; nad&#x3D;\&quot;true\&quot;        info&#x3D;\&quot;nejede\&quot; dd&#x3D;\&quot;7\&quot; smer_c&#x3D;\&quot;0\&quot;/&gt;     &lt;i stan&#x3D;\&quot;A\&quot;&gt;Výluka tramvají na Smíchově.&lt;/i&gt;   &lt;/t&gt; &lt;/TBL&gt; &#x60;&#x60;&#x60;  |  * Cache-Control - Cache control directive for caching proxies <br>  |
 |**400** | Bad request - invalid query parameters |  -  |
 |**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
 |**404** | Not found |  -  |

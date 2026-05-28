@@ -3635,6 +3635,64 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
+     * @interface PIDDepartureBoardMinimalDeparture
+     */
+    export interface PIDDepartureBoardMinimalDeparture {
+        /**
+         * 
+         * @type {PIDDepartureBoardStopTime}
+         * @memberof PIDDepartureBoardMinimalDeparture
+         */
+        'arrival_timestamp': PIDDepartureBoardStopTime;
+        /**
+         * 
+         * @type {PIDDepartureBoardStopTime}
+         * @memberof PIDDepartureBoardMinimalDeparture
+         */
+        'departure_timestamp': PIDDepartureBoardStopTime;
+        /**
+         * 
+         * @type {PIDDepartureBoardRoute}
+         * @memberof PIDDepartureBoardMinimalDeparture
+         */
+        'route': PIDDepartureBoardRoute;
+        /**
+         * 
+         * @type {PIDDepartureBoardStopReference}
+         * @memberof PIDDepartureBoardMinimalDeparture
+         */
+        'stop': PIDDepartureBoardStopReference;
+        /**
+         * 
+         * @type {PIDDepartureBoardMinimalDepartureTrip}
+         * @memberof PIDDepartureBoardMinimalDeparture
+         */
+        'trip': PIDDepartureBoardMinimalDepartureTrip;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface PIDDepartureBoardMinimalDepartureTrip
+     */
+    export interface PIDDepartureBoardMinimalDepartureTrip {
+        /**
+         * Trip headsign (usually the final stop).
+         * @type {string}
+         * @memberof PIDDepartureBoardMinimalDepartureTrip
+         */
+        'headsign': string;
+        /**
+         * GTFS trip ID.
+         * @type {string}
+         * @memberof PIDDepartureBoardMinimalDepartureTrip
+         */
+        'id': string;
+    }
+    
+        /**
+     * 
+     * @export
      * @interface PIDDepartureBoardRoute
      */
     export interface PIDDepartureBoardRoute {
@@ -6335,6 +6393,20 @@ export namespace GolemioPublicTransportApi {
          * @memberof V2MvtZXYGet401Response
          */
         'message'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V2PidDepartureboardsMinimalGet200Response
+     */
+    export interface V2PidDepartureboardsMinimalGet200Response {
+        /**
+         * 
+         * @type {Array<PIDDepartureBoardMinimalDeparture>}
+         * @memberof V2PidDepartureboardsMinimalGet200Response
+         */
+        'departures'?: Array<PIDDepartureBoardMinimalDeparture>;
     }
     
         /**
@@ -9803,6 +9875,24 @@ export namespace GolemioPublicTransportApi {
             }
         
         
+                    
+        
+        /**
+         * Query parameters for v2PidDepartureboardsMinimalGet operation in PIDDepartureBoardsV2Api.
+         * @export
+         * @interface PIDDepartureBoardsV2ApiV2PidDepartureboardsMinimalGetQueryParams
+         */
+        export interface PIDDepartureBoardsV2ApiV2PidDepartureboardsMinimalGetQueryParams {
+            //cisIds
+            /**
+             * Get result by CIS ID. A list of CIS IDs can be found in [Prague Open data](https://opendata.praha.eu/datasets/https%3A%2F%2Fapi.opendata.praha.eu%2Flod%2Fcatalog%2F6ac8381f-ea19-4ea9-8949-92076809dc5a).
+             * @type     {number}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsMinimalGet
+             */
+            cisIds?: number
+            }
+        
+        
                                                                             /**
          * @export
          */
@@ -10092,6 +10182,53 @@ export namespace GolemioPublicTransportApi {
                 axiosRequestConfig["baseURL"] = this.configuration.basePath;
                 
                 return this.axios.request<PIDDepartureBoard>(axiosRequestConfig);
+            }
+        
+                /**
+             * **DEPRECATED.** Minimal departure board endpoint backed entirely by Redis cache (no database queries).  Accepts one or more CIS node IDs. One CIS node may map to multiple GTFS stop IDs (e.g. platforms). All stop IDs for a node are resolved and queried together.  Response shape is a strict subset of `/v2/pid/departureboards` — `delay`, `last_stop`, and most `trip` fields are omitted.  The following parameters are hardcoded and cannot be overridden: - `limit`: 12 - `minutesAfter`: 30 - `mode`: `departures` - `filter`: `routeHeadingOnce` - `order`: `real` - `skip`: `canceled` 
+             * @summary [DEPRECATED] GET Departure Boards Minimal
+        
+                 * @param     {PIDDepartureBoardsV2ApiV2PidDepartureboardsMinimalGetQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @deprecated
+             * @throws {RequiredError}
+             * @memberof PIDDepartureBoardsV2Api
+             */
+            
+            public async v2PidDepartureboardsMinimalGet(
+                queryParams: PIDDepartureBoardsV2ApiV2PidDepartureboardsMinimalGetQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                        const localVarPath = `/v2/pid/departureboards/minimal`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.cisIds !== undefined) {
+                                requestQueryParameter['cisIds'] = queryParams.cisIds;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<V2PidDepartureboardsMinimalGet200Response>(axiosRequestConfig);
             }
         
                 /**

@@ -59,6 +59,8 @@ docs/PIDDepartureBoardDeparture.md
 docs/PIDDepartureBoardInfotext.md
 docs/PIDDepartureBoardInfotextsInner.md
 docs/PIDDepartureBoardLastStop.md
+docs/PIDDepartureBoardMinimalDeparture.md
+docs/PIDDepartureBoardMinimalDepartureTrip.md
 docs/PIDDepartureBoardRoute.md
 docs/PIDDepartureBoardStop.md
 docs/PIDDepartureBoardStopReference.md
@@ -116,6 +118,7 @@ docs/V2GtfsTripsIdGet200Response.md
 docs/V2GtfsTripsIdGet200ResponseAllOfShapesInner.md
 docs/V2MvtValidationGet200Response.md
 docs/V2MvtZXYGet401Response.md
+docs/V2PidDepartureboardsMinimalGet200Response.md
 docs/V2PublicGtfsTripsGtfsTripIdGet200Response.md
 docs/V2PublicVehiclepositionsGet200Response.md
 docs/V2PublicVehiclepositionsVehicleIdGet200Response.md

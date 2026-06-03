@@ -91,7 +91,7 @@ import {
 const configuration = new Configuration();
 const apiInstance = new MunicipalLibrariesV2Api(configuration);
 
-let id: number; //Identifier of the Municipal Library. (default to undefined)
+let id: string; //Identifier of the Municipal Library. (default to undefined)
 
 const { status, data } = await apiInstance.gETMunicipalLibrary(
     id
@@ -102,7 +102,7 @@ const { status, data } = await apiInstance.gETMunicipalLibrary(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **id** | [**number**] | Identifier of the Municipal Library. | defaults to undefined|
+| **id** | [**string**] | Identifier of the Municipal Library. | defaults to undefined|
 
 
 ### Return type

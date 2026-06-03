@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **address** | [**MunicipalLibraryPropertiesAddress**](MunicipalLibraryPropertiesAddress.md) |  | [optional] [default to undefined]
 **email** | **string** |  | [optional] [default to undefined]
-**id** | **number** |  | [optional] [default to undefined]
+**id** | **string** |  | [optional] [default to undefined]
 **name** | **string** |  | [optional] [default to undefined]
 **opening_hours** | [**Array&lt;MunicipalLibraryPropertiesOpeningHoursInner&gt;**](MunicipalLibraryPropertiesOpeningHoursInner.md) |  | [optional] [default to undefined]
 **services** | [**Array&lt;MunicipalLibraryPropertiesServicesInner&gt;**](MunicipalLibraryPropertiesServicesInner.md) |  | [optional] [default to undefined]

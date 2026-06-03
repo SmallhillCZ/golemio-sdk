@@ -5087,10 +5087,10 @@ export namespace GolemioApi {
         'email'?: string;
         /**
          * 
-         * @type {number}
+         * @type {string}
          * @memberof MunicipalLibraryProperties
          */
-        'id'?: number;
+        'id'?: string;
         /**
          * 
          * @type {string}
@@ -5227,7 +5227,21 @@ export namespace GolemioApi {
          * @memberof MunicipalLibraryPropertiesOpeningHoursInner
          */
         'valid_through'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof MunicipalLibraryPropertiesOpeningHoursInner
+         */
+        'type'?: MunicipalLibraryPropertiesOpeningHoursInnerTypeEnum;
     }
+    
+    export const MunicipalLibraryPropertiesOpeningHoursInnerTypeEnum = {
+        Standard: 'standard',
+        SelfService: 'self_service'
+    } as const;
+    
+    export type MunicipalLibraryPropertiesOpeningHoursInnerTypeEnum = typeof MunicipalLibraryPropertiesOpeningHoursInnerTypeEnum[keyof typeof MunicipalLibraryPropertiesOpeningHoursInnerTypeEnum];
+    
     
         /**
      * 
@@ -13291,14 +13305,14 @@ export namespace GolemioApi {
              * 
              * @summary GET Municipal Library
         
-             * @param     {number}     id Identifier of the Municipal Library.
+             * @param     {string}     id Identifier of the Municipal Library.
                  * @param {AxiosRequestConfig} [options] Override http request option.
              * @throws {RequiredError}
              * @memberof MunicipalLibrariesV2Api
              */
             
             public async gETMunicipalLibrary(
-                id: number,
+                id: string,
                 options: AxiosRequestConfig = {}
             ) {
         

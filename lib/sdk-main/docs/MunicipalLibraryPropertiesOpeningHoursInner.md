@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **opens** | **string** |  | [optional] [default to undefined]
 **valid_from** | **string** |  | [optional] [default to undefined]
 **valid_through** | **string** |  | [optional] [default to undefined]
+**type** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -26,6 +27,7 @@ const instance: MunicipalLibraryPropertiesOpeningHoursInner = {
     opens,
     valid_from,
     valid_through,
+    type,
 };
 ```
 

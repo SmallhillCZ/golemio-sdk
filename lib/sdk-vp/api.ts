@@ -3861,7 +3861,7 @@ export namespace GolemioPublicTransportApi {
          */
         'direction': string | null;
         /**
-         * Trip headsign (usually the final stop). When the `appendHeadsignsLimit` parameter is used and the departure has route-switch data, this field may contain appended continuation info in the form `&lt;headsign&gt; → &lt;next_route&gt; &lt;next_headsign&gt;`.
+         * Trip headsign (usually the final stop). When the `appendHeadsignsLimit` parameter is used and the departure has route-switch data, this field may contain appended continuation info in the form `≪headsign≫ → ≪next_route≫ ≪next_headsign≫`.
          * @type {string}
          * @memberof PIDDepartureBoardTrip
          */
@@ -9721,7 +9721,7 @@ export namespace GolemioPublicTransportApi {
             Missing: 'missing'
             } as const;
         export type V2PidDepartureboardsGetSkipEnum = typeof V2PidDepartureboardsGetSkipEnum[keyof typeof V2PidDepartureboardsGetSkipEnum];
-                                
+                                    
         
         /**
          * Query parameters for v2PidDepartureboardsGet operation in PIDDepartureBoardsV2Api.
@@ -9867,11 +9867,19 @@ export namespace GolemioPublicTransportApi {
         
                 //appendHeadsignsLimit
             /**
-             * Number of stops before route switch at which headsign is enriched with continuation info. When set and a departure has route-switch data, headsign becomes &#x60;&amp;lt;headsign&amp;gt; → &amp;lt;next_route&amp;gt; &amp;lt;next_headsign&amp;gt;&#x60;.
+             * Number of stops before route switch at which headsign is enriched with continuation info. When set and a departure has route-switch data, headsign becomes &#x60;≪headsign≫ → ≪next_route≫ ≪next_headsign≫&#x60;.
              * @type     {number}    
              * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsGet
              */
             appendHeadsignsLimit?: number
+        
+                //preset
+            /**
+             * 
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsGet
+             */
+            preset?: string
             }
         
         
@@ -9903,7 +9911,7 @@ export namespace GolemioPublicTransportApi {
             Missing: 'missing'
             } as const;
         export type V2PidDepartureboardsXmlGetSkipEnum = typeof V2PidDepartureboardsXmlGetSkipEnum[keyof typeof V2PidDepartureboardsXmlGetSkipEnum];
-                                
+                                    
         
         /**
          * Query parameters for v2PidDepartureboardsXmlGet operation in PIDDepartureBoardsV2Api.
@@ -10049,11 +10057,19 @@ export namespace GolemioPublicTransportApi {
         
                 //appendHeadsignsLimit
             /**
-             * Number of stops before route switch at which headsign is enriched with continuation info. When set and a departure has route-switch data, headsign becomes &#x60;&amp;lt;headsign&amp;gt; → &amp;lt;next_route&amp;gt; &amp;lt;next_headsign&amp;gt;&#x60;.
+             * Number of stops before route switch at which headsign is enriched with continuation info. When set and a departure has route-switch data, headsign becomes &#x60;≪headsign≫ → ≪next_route≫ ≪next_headsign≫&#x60;.
              * @type     {number}    
              * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
              */
             appendHeadsignsLimit?: number
+        
+                //preset
+            /**
+             * 
+             * @type     {string}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            preset?: string
             }
         
         
@@ -10085,7 +10101,7 @@ export namespace GolemioPublicTransportApi {
                 options: AxiosRequestConfig = {}
             ) {
         
-                                                                                                                                                                const localVarPath = `/v2/pid/departureboards`;
+                                                                                                                                                                        const localVarPath = `/v2/pid/departureboards`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;
@@ -10170,6 +10186,10 @@ export namespace GolemioPublicTransportApi {
         
                         if (queryParams.appendHeadsignsLimit !== undefined) {
                                 requestQueryParameter['appendHeadsignsLimit'] = queryParams.appendHeadsignsLimit;
+                    }
+        
+                        if (queryParams.preset !== undefined) {
+                                requestQueryParameter['preset'] = queryParams.preset;
                     }
         
                 
@@ -10247,7 +10267,7 @@ export namespace GolemioPublicTransportApi {
                 options: AxiosRequestConfig = {}
             ) {
         
-                                                                                                                                                                const localVarPath = `/v2/pid/departureboards/xml`;
+                                                                                                                                                                        const localVarPath = `/v2/pid/departureboards/xml`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;
@@ -10332,6 +10352,10 @@ export namespace GolemioPublicTransportApi {
         
                         if (queryParams.appendHeadsignsLimit !== undefined) {
                                 requestQueryParameter['appendHeadsignsLimit'] = queryParams.appendHeadsignsLimit;
+                    }
+        
+                        if (queryParams.preset !== undefined) {
+                                requestQueryParameter['preset'] = queryParams.preset;
                     }
         
                 

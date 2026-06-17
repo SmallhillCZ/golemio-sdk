@@ -5306,7 +5306,7 @@ export namespace GolemioApi {
          * @type {string}
          * @memberof MunicipalPoliceStationProperties
          */
-        'cadastral_area': string;
+        'cadastral_area'?: string;
         /**
          * 
          * @type {string}
@@ -12006,7 +12006,7 @@ export namespace GolemioApi {
         
                 //filter
             /**
-             * stringified json for filter parameters
+             * stringified json for filter parameters. The &#x60;in&#x60; operator expects an array of values (e.g. &#x60;{\&quot;zrizovatel_po\&quot;:{\&quot;in\&quot;:[\&quot;MČ Praha-Vinoř\&quot;,\&quot;Ministerstvo školství, mládeže a tělovýchovy ČR\&quot;]}}&#x60;), which safely supports values containing commas.
              * @type     {string}    
              * @memberof MVTMapsV2ApiV2MvtZXYGet
              */

@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**cadastral_area** | **string** |  | [default to undefined]
+**cadastral_area** | **string** |  | [optional] [default to '']
 **id** | **string** |  | [default to undefined]
 **note** | **string** |  | [default to undefined]
 **updated_at** | **string** |  | [optional] [default to undefined]

@@ -1,5 +1,6 @@
 # FyprMetadataKindTranslation
 
+Czech names for an element kind (plural, singular) and its English database slug.
 
 ## Properties
 

@@ -45,7 +45,7 @@ This endpoint does not have any parameters.
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | A list of ROPID departures presets linked with gtfs stops |  * Cache-Control - Cache control directive for caching proxies <br>  |
+|**200** | A list of ROPID departures presets linked with gtfs stops, without exceptional routes |  * Cache-Control - Cache control directive for caching proxies <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -118,7 +118,7 @@ const { status, data } = await apiInstance.v2PidDepartureboardsGet(
 # **v2PidDepartureboardsMinimalGet**
 > V2PidDepartureboardsMinimalGet200Response v2PidDepartureboardsMinimalGet()
 
-**DEPRECATED.** Minimal departure board endpoint backed entirely by Redis cache (no database queries).  Accepts one or more CIS node IDs. One CIS node may map to multiple GTFS stop IDs (e.g. platforms). All stop IDs for a node are resolved and queried together.  Response shape is a strict subset of `/v2/pid/departureboards` — `delay`, `last_stop`, and most `trip` fields are omitted.  The following parameters are hardcoded and cannot be overridden: - `limit`: 15 - `minutesAfter`: 30 - `mode`: `departures` - `filter`: `routeHeadingOnce` - `order`: `real` - `skip`: `canceled` 
+**DEPRECATED.** Minimal departure board endpoint backed entirely by Redis cache (no database queries).  Accepts one or more CIS node IDs. One CIS node may map to multiple GTFS stop IDs (e.g. platforms). All stop IDs for a node are resolved and queried together.  Response shape is a strict subset of `/v2/pid/departureboards` — `delay`, `last_stop`, and most `trip` fields are omitted.  The following parameters are hardcoded and cannot be overridden: - `limit`: 15 - `minutesBefore`: -1 (only departures at least 1 minute in the future are returned) - `minutesAfter`: 30 - `mode`: `departures` - `filter`: `routeHeadingOnce` - `order`: `real` - `skip`: `canceled` 
 
 ### Example
 

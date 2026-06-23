@@ -1,5 +1,6 @@
 # FyprMetadataFieldTranslation
 
+Translation entry for a single element attribute: Czech slug and human-readable label.
 
 ## Properties
 

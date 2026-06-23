@@ -1,5 +1,6 @@
 # FyprMetadataKindTranslations
 
+Translation data for an element kind: kind-level names and per-attribute translations.
 
 ## Properties
 

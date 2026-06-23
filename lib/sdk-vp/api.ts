@@ -81,6 +81,89 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
+     * State of the building permit process for an element.
+     * @export
+     * @enum {string}
+     */
+    
+    export const BuildingPermitStateEnum = {
+        VPlnu: 'V plánu',
+        Probh: 'Probíhá',
+        Hotovo: 'Hotovo'
+    } as const;
+    
+    export type BuildingPermitStateEnum = typeof BuildingPermitStateEnum[keyof typeof BuildingPermitStateEnum];
+    
+        /**
+     * Prague city district or municipality where the element is located.
+     * @export
+     * @enum {string}
+     */
+    
+    export const CityDistrictEnum = {
+        Praha1: 'Praha 1',
+        Praha2: 'Praha 2',
+        Praha3: 'Praha 3',
+        Praha4: 'Praha 4',
+        Praha5: 'Praha 5',
+        Praha6: 'Praha 6',
+        Praha7: 'Praha 7',
+        Praha8: 'Praha 8',
+        Praha9: 'Praha 9',
+        Praha10: 'Praha 10',
+        Praha11: 'Praha 11',
+        Praha12: 'Praha 12',
+        Praha13: 'Praha 13',
+        Praha14: 'Praha 14',
+        Praha15: 'Praha 15',
+        Praha16: 'Praha 16',
+        Praha17: 'Praha 17',
+        Praha18: 'Praha 18',
+        Praha19: 'Praha 19',
+        Praha20: 'Praha 20',
+        Praha21: 'Praha 21',
+        Praha22: 'Praha 22',
+        PrahaBchovice: 'Praha-Běchovice',
+        PrahaBenice: 'Praha-Benice',
+        PrahaBezinves: 'Praha-Březiněves',
+        PrahaAkovice: 'Praha-Čakovice',
+        PrahaBlice: 'Praha-Ďáblice',
+        PrahaDolnChabry: 'Praha-Dolní Chabry',
+        PrahaDolnMcholupy: 'Praha-Dolní Měcholupy',
+        PrahaDolnPoernice: 'Praha-Dolní Počernice',
+        PrahaDube: 'Praha-Dubeč',
+        PrahaKlnovice: 'Praha-Klánovice',
+        PrahaKolodje: 'Praha-Koloděje',
+        PrahaKolovraty: 'Praha-Kolovraty',
+        PrahaKrlovice: 'Praha-Královice',
+        PrahaKeslice: 'Praha-Křeslice',
+        PrahaKunratice: 'Praha-Kunratice',
+        PrahaLibu: 'Praha-Libuš',
+        PrahaLipence: 'Praha-Lipence',
+        PrahaLochkov: 'Praha-Lochkov',
+        PrahaLysolaje: 'Praha-Lysolaje',
+        PrahaNebuice: 'Praha-Nebušice',
+        PrahaNedvz: 'Praha-Nedvězí',
+        PrahaPetrovice: 'Praha-Petrovice',
+        PrahaPednKopanina: 'Praha-Přední Kopanina',
+        PrahaEporyje: 'Praha-Řeporyje',
+        PrahaSatalice: 'Praha-Satalice',
+        PrahaSlivenec: 'Praha-Slivenec',
+        PrahaSuchdol: 'Praha-Suchdol',
+        PrahaEberov: 'Praha-Šeberov',
+        PrahaTrboholy: 'Praha-Štěrboholy',
+        PrahaTroja: 'Praha-Troja',
+        PrahaJezd: 'Praha-Újezd',
+        PrahaVelkChuchle: 'Praha-Velká Chuchle',
+        PrahaVino: 'Praha-Vinoř',
+        PrahaZbraslav: 'Praha-Zbraslav',
+        PrahaZlin: 'Praha-Zličín',
+        MimoHmp: 'Mimo HMP'
+    } as const;
+    
+    export type CityDistrictEnum = typeof CityDistrictEnum[keyof typeof CityDistrictEnum];
+    
+        /**
      * Fully composed DisplayCase schema for list responses. Combines DisplayCaseBase (writable display-case-specific and base fields) with server-set read-only fields from ElementReadOnly. The required array enforces that id and source_updated_at are always present in responses.
      * @export
      * @interface DisplayCase
@@ -135,29 +218,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof DisplayCase
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof DisplayCase
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof DisplayCase
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof DisplayCase
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -177,7 +260,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof DisplayCase
          */
@@ -225,13 +308,13 @@ export namespace GolemioPublicTransportApi {
          */
         'stop_type'?: Array<string> | null;
         /**
-         * Stop identifier from the THMP (Prague Transport Information System). May be null if not linked to a THMP stop.
+         * Stop identifier from the THMP system. May be null if not linked to a THMP stop.
          * @type {string}
          * @memberof DisplayCase
          */
         'thmp_stop_id'?: string | null;
         /**
-         * Type classification of the shelter or enclosure housing the display case. May be null.
+         * Type of the stop shelter (přístřešek) at which the display case is installed (e.g. \"Repasovaný\", \"Olgoj Chorchoj\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof DisplayCase
          */
@@ -261,19 +344,19 @@ export namespace GolemioPublicTransportApi {
          */
         'comments'?: string | null;
         /**
-         * Node identifier from the ASW (Automated Stop Management) system linking the display case to a stop node. May be null.
+         * Node identifier in the ASW system. May be null.
          * @type {string}
          * @memberof DisplayCase
          */
         'asw_node_id'?: string | null;
         /**
-         * Stop identifier from the ASW (Automated Stop Management) system. May be null.
+         * Stop identifier from the ASW system on the ASW node. May be null.
          * @type {string}
          * @memberof DisplayCase
          */
         'asw_stop_id'?: string | null;
         /**
-         * Human-readable description of the exact physical placement of the display case at the stop. May be null.
+         * Placement type of the display case at the stop (e.g. \"Samostatně stojící\", \"V přístřešku\"). May be null.
          * @type {string}
          * @memberof DisplayCase
          */
@@ -303,13 +386,13 @@ export namespace GolemioPublicTransportApi {
          */
         'serial_number'?: string | null;
         /**
-         * Element number assigned by the THMP (Prague Transport Information System). May be null if not registered in THMP.
+         * Element number assigned by the THMP system. May be null if not registered in THMP.
          * @type {string}
          * @memberof DisplayCase
          */
         'thmp_element_number'?: string | null;
         /**
-         * Scheduled cleaning frequency for the display case (e.g. daily, weekly, monthly). May be null if no cleaning schedule is set.
+         * Scheduled cleaning frequency for the display case. Free-text field. May be null.
          * @type {string}
          * @memberof DisplayCase
          */
@@ -328,7 +411,7 @@ export namespace GolemioPublicTransportApi {
     
     
         /**
-     * 
+     * Display case (vitrína) element. Extends ElementBase with display-case-specific fields.
      * @export
      * @interface DisplayCaseBase
      */
@@ -358,29 +441,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof DisplayCaseBase
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof DisplayCaseBase
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof DisplayCaseBase
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof DisplayCaseBase
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -400,7 +483,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof DisplayCaseBase
          */
@@ -448,13 +531,13 @@ export namespace GolemioPublicTransportApi {
          */
         'stop_type'?: Array<string> | null;
         /**
-         * Stop identifier from the THMP (Prague Transport Information System). May be null if not linked to a THMP stop.
+         * Stop identifier from the THMP system. May be null if not linked to a THMP stop.
          * @type {string}
          * @memberof DisplayCaseBase
          */
         'thmp_stop_id'?: string | null;
         /**
-         * Type classification of the shelter or enclosure housing the display case. May be null.
+         * Type of the stop shelter (přístřešek) at which the display case is installed (e.g. \"Repasovaný\", \"Olgoj Chorchoj\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof DisplayCaseBase
          */
@@ -484,19 +567,19 @@ export namespace GolemioPublicTransportApi {
          */
         'comments'?: string | null;
         /**
-         * Node identifier from the ASW (Automated Stop Management) system linking the display case to a stop node. May be null.
+         * Node identifier in the ASW system. May be null.
          * @type {string}
          * @memberof DisplayCaseBase
          */
         'asw_node_id'?: string | null;
         /**
-         * Stop identifier from the ASW (Automated Stop Management) system. May be null.
+         * Stop identifier from the ASW system on the ASW node. May be null.
          * @type {string}
          * @memberof DisplayCaseBase
          */
         'asw_stop_id'?: string | null;
         /**
-         * Human-readable description of the exact physical placement of the display case at the stop. May be null.
+         * Placement type of the display case at the stop (e.g. \"Samostatně stojící\", \"V přístřešku\"). May be null.
          * @type {string}
          * @memberof DisplayCaseBase
          */
@@ -526,13 +609,13 @@ export namespace GolemioPublicTransportApi {
          */
         'serial_number'?: string | null;
         /**
-         * Element number assigned by the THMP (Prague Transport Information System). May be null if not registered in THMP.
+         * Element number assigned by the THMP system. May be null if not registered in THMP.
          * @type {string}
          * @memberof DisplayCaseBase
          */
         'thmp_element_number'?: string | null;
         /**
-         * Scheduled cleaning frequency for the display case (e.g. daily, weekly, monthly). May be null if no cleaning schedule is set.
+         * Scheduled cleaning frequency for the display case. Free-text field. May be null.
          * @type {string}
          * @memberof DisplayCaseBase
          */
@@ -601,29 +684,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof ElementBase
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof ElementBase
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof ElementBase
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof ElementBase
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -643,7 +726,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof ElementBase
          */
@@ -710,6 +793,22 @@ export namespace GolemioPublicTransportApi {
          */
         'source_published_at'?: string;
     }
+    
+        /**
+     * State of the element (stav prvku). Common across all element kinds.
+     * @export
+     * @enum {string}
+     */
+    
+    export const ElementStateEnum = {
+        Plnovno: 'Plánováno',
+        VPprav: 'V přípravě',
+        Hotovo: 'Hotovo',
+        Zrueno: 'Zrušeno',
+        Neplnovno: 'Neplánováno'
+    } as const;
+    
+    export type ElementStateEnum = typeof ElementStateEnum[keyof typeof ElementStateEnum];
     
         /**
      * 
@@ -1026,7 +1125,7 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
-     * 
+     * Translation entry for a single element attribute: Czech slug and human-readable label.
      * @export
      * @interface FyprMetadataFieldTranslation
      */
@@ -1046,13 +1145,13 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
-     * 
+     * Metadata entry for a single element kind: navigation links and field translations.
      * @export
      * @interface FyprMetadataKindEntry
      */
     export interface FyprMetadataKindEntry {
         /**
-         * 
+         * Array of navigation links for an element kind (rel + href pairs).
          * @type {Array<FyprMetadataKindLinksInner>}
          * @memberof FyprMetadataKindEntry
          */
@@ -1086,7 +1185,7 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
-     * 
+     * Czech names for an element kind (plural, singular) and its English database slug.
      * @export
      * @interface FyprMetadataKindTranslation
      */
@@ -1112,7 +1211,7 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
-     * 
+     * Translation data for an element kind: kind-level names and per-attribute translations.
      * @export
      * @interface FyprMetadataKindTranslations
      */
@@ -1627,7 +1726,7 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
-     * Fully composed information panel schema. Combines InformationPanelBase (writable type-specific and base fields) with ElementReadOnly (server-set timestamps and id). Returned by the list endpoint GET /v1/information-panels.
+     * Fully composed information panel schema. Combines InformationPanelBase (writable type-specific and base fields) with ElementReadOnly (server-set timestamps and id). Returned by the list endpoint GET /v1/information-panels. When ?scopes=routes is provided, the response includes a routes array directly on each panel with preset routes grouped by preset name.
      * @export
      * @interface InformationPanel
      */
@@ -1681,29 +1780,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof InformationPanel
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof InformationPanel
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof InformationPanel
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof InformationPanel
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -1723,7 +1822,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof InformationPanel
          */
@@ -1771,7 +1870,7 @@ export namespace GolemioPublicTransportApi {
          */
         'stop_type'?: Array<string> | null;
         /**
-         * Stop identifier in the THMP (Technicka hromadna mestska preprava) registry. May be null.
+         * Stop identifier in the THMP registry. May be null.
          * @type {string}
          * @memberof InformationPanel
          */
@@ -1784,10 +1883,10 @@ export namespace GolemioPublicTransportApi {
         'land_parcel_number'?: string | null;
         /**
          * Owner of the land parcel. May be null.
-         * @type {string}
+         * @type {LandOwnerEnum}
          * @memberof InformationPanel
          */
-        'land_owner'?: string | null;
+        'land_owner'?: LandOwnerEnum | null;
         /**
          * Average number of passengers boarding at this stop on a workday. Integer count. May be null.
          * @type {number}
@@ -1807,13 +1906,13 @@ export namespace GolemioPublicTransportApi {
          */
         'location_description'?: string | null;
         /**
-         * Reference to the street light pole used to verify installation position. May be null.
-         * @type {string}
+         * Whether the installation position was verified against a street light pole. May be null.
+         * @type {YesNoPlanEnum}
          * @memberof InformationPanel
          */
-        'location_verification_on_street_light'?: string | null;
+        'location_verification_on_street_light'?: YesNoPlanEnum | null;
         /**
-         * Type or model of the shelter associated with this panel. May be null.
+         * Type of the stop shelter (přístřešek) associated with this panel (e.g. \"Repasovaný\", \"Olgoj Chorchoj\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
@@ -1831,53 +1930,53 @@ export namespace GolemioPublicTransportApi {
          */
         'street_light_number'?: string | null;
         /**
-         * Type of ground surface at the installation site. May be null.
+         * Type of ground surface at the installation site (e.g. \"Asfalt\", \"Dlažba\", \"Mozaika\", \"Zeleň\", \"VO\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'surface_type'?: string | null;
         /**
-         * Current connectivity state of the panel (e.g. connected, disconnected, pending). May be null.
-         * @type {string}
+         * Whether the panel is connected to power. May be null.
+         * @type {YesNoPlanEnum}
          * @memberof InformationPanel
          */
-        'connection_state'?: string | null;
+        'connection_state'?: YesNoPlanEnum | null;
         /**
-         * Technology used for the panel\'s data connection (e.g. ethernet, GSM, LTE). May be null.
+         * Electrical power supply connection type (e.g. \"PRE\", \"VO\", \"TSK\", \"SŽ\", \"Solární panel\", \"Baterie\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'connection_type'?: string | null;
         /**
-         * Network addressing mode used for the panel connection. May be null.
+         * Power supply mode for the panel (\"Celodenní\", \"Noční\", \"Lze vyčlenit 24x7\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'connection_mode'?: string | null;
         /**
-         * Installation or maintenance priority assigned to this panel. May be null.
+         * Installation or maintenance priority assigned to this panel (\"p1\" to \"p5\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'priority'?: string | null;
         /**
-         * Investor action or project reference linked to this panel. May be null.
+         * Investor responsible for the action linked to this panel (e.g. \"HMP\", \"DPP\", \"MČ\", \"THMP\", \"TSK\", \"ROPID\", \"SŽ\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'investor_action'?: string | null;
         /**
-         * Reference identifier for the design (projekce) request. May be null.
+         * Whether a design (projekce) has been requested (\"ANO\", \"NE\", \"Zrušeno\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'design_request'?: string | null;
         /**
          * Current state of the design phase. May be null.
-         * @type {string}
+         * @type {PhaseStateEnum}
          * @memberof InformationPanel
          */
-        'design_state'?: string | null;
+        'design_state'?: PhaseStateEnum | null;
         /**
          * Order number issued for the design phase. May be null.
          * @type {string}
@@ -1885,17 +1984,17 @@ export namespace GolemioPublicTransportApi {
          */
         'design_order_number'?: string | null;
         /**
-         * Publication reference in the public procurement registry for the design order. May be null.
-         * @type {string}
+         * Whether the design order was published in the public procurement registry. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanel
          */
-        'design_registry_publication'?: string | null;
+        'design_registry_publication'?: YesNoEnum | null;
         /**
-         * Indicates whether the design phase invoice has been paid. May be null.
-         * @type {string}
+         * Whether the design phase invoice has been paid. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanel
          */
-        'design_invoice_paid'?: string | null;
+        'design_invoice_paid'?: YesNoEnum | null;
         /**
          * Order number issued for the production (vyroba) phase. May be null.
          * @type {string}
@@ -1904,22 +2003,22 @@ export namespace GolemioPublicTransportApi {
         'production_order_number'?: string | null;
         /**
          * Current state of the production phase. May be null.
-         * @type {string}
+         * @type {PhaseStateEnum}
          * @memberof InformationPanel
          */
-        'production_state'?: string | null;
+        'production_state'?: PhaseStateEnum | null;
         /**
-         * Publication reference in the public procurement registry for the production order. May be null.
-         * @type {string}
+         * Whether the production order was published in the public procurement registry. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanel
          */
-        'production_registry_publication'?: string | null;
+        'production_registry_publication'?: YesNoEnum | null;
         /**
-         * Indicates whether the production phase invoice has been paid. May be null.
-         * @type {string}
+         * Whether the production phase invoice has been paid. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanel
          */
-        'production_invoice_paid'?: string | null;
+        'production_invoice_paid'?: YesNoEnum | null;
         /**
          * Whether a realization (realizace) request has been raised for this panel. May be null.
          * @type {boolean}
@@ -1928,10 +2027,10 @@ export namespace GolemioPublicTransportApi {
         'realization_request'?: boolean | null;
         /**
          * Current state of the realization phase. May be null.
-         * @type {string}
+         * @type {PhaseStateEnum}
          * @memberof InformationPanel
          */
-        'realization_state'?: string | null;
+        'realization_state'?: PhaseStateEnum | null;
         /**
          * Order number issued for the realization phase. May be null.
          * @type {string}
@@ -1939,17 +2038,17 @@ export namespace GolemioPublicTransportApi {
          */
         'realization_order_number'?: string | null;
         /**
-         * Publication reference in the public procurement registry for the realization order. May be null.
-         * @type {string}
+         * Whether the realization order was published in the public procurement registry. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanel
          */
-        'realization_registry_publication'?: string | null;
+        'realization_registry_publication'?: YesNoEnum | null;
         /**
-         * Indicates whether the realization phase invoice has been paid. May be null.
-         * @type {string}
+         * Whether the realization phase invoice has been paid. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanel
          */
-        'realization_invoice_paid'?: string | null;
+        'realization_invoice_paid'?: YesNoEnum | null;
         /**
          * Accessible name of the stop used in audio announcements for visually impaired passengers. May be null.
          * @type {string}
@@ -1975,13 +2074,13 @@ export namespace GolemioPublicTransportApi {
          */
         'templates'?: string | null;
         /**
-         * Presets assigned to this panel.
+         * Departure preset identifiers assigned to this panel. Null if no presets are configured
          * @type {Array<string>}
          * @memberof InformationPanel
          */
         'presets'?: Array<string> | null;
         /**
-         * Identifier of the data source feeding real-time information to this panel. May be null.
+         * Data source feeding real-time information to this panel (e.g. \"Golemio\", \"MPV\", \"GTFS-RT\", \"CIS\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
@@ -1993,19 +2092,19 @@ export namespace GolemioPublicTransportApi {
          */
         'imsi'?: string | null;
         /**
-         * Identifier of the electrical or network connection point used by this panel. May be null.
+         * Location type where the panel is connected to power (e.g. \"Přístřešek\", \"VO\", \"Soukromá budova\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'connection_point'?: string | null;
         /**
-         * Sequential number of the connection point within its cabinet or junction. May be null.
+         * Identifier of the electrical connection point used by this panel.
          * @type {string}
          * @memberof InformationPanel
          */
         'connection_point_number'?: string | null;
         /**
-         * Type of physical foundation used to mount the panel. May be null.
+         * Type of physical foundation used to mount the panel (\"Klasický\", \"Plochý\", \"Atyp\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
@@ -2059,7 +2158,7 @@ export namespace GolemioPublicTransportApi {
          */
         'insurance'?: boolean | null;
         /**
-         * Whether this panel has been formally handed over to OZP (Odbor zelene a pro verejny prostor) for management. May be null.
+         * Whether this panel has been formally handed over to OZP (Odbor životního prostředí) for management. May be null.
          * @type {boolean}
          * @memberof InformationPanel
          */
@@ -2119,13 +2218,13 @@ export namespace GolemioPublicTransportApi {
          */
         'device_id'?: string | null;
         /**
-         * Node identifier in the ASW (Automatizovany system rizeni) network registry. May be null.
+         * Node identifier in the ASW system. May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'asw_node_id'?: string | null;
         /**
-         * Stop identifier in the ASW network registry. May be null.
+         * Stop identifier from the ASW system on the ASW node. May be null.
          * @type {string}
          * @memberof InformationPanel
          */
@@ -2149,25 +2248,25 @@ export namespace GolemioPublicTransportApi {
          */
         'electricity_supply_contract'?: string | null;
         /**
-         * Scheduled cleaning frequency for this panel. May be null.
+         * Scheduled cleaning frequency for this panel. Free-text field. May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'cleaning_frequency'?: string | null;
         /**
-         * Unit price per kWh charged under the electricity supply contract. Decimal values are permitted. May be null.
+         * Price for electricity consumption (cena za odběr elektřiny). May be null.
          * @type {number}
          * @memberof InformationPanel
          */
         'electricity_consumption_price'?: number | null;
         /**
-         * Type of physical construction used for this panel (e.g. pole_mounted, wall_mounted, freestanding). May be null.
+         * Construction type of the panel (e.g. \"Samostatně stojící\", \"V přístřešku\", \"V označníku\", \"Na konstrukci - VO\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanel
          */
         'construction_type'?: string | null;
         /**
-         * Count of rows for text or data on the panel. The source system stores this with a \"v\" prefix which is stripped on output. May be null.
+         * Number of rows the information panel can display. May be null.
          * @type {number}
          * @memberof InformationPanel
          */
@@ -2227,7 +2326,7 @@ export namespace GolemioPublicTransportApi {
          */
         'owner_contact'?: string | null;
         /**
-         * Internet connectivity type or provider for the panel. May be null.
+         * Internet connectivity type for the panel. May be null.
          * @type {string}
          * @memberof InformationPanel
          */
@@ -2250,6 +2349,12 @@ export namespace GolemioPublicTransportApi {
          * @memberof InformationPanel
          */
         'supported_functions'?: Array<string> | null;
+        /**
+         * Preset routes grouped by preset name.
+         * @type {Array<InformationPanelScopesRoutesInner>}
+         * @memberof InformationPanel
+         */
+        'routes'?: Array<InformationPanelScopesRoutesInner>;
     }
     
     export const InformationPanelKindEnum = {
@@ -2294,29 +2399,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof InformationPanelBase
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof InformationPanelBase
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof InformationPanelBase
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof InformationPanelBase
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -2336,7 +2441,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
@@ -2384,7 +2489,7 @@ export namespace GolemioPublicTransportApi {
          */
         'stop_type'?: Array<string> | null;
         /**
-         * Stop identifier in the THMP (Technicka hromadna mestska preprava) registry. May be null.
+         * Stop identifier in the THMP registry. May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
@@ -2397,10 +2502,10 @@ export namespace GolemioPublicTransportApi {
         'land_parcel_number'?: string | null;
         /**
          * Owner of the land parcel. May be null.
-         * @type {string}
+         * @type {LandOwnerEnum}
          * @memberof InformationPanelBase
          */
-        'land_owner'?: string | null;
+        'land_owner'?: LandOwnerEnum | null;
         /**
          * Average number of passengers boarding at this stop on a workday. Integer count. May be null.
          * @type {number}
@@ -2420,13 +2525,13 @@ export namespace GolemioPublicTransportApi {
          */
         'location_description'?: string | null;
         /**
-         * Reference to the street light pole used to verify installation position. May be null.
-         * @type {string}
+         * Whether the installation position was verified against a street light pole. May be null.
+         * @type {YesNoPlanEnum}
          * @memberof InformationPanelBase
          */
-        'location_verification_on_street_light'?: string | null;
+        'location_verification_on_street_light'?: YesNoPlanEnum | null;
         /**
-         * Type or model of the shelter associated with this panel. May be null.
+         * Type of the stop shelter (přístřešek) associated with this panel (e.g. \"Repasovaný\", \"Olgoj Chorchoj\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
@@ -2444,53 +2549,53 @@ export namespace GolemioPublicTransportApi {
          */
         'street_light_number'?: string | null;
         /**
-         * Type of ground surface at the installation site. May be null.
+         * Type of ground surface at the installation site (e.g. \"Asfalt\", \"Dlažba\", \"Mozaika\", \"Zeleň\", \"VO\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'surface_type'?: string | null;
         /**
-         * Current connectivity state of the panel (e.g. connected, disconnected, pending). May be null.
-         * @type {string}
+         * Whether the panel is connected to power. May be null.
+         * @type {YesNoPlanEnum}
          * @memberof InformationPanelBase
          */
-        'connection_state'?: string | null;
+        'connection_state'?: YesNoPlanEnum | null;
         /**
-         * Technology used for the panel\'s data connection (e.g. ethernet, GSM, LTE). May be null.
+         * Electrical power supply connection type (e.g. \"PRE\", \"VO\", \"TSK\", \"SŽ\", \"Solární panel\", \"Baterie\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'connection_type'?: string | null;
         /**
-         * Network addressing mode used for the panel connection. May be null.
+         * Power supply mode for the panel (\"Celodenní\", \"Noční\", \"Lze vyčlenit 24x7\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'connection_mode'?: string | null;
         /**
-         * Installation or maintenance priority assigned to this panel. May be null.
+         * Installation or maintenance priority assigned to this panel (\"p1\" to \"p5\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'priority'?: string | null;
         /**
-         * Investor action or project reference linked to this panel. May be null.
+         * Investor responsible for the action linked to this panel (e.g. \"HMP\", \"DPP\", \"MČ\", \"THMP\", \"TSK\", \"ROPID\", \"SŽ\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'investor_action'?: string | null;
         /**
-         * Reference identifier for the design (projekce) request. May be null.
+         * Whether a design (projekce) has been requested (\"ANO\", \"NE\", \"Zrušeno\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'design_request'?: string | null;
         /**
          * Current state of the design phase. May be null.
-         * @type {string}
+         * @type {PhaseStateEnum}
          * @memberof InformationPanelBase
          */
-        'design_state'?: string | null;
+        'design_state'?: PhaseStateEnum | null;
         /**
          * Order number issued for the design phase. May be null.
          * @type {string}
@@ -2498,17 +2603,17 @@ export namespace GolemioPublicTransportApi {
          */
         'design_order_number'?: string | null;
         /**
-         * Publication reference in the public procurement registry for the design order. May be null.
-         * @type {string}
+         * Whether the design order was published in the public procurement registry. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanelBase
          */
-        'design_registry_publication'?: string | null;
+        'design_registry_publication'?: YesNoEnum | null;
         /**
-         * Indicates whether the design phase invoice has been paid. May be null.
-         * @type {string}
+         * Whether the design phase invoice has been paid. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanelBase
          */
-        'design_invoice_paid'?: string | null;
+        'design_invoice_paid'?: YesNoEnum | null;
         /**
          * Order number issued for the production (vyroba) phase. May be null.
          * @type {string}
@@ -2517,22 +2622,22 @@ export namespace GolemioPublicTransportApi {
         'production_order_number'?: string | null;
         /**
          * Current state of the production phase. May be null.
-         * @type {string}
+         * @type {PhaseStateEnum}
          * @memberof InformationPanelBase
          */
-        'production_state'?: string | null;
+        'production_state'?: PhaseStateEnum | null;
         /**
-         * Publication reference in the public procurement registry for the production order. May be null.
-         * @type {string}
+         * Whether the production order was published in the public procurement registry. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanelBase
          */
-        'production_registry_publication'?: string | null;
+        'production_registry_publication'?: YesNoEnum | null;
         /**
-         * Indicates whether the production phase invoice has been paid. May be null.
-         * @type {string}
+         * Whether the production phase invoice has been paid. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanelBase
          */
-        'production_invoice_paid'?: string | null;
+        'production_invoice_paid'?: YesNoEnum | null;
         /**
          * Whether a realization (realizace) request has been raised for this panel. May be null.
          * @type {boolean}
@@ -2541,10 +2646,10 @@ export namespace GolemioPublicTransportApi {
         'realization_request'?: boolean | null;
         /**
          * Current state of the realization phase. May be null.
-         * @type {string}
+         * @type {PhaseStateEnum}
          * @memberof InformationPanelBase
          */
-        'realization_state'?: string | null;
+        'realization_state'?: PhaseStateEnum | null;
         /**
          * Order number issued for the realization phase. May be null.
          * @type {string}
@@ -2552,17 +2657,17 @@ export namespace GolemioPublicTransportApi {
          */
         'realization_order_number'?: string | null;
         /**
-         * Publication reference in the public procurement registry for the realization order. May be null.
-         * @type {string}
+         * Whether the realization order was published in the public procurement registry. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanelBase
          */
-        'realization_registry_publication'?: string | null;
+        'realization_registry_publication'?: YesNoEnum | null;
         /**
-         * Indicates whether the realization phase invoice has been paid. May be null.
-         * @type {string}
+         * Whether the realization phase invoice has been paid. May be null.
+         * @type {YesNoEnum}
          * @memberof InformationPanelBase
          */
-        'realization_invoice_paid'?: string | null;
+        'realization_invoice_paid'?: YesNoEnum | null;
         /**
          * Accessible name of the stop used in audio announcements for visually impaired passengers. May be null.
          * @type {string}
@@ -2588,13 +2693,13 @@ export namespace GolemioPublicTransportApi {
          */
         'templates'?: string | null;
         /**
-         * Presets assigned to this panel.
+         * Departure preset identifiers assigned to this panel. Null if no presets are configured
          * @type {Array<string>}
          * @memberof InformationPanelBase
          */
         'presets'?: Array<string> | null;
         /**
-         * Identifier of the data source feeding real-time information to this panel. May be null.
+         * Data source feeding real-time information to this panel (e.g. \"Golemio\", \"MPV\", \"GTFS-RT\", \"CIS\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
@@ -2606,19 +2711,19 @@ export namespace GolemioPublicTransportApi {
          */
         'imsi'?: string | null;
         /**
-         * Identifier of the electrical or network connection point used by this panel. May be null.
+         * Location type where the panel is connected to power (e.g. \"Přístřešek\", \"VO\", \"Soukromá budova\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'connection_point'?: string | null;
         /**
-         * Sequential number of the connection point within its cabinet or junction. May be null.
+         * Identifier of the electrical connection point used by this panel.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'connection_point_number'?: string | null;
         /**
-         * Type of physical foundation used to mount the panel. May be null.
+         * Type of physical foundation used to mount the panel (\"Klasický\", \"Plochý\", \"Atyp\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
@@ -2672,7 +2777,7 @@ export namespace GolemioPublicTransportApi {
          */
         'insurance'?: boolean | null;
         /**
-         * Whether this panel has been formally handed over to OZP (Odbor zelene a pro verejny prostor) for management. May be null.
+         * Whether this panel has been formally handed over to OZP (Odbor životního prostředí) for management. May be null.
          * @type {boolean}
          * @memberof InformationPanelBase
          */
@@ -2732,13 +2837,13 @@ export namespace GolemioPublicTransportApi {
          */
         'device_id'?: string | null;
         /**
-         * Node identifier in the ASW (Automatizovany system rizeni) network registry. May be null.
+         * Node identifier in the ASW system. May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'asw_node_id'?: string | null;
         /**
-         * Stop identifier in the ASW network registry. May be null.
+         * Stop identifier from the ASW system on the ASW node. May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
@@ -2762,25 +2867,25 @@ export namespace GolemioPublicTransportApi {
          */
         'electricity_supply_contract'?: string | null;
         /**
-         * Scheduled cleaning frequency for this panel. May be null.
+         * Scheduled cleaning frequency for this panel. Free-text field. May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'cleaning_frequency'?: string | null;
         /**
-         * Unit price per kWh charged under the electricity supply contract. Decimal values are permitted. May be null.
+         * Price for electricity consumption (cena za odběr elektřiny). May be null.
          * @type {number}
          * @memberof InformationPanelBase
          */
         'electricity_consumption_price'?: number | null;
         /**
-         * Type of physical construction used for this panel (e.g. pole_mounted, wall_mounted, freestanding). May be null.
+         * Construction type of the panel (e.g. \"Samostatně stojící\", \"V přístřešku\", \"V označníku\", \"Na konstrukci - VO\", \"Ostatní\"). May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
         'construction_type'?: string | null;
         /**
-         * Count of rows for text or data on the panel. The source system stores this with a \"v\" prefix which is stripped on output. May be null.
+         * Number of rows the information panel can display. May be null.
          * @type {number}
          * @memberof InformationPanelBase
          */
@@ -2840,7 +2945,7 @@ export namespace GolemioPublicTransportApi {
          */
         'owner_contact'?: string | null;
         /**
-         * Internet connectivity type or provider for the panel. May be null.
+         * Internet connectivity type for the panel. May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
@@ -2877,6 +2982,78 @@ export namespace GolemioPublicTransportApi {
     
     
         /**
+     * Additional resources included when ?scopes=routes is requested. Present only when the panel has presets with associated routes.
+     * @export
+     * @interface InformationPanelScopes
+     */
+    export interface InformationPanelScopes {
+        /**
+         * Preset routes grouped by preset name.
+         * @type {Array<InformationPanelScopesRoutesInner>}
+         * @memberof InformationPanelScopes
+         */
+        'routes'?: Array<InformationPanelScopesRoutesInner>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface InformationPanelScopesRoutesInner
+     */
+    export interface InformationPanelScopesRoutesInner {
+        /**
+         * Name of the preset (matches the presets array value).
+         * @type {string}
+         * @memberof InformationPanelScopesRoutesInner
+         */
+        'route_name': string;
+        /**
+         * Note describing the preset.
+         * @type {string}
+         * @memberof InformationPanelScopesRoutesInner
+         */
+        'note': string;
+        /**
+         * Whether this preset is a testing preset.
+         * @type {boolean}
+         * @memberof InformationPanelScopesRoutesInner
+         */
+        'is_testing': boolean;
+        /**
+         * Routes serving stops in this preset.
+         * @type {Array<InformationPanelScopesRoutesInnerRoutesInner>}
+         * @memberof InformationPanelScopesRoutesInner
+         */
+        'routes': Array<InformationPanelScopesRoutesInnerRoutesInner>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface InformationPanelScopesRoutesInnerRoutesInner
+     */
+    export interface InformationPanelScopesRoutesInnerRoutesInner {
+        /**
+         * Stop identifier in THMP registry.
+         * @type {string}
+         * @memberof InformationPanelScopesRoutesInnerRoutesInner
+         */
+        'stop_id': string;
+        /**
+         * GTFS route type (0 = tram, 1 = metro, 3 = bus, etc.).
+         * @type {number}
+         * @memberof InformationPanelScopesRoutesInnerRoutesInner
+         */
+        'route_type': number;
+        /**
+         * Short name of the route.
+         * @type {string}
+         * @memberof InformationPanelScopesRoutesInnerRoutesInner
+         */
+        'route_short_name': string;
+    }
+    
+        /**
      * 
      * @export
      * @interface InformedEntityRoute
@@ -2909,6 +3086,37 @@ export namespace GolemioPublicTransportApi {
     }
     
     
+    
+        /**
+     * State of the insurance policy for an element.
+     * @export
+     * @enum {string}
+     */
+    
+    export const InsuranceStateEnum = {
+        VPprav: 'V přípravě',
+        Objednno: 'Objednáno',
+        Hotovo: 'Hotovo'
+    } as const;
+    
+    export type InsuranceStateEnum = typeof InsuranceStateEnum[keyof typeof InsuranceStateEnum];
+    
+        /**
+     * Owner of the land parcel (vlastník pozemku). Union of all kind-specific values.
+     * @export
+     * @enum {string}
+     */
+    
+    export const LandOwnerEnum = {
+        Hmp: 'HMP',
+        Passerinvest: 'Passerinvest',
+        S: 'SŽ',
+        D: 'ČD',
+        SoukromOsoba: 'Soukromá osoba',
+        Ostatn: 'Ostatní'
+    } as const;
+    
+    export type LandOwnerEnum = typeof LandOwnerEnum[keyof typeof LandOwnerEnum];
     
         /**
      * 
@@ -3003,6 +3211,56 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
+     * Entity managing the element (správce prvku). Union of all kind-specific values.
+     * @export
+     * @enum {string}
+     */
+    
+    export const ManagerEnum = {
+        Ropid: 'ROPID',
+        Thmp: 'THMP',
+        Tsk: 'TSK',
+        Apex: 'Apex',
+        Arriva: 'Arriva',
+        BigBoard: 'BigBoard',
+        SadKladno: 'ČSAD Kladno',
+        SadStednEchy: 'ČSAD Střední Čechy',
+        Dpp: 'DPP',
+        Idsk: 'IDSK',
+        MstoBNLStBol: 'Město B.n.L.-St.Bol.',
+        MstoBentkyNadJizerou: 'Město Benátky nad Jizerou',
+        MstoBeneov: 'Město Benešov',
+        MstoBeroun: 'Město Beroun',
+        MstoJesenice: 'Město Jesenice',
+        MstoKoln: 'Město Kolín',
+        MstoKralupyNadVltavou: 'Město Kralupy nad Vltavou',
+        MstoMlnk: 'Město Mělník',
+        MstoMnichovoHradit: 'Město Mnichovo Hradiště',
+        MstoPeky: 'Město Pečky',
+        MstoPodbrady: 'Město Poděbrady',
+        MstoPbram: 'Město Příbram',
+        MstoRomitlPodTemnem: 'Město Rožmitál pod Třemšínem',
+        MstoAny: 'Město Říčany',
+        MstoSzava: 'Město Sázava',
+        MstoTt: 'Město Štětí',
+        MstoTnecNadSzavou: 'Město Týnec nad Sázavou',
+        MstoVotice: 'Město Votice',
+        MstoZruNadSzavou: 'Město Zruč nad Sázavou',
+        MstysDavle: 'Městys Davle',
+        ObecBu: 'Obec Buš',
+        ObecDolnBeany: 'Obec Dolní Břežany',
+        ObecMalJezd: 'Obec Malý Újezd',
+        ObecPistoupim: 'Obec Přistoupim',
+        ObecStedokluky: 'Obec Středokluky',
+        ObecVestec: 'Obec Vestec',
+        Passerinvest: 'Passerinvest',
+        S: 'SŽ',
+        Ostatn: 'Ostatní'
+    } as const;
+    
+    export type ManagerEnum = typeof ManagerEnum[keyof typeof ManagerEnum];
+    
+        /**
      * Fully composed obelisk schema for list responses. Combines all writable obelisk-specific fields (ObeliskBase, which itself includes ElementBase) with server-set read-only fields (ElementReadOnly). The id and source_updated_at fields are required on every record returned by the API.
      * @export
      * @interface Obelisk
@@ -3057,29 +3315,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof Obelisk
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof Obelisk
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof Obelisk
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof Obelisk
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -3099,7 +3357,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof Obelisk
          */
@@ -3141,13 +3399,13 @@ export namespace GolemioPublicTransportApi {
          */
         'land_parcel_number'?: string | null;
         /**
-         * Name of the entity that owns the land parcel where the obelisk is installed. May be null.
-         * @type {string}
+         * Owner of the land parcel where the obelisk is installed. May be null.
+         * @type {LandOwnerEnum}
          * @memberof Obelisk
          */
-        'land_owner'?: string | null;
+        'land_owner'?: LandOwnerEnum | null;
         /**
-         * Operational priority assigned to the obelisk for maintenance scheduling purposes. May be null.
+         * Maintenance priority assigned to this obelisk (\"p1\" to \"p5\"). May be null.
          * @type {string}
          * @memberof Obelisk
          */
@@ -3171,13 +3429,13 @@ export namespace GolemioPublicTransportApi {
          */
         'insurance'?: boolean | null;
         /**
-         * Current state of the insurance policy for the obelisk (e.g. ACTIVE, EXPIRED). May be null.
-         * @type {string}
+         * Current state of the insurance policy for the obelisk. May be null.
+         * @type {InsuranceStateEnum}
          * @memberof Obelisk
          */
-        'insurance_state'?: string | null;
+        'insurance_state'?: InsuranceStateEnum | null;
         /**
-         * Indicates whether the obelisk has been formally handed over to the OZP (Odbor zelene a prostredi) department for ongoing management. May be null.
+         * Whether this obelisk has been formally handed over to OZP (Odbor životního prostředí) for management. May be null.
          * @type {boolean}
          * @memberof Obelisk
          */
@@ -3195,7 +3453,7 @@ export namespace GolemioPublicTransportApi {
          */
         'ropid_element_id'?: string | null;
         /**
-         * Type of construction used for the obelisk (e.g. STEEL_FRAME, CONCRETE, COMPOSITE). May be null.
+         * Construction type of the obelisk (\"Široký\", \"Standard\", \"Úzký\"). May be null.
          * @type {string}
          * @memberof Obelisk
          */
@@ -3250,29 +3508,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof ObeliskBase
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof ObeliskBase
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof ObeliskBase
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof ObeliskBase
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -3292,7 +3550,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof ObeliskBase
          */
@@ -3334,13 +3592,13 @@ export namespace GolemioPublicTransportApi {
          */
         'land_parcel_number'?: string | null;
         /**
-         * Name of the entity that owns the land parcel where the obelisk is installed. May be null.
-         * @type {string}
+         * Owner of the land parcel where the obelisk is installed. May be null.
+         * @type {LandOwnerEnum}
          * @memberof ObeliskBase
          */
-        'land_owner'?: string | null;
+        'land_owner'?: LandOwnerEnum | null;
         /**
-         * Operational priority assigned to the obelisk for maintenance scheduling purposes. May be null.
+         * Maintenance priority assigned to this obelisk (\"p1\" to \"p5\"). May be null.
          * @type {string}
          * @memberof ObeliskBase
          */
@@ -3364,13 +3622,13 @@ export namespace GolemioPublicTransportApi {
          */
         'insurance'?: boolean | null;
         /**
-         * Current state of the insurance policy for the obelisk (e.g. ACTIVE, EXPIRED). May be null.
-         * @type {string}
+         * Current state of the insurance policy for the obelisk. May be null.
+         * @type {InsuranceStateEnum}
          * @memberof ObeliskBase
          */
-        'insurance_state'?: string | null;
+        'insurance_state'?: InsuranceStateEnum | null;
         /**
-         * Indicates whether the obelisk has been formally handed over to the OZP (Odbor zelene a prostredi) department for ongoing management. May be null.
+         * Whether this obelisk has been formally handed over to OZP (Odbor životního prostředí) for management. May be null.
          * @type {boolean}
          * @memberof ObeliskBase
          */
@@ -3388,7 +3646,7 @@ export namespace GolemioPublicTransportApi {
          */
         'ropid_element_id'?: string | null;
         /**
-         * Type of construction used for the obelisk (e.g. STEEL_FRAME, CONCRETE, COMPOSITE). May be null.
+         * Construction type of the obelisk (\"Široký\", \"Standard\", \"Úzký\"). May be null.
          * @type {string}
          * @memberof ObeliskBase
          */
@@ -3411,6 +3669,69 @@ export namespace GolemioPublicTransportApi {
     
     export type ObeliskBaseKindEnum = typeof ObeliskBaseKindEnum[keyof typeof ObeliskBaseKindEnum];
     
+    
+        /**
+     * State of the procurement order for an element.
+     * @export
+     * @enum {string}
+     */
+    
+    export const OrderStateEnum = {
+        VPprav: 'V přípravě',
+        Objednno: 'Objednáno',
+        Hotovo: 'Hotovo'
+    } as const;
+    
+    export type OrderStateEnum = typeof OrderStateEnum[keyof typeof OrderStateEnum];
+    
+        /**
+     * Entity owning the element (vlastník prvku). Union of all kind-specific values.
+     * @export
+     * @enum {string}
+     */
+    
+    export const OwnerEnum = {
+        Hmp: 'HMP',
+        Ropid: 'ROPID',
+        Tsk: 'TSK',
+        Dpp: 'DPP',
+        Arriva: 'Arriva',
+        BigBoard: 'BigBoard',
+        SadKladno: 'ČSAD Kladno',
+        SadStednEchy: 'ČSAD Střední Čechy',
+        Idsk: 'IDSK',
+        MstoBNLStBol: 'Město B.n.L.-St.Bol.',
+        MstoBentkyNadJizerou: 'Město Benátky nad Jizerou',
+        MstoBeneov: 'Město Benešov',
+        MstoBeroun: 'Město Beroun',
+        MstoJesenice: 'Město Jesenice',
+        MstoKoln: 'Město Kolín',
+        MstoKralupyNadVltavou: 'Město Kralupy nad Vltavou',
+        MstoMlnk: 'Město Mělník',
+        MstoMnichovoHradit: 'Město Mnichovo Hradiště',
+        MstoPeky: 'Město Pečky',
+        MstoPodbrady: 'Město Poděbrady',
+        MstoPbram: 'Město Příbram',
+        MstoRomitlPodTemnem: 'Město Rožmitál pod Třemšínem',
+        MstoAny: 'Město Říčany',
+        MstoSzava: 'Město Sázava',
+        MstoTt: 'Město Štětí',
+        MstoTnecNadSzavou: 'Město Týnec nad Sázavou',
+        MstoVotice: 'Město Votice',
+        MstoZruNadSzavou: 'Město Zruč nad Sázavou',
+        MstysDavle: 'Městys Davle',
+        ObecBu: 'Obec Buš',
+        ObecDolnBeany: 'Obec Dolní Břežany',
+        ObecMalJezd: 'Obec Malý Újezd',
+        ObecPistoupim: 'Obec Přistoupim',
+        ObecStedokluky: 'Obec Středokluky',
+        ObecVestec: 'Obec Vestec',
+        Passerinvest: 'Passerinvest',
+        S: 'SŽ',
+        Ostatn: 'Ostatní'
+    } as const;
+    
+    export type OwnerEnum = typeof OwnerEnum[keyof typeof OwnerEnum];
     
         /**
      * 
@@ -3903,6 +4224,22 @@ export namespace GolemioPublicTransportApi {
          */
         'short_name': string | null;
     }
+    
+        /**
+     * State of a procurement phase (design, production, or realization).
+     * @export
+     * @enum {string}
+     */
+    
+    export const PhaseStateEnum = {
+        Neobjednno: 'Neobjednáno',
+        VPprav: 'V přípravě',
+        Objednno: 'Objednáno',
+        Probh: 'Probíhá',
+        Hotovo: 'Hotovo'
+    } as const;
+    
+    export type PhaseStateEnum = typeof PhaseStateEnum[keyof typeof PhaseStateEnum];
     
         /**
      * 
@@ -4747,29 +5084,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof Signpost
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof Signpost
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof Signpost
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof Signpost
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -4789,7 +5126,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof Signpost
          */
@@ -4819,7 +5156,7 @@ export namespace GolemioPublicTransportApi {
          */
         'street_name'?: string | null;
         /**
-         * Free-text description of the precise installation location. May be null if not yet recorded.
+         * Free-text description of the precise installation location. May be null.
          * @type {string}
          * @memberof Signpost
          */
@@ -4831,11 +5168,11 @@ export namespace GolemioPublicTransportApi {
          */
         'land_parcel_number'?: string | null;
         /**
-         * Name of the land parcel owner. May be null if ownership has not been determined.
-         * @type {string}
+         * Owner of the land parcel where the signpost is installed. May be null.
+         * @type {LandOwnerEnum}
          * @memberof Signpost
          */
-        'land_owner'?: string | null;
+        'land_owner'?: LandOwnerEnum | null;
         /**
          * Identifier of the street-light pole the signpost is attached to. May be null if not attached to a street-light pole.
          * @type {string}
@@ -4849,7 +5186,7 @@ export namespace GolemioPublicTransportApi {
          */
         'sheet_count'?: number | null;
         /**
-         * Installation or maintenance priority classification assigned to this signpost. May be null.
+         * Maintenance priority assigned to this signpost (\"p1\" to \"p5\"). May be null.
          * @type {string}
          * @memberof Signpost
          */
@@ -4873,13 +5210,13 @@ export namespace GolemioPublicTransportApi {
          */
         'insurance'?: boolean | null;
         /**
-         * Current state of the insurance coverage for the signpost (e.g. ACTIVE, EXPIRED). May be null.
-         * @type {string}
+         * Current state of the insurance coverage for the signpost. May be null.
+         * @type {InsuranceStateEnum}
          * @memberof Signpost
          */
-        'insurance_state'?: string | null;
+        'insurance_state'?: InsuranceStateEnum | null;
         /**
-         * Indicates whether the signpost has been formally handed over to OZP (maintenance department) for ongoing administration. May be null.
+         * Whether this signpost has been formally handed over to OZP (Odbor životního prostředí) for management. May be null.
          * @type {boolean}
          * @memberof Signpost
          */
@@ -4897,7 +5234,7 @@ export namespace GolemioPublicTransportApi {
          */
         'ropid_element_id'?: string | null;
         /**
-         * Type of construction or structural form of the signpost (e.g. STEEL_POLE, WALL_MOUNTED). May be null.
+         * Construction type of the signpost (\"Samostatně stojící\", \"Na konstrukci - VO\", \"Totem\"). May be null.
          * @type {string}
          * @memberof Signpost
          */
@@ -4952,29 +5289,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof SignpostBase
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof SignpostBase
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof SignpostBase
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof SignpostBase
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -4994,7 +5331,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof SignpostBase
          */
@@ -5024,7 +5361,7 @@ export namespace GolemioPublicTransportApi {
          */
         'street_name'?: string | null;
         /**
-         * Free-text description of the precise installation location. May be null if not yet recorded.
+         * Free-text description of the precise installation location. May be null.
          * @type {string}
          * @memberof SignpostBase
          */
@@ -5036,11 +5373,11 @@ export namespace GolemioPublicTransportApi {
          */
         'land_parcel_number'?: string | null;
         /**
-         * Name of the land parcel owner. May be null if ownership has not been determined.
-         * @type {string}
+         * Owner of the land parcel where the signpost is installed. May be null.
+         * @type {LandOwnerEnum}
          * @memberof SignpostBase
          */
-        'land_owner'?: string | null;
+        'land_owner'?: LandOwnerEnum | null;
         /**
          * Identifier of the street-light pole the signpost is attached to. May be null if not attached to a street-light pole.
          * @type {string}
@@ -5054,7 +5391,7 @@ export namespace GolemioPublicTransportApi {
          */
         'sheet_count'?: number | null;
         /**
-         * Installation or maintenance priority classification assigned to this signpost. May be null.
+         * Maintenance priority assigned to this signpost (\"p1\" to \"p5\"). May be null.
          * @type {string}
          * @memberof SignpostBase
          */
@@ -5078,13 +5415,13 @@ export namespace GolemioPublicTransportApi {
          */
         'insurance'?: boolean | null;
         /**
-         * Current state of the insurance coverage for the signpost (e.g. ACTIVE, EXPIRED). May be null.
-         * @type {string}
+         * Current state of the insurance coverage for the signpost. May be null.
+         * @type {InsuranceStateEnum}
          * @memberof SignpostBase
          */
-        'insurance_state'?: string | null;
+        'insurance_state'?: InsuranceStateEnum | null;
         /**
-         * Indicates whether the signpost has been formally handed over to OZP (maintenance department) for ongoing administration. May be null.
+         * Whether this signpost has been formally handed over to OZP (Odbor životního prostředí) for management. May be null.
          * @type {boolean}
          * @memberof SignpostBase
          */
@@ -5102,7 +5439,7 @@ export namespace GolemioPublicTransportApi {
          */
         'ropid_element_id'?: string | null;
         /**
-         * Type of construction or structural form of the signpost (e.g. STEEL_POLE, WALL_MOUNTED). May be null.
+         * Construction type of the signpost (\"Samostatně stojící\", \"Na konstrukci - VO\", \"Totem\"). May be null.
          * @type {string}
          * @memberof SignpostBase
          */
@@ -5198,29 +5535,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof Totem
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof Totem
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof Totem
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof Totem
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -5240,7 +5577,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof Totem
          */
@@ -5264,7 +5601,7 @@ export namespace GolemioPublicTransportApi {
          */
         'handover_date'?: string | null;
         /**
-         * Physical size of the totem\'s display panel (width x height in mm). May be null if not yet specified.
+         * Size of the totem\'s display panel (\"Standard\", \"Atyp\", \"Mini\", \"Menší\"). May be null.
          * @type {string}
          * @memberof Totem
          */
@@ -5276,25 +5613,25 @@ export namespace GolemioPublicTransportApi {
          */
         'locality'?: string | null;
         /**
-         * List of icon identifiers displayed on the totem face (e.g. transit mode icons). May be null if no icons are configured.
+         * List of transit mode icons displayed on the totem face (e.g. \"metro\", \"vlak\", \"S\", \"P+R\"). May be null.
          * @type {Array<string>}
          * @memberof Totem
          */
         'displayed_icon'?: Array<string> | null;
         /**
-         * Transit line identifiers served at or referenced by this totem. May be null.
+         * Metro or rail lines associated with this totem (e.g. \"A\", \"B\", \"C\", \"D\", \"vlak\"). May be null.
          * @type {Array<string>}
          * @memberof Totem
          */
         'line'?: Array<string> | null;
         /**
-         * Installation or operational priority rank for this totem. Integer value; lower numbers indicate higher priority. May be null.
+         * Installation or operational priority rank for this totem (1–5). May be null.
          * @type {number}
          * @memberof Totem
          */
         'priority'?: number | null;
         /**
-         * Free-text record of the site survey result or reference. May be null if no survey has been conducted.
+         * State of the site survey (místní šetření) for this totem (e.g. \"Realizováno\", \"K realizaci\", \"Prověřit - THMP\", \"Nelze osadit\"). May be null.
          * @type {string}
          * @memberof Totem
          */
@@ -5330,11 +5667,11 @@ export namespace GolemioPublicTransportApi {
          */
         'building_permit'?: boolean | null;
         /**
-         * Current state of the building permit process (e.g. PENDING, GRANTED, NOT_REQUIRED). May be null.
-         * @type {string}
+         * Current state of the building permit process. May be null.
+         * @type {BuildingPermitStateEnum}
          * @memberof Totem
          */
-        'building_permit_state'?: string | null;
+        'building_permit_state'?: BuildingPermitStateEnum | null;
         /**
          * Free-text note describing the precise physical placement of the totem at its site. May be null.
          * @type {string}
@@ -5348,11 +5685,11 @@ export namespace GolemioPublicTransportApi {
          */
         'site_survey_report'?: string | null;
         /**
-         * Current state of the procurement order for this totem (e.g. DRAFT, SUBMITTED, IN_PROGRESS, COMPLETED). May be null.
-         * @type {string}
+         * Current state of the procurement order for this totem. May be null.
+         * @type {OrderStateEnum}
          * @memberof Totem
          */
-        'order_state'?: string | null;
+        'order_state'?: OrderStateEnum | null;
         /**
          * Procurement order number associated with this totem. May be null if no order has been raised.
          * @type {string}
@@ -5456,7 +5793,7 @@ export namespace GolemioPublicTransportApi {
          */
         'insurance'?: boolean | null;
         /**
-         * Indicates whether the totem has been formally handed over to the OZP (public space department) for ongoing maintenance. May be null.
+         * Whether this totem has been formally handed over to OZP (Odbor životního prostředí) for management. May be null.
          * @type {boolean}
          * @memberof Totem
          */
@@ -5492,11 +5829,11 @@ export namespace GolemioPublicTransportApi {
          */
         'dpp_priority'?: number | null;
         /**
-         * Current state of the insurance coverage for this totem (e.g. ACTIVE, EXPIRED, NOT_REQUIRED). May be null.
-         * @type {string}
+         * Current state of the insurance coverage for this totem. May be null.
+         * @type {InsuranceStateEnum}
          * @memberof Totem
          */
-        'insurance_state'?: string | null;
+        'insurance_state'?: InsuranceStateEnum | null;
         /**
          * Free-text comments or operational remarks about this totem. May be null.
          * @type {string}
@@ -5504,13 +5841,13 @@ export namespace GolemioPublicTransportApi {
          */
         'comments'?: string | null;
         /**
-         * Node identifier in the ASW (automated stop information system) associated with this totem\'s location. May be null.
+         * Node identifier in the ASW system. May be null.
          * @type {string}
          * @memberof Totem
          */
         'asw_node_id'?: string | null;
         /**
-         * Stop identifier in the ASW system linked to this totem. May be null.
+         * Stop identifier from the ASW system on the ASW node. May be null.
          * @type {string}
          * @memberof Totem
          */
@@ -5522,7 +5859,7 @@ export namespace GolemioPublicTransportApi {
          */
         'power_consumption_watt'?: number | null;
         /**
-         * Element number assigned within the THMP (Technical Management of Public Infrastructure) register. May be null.
+         * Element number assigned within the THMP register. May be null.
          * @type {string}
          * @memberof Totem
          */
@@ -5534,13 +5871,13 @@ export namespace GolemioPublicTransportApi {
          */
         'electricity_supply_contract'?: string | null;
         /**
-         * Scheduled cleaning frequency for this totem (e.g. weekly, monthly, quarterly). May be null.
+         * Scheduled cleaning frequency for this totem. Free-text field. May be null.
          * @type {string}
          * @memberof Totem
          */
         'cleaning_frequency'?: string | null;
         /**
-         * Annual electricity consumption cost for this totem in Czech crowns, excluding VAT. May be null.
+         * Price for electricity consumption (cena za odběr elektřiny). May be null.
          * @type {number}
          * @memberof Totem
          */
@@ -5552,7 +5889,7 @@ export namespace GolemioPublicTransportApi {
          */
         'ropid_element_id'?: string | null;
         /**
-         * Construction or mounting type of the totem (e.g. STANDALONE, POLE_MOUNTED, WALL_MOUNTED). May be null.
+         * Construction type of the totem (\"SS\", \"VO\", \"TV\", \"Digi Panel\"). May be null.
          * @type {string}
          * @memberof Totem
          */
@@ -5613,29 +5950,29 @@ export namespace GolemioPublicTransportApi {
          */
         'name'?: string | null;
         /**
-         * Lifecycle state of the element (e.g. PLANNED, IN_PROGRESS, REALIZED). Sourced from CMS. May be null.
-         * @type {string}
+         * Lifecycle state of the element. May not be null.
+         * @type {ElementStateEnum}
          * @memberof TotemBase
          */
-        'state'?: string | null;
+        'state'?: ElementStateEnum;
         /**
          * Organization or entity that owns the element. May be null.
-         * @type {string}
+         * @type {OwnerEnum}
          * @memberof TotemBase
          */
-        'owner'?: string | null;
+        'owner'?: OwnerEnum | null;
         /**
          * Organization or entity that manages the element. May be null.
-         * @type {string}
+         * @type {ManagerEnum}
          * @memberof TotemBase
          */
-        'manager'?: string | null;
+        'manager'?: ManagerEnum | null;
         /**
          * Prague city district where the element is physically located. May be null.
-         * @type {string}
+         * @type {CityDistrictEnum}
          * @memberof TotemBase
          */
-        'city_district'?: string | null;
+        'city_district'?: CityDistrictEnum | null;
         /**
          * WGS-84 latitude coordinate of the element\'s installation site. May be null if coordinates are not yet surveyed.
          * @type {number}
@@ -5655,7 +5992,7 @@ export namespace GolemioPublicTransportApi {
          */
         'map_link'?: string | null;
         /**
-         * Year in which the element is planned to be realized or installed. Stored as string to accommodate partial or estimated values. May be null.
+         * Year in which the element is planned to be realized or installed. May be null.
          * @type {string}
          * @memberof TotemBase
          */
@@ -5679,7 +6016,7 @@ export namespace GolemioPublicTransportApi {
          */
         'handover_date'?: string | null;
         /**
-         * Physical size of the totem\'s display panel (width x height in mm). May be null if not yet specified.
+         * Size of the totem\'s display panel (\"Standard\", \"Atyp\", \"Mini\", \"Menší\"). May be null.
          * @type {string}
          * @memberof TotemBase
          */
@@ -5691,25 +6028,25 @@ export namespace GolemioPublicTransportApi {
          */
         'locality'?: string | null;
         /**
-         * List of icon identifiers displayed on the totem face (e.g. transit mode icons). May be null if no icons are configured.
+         * List of transit mode icons displayed on the totem face (e.g. \"metro\", \"vlak\", \"S\", \"P+R\"). May be null.
          * @type {Array<string>}
          * @memberof TotemBase
          */
         'displayed_icon'?: Array<string> | null;
         /**
-         * Transit line identifiers served at or referenced by this totem. May be null.
+         * Metro or rail lines associated with this totem (e.g. \"A\", \"B\", \"C\", \"D\", \"vlak\"). May be null.
          * @type {Array<string>}
          * @memberof TotemBase
          */
         'line'?: Array<string> | null;
         /**
-         * Installation or operational priority rank for this totem. Integer value; lower numbers indicate higher priority. May be null.
+         * Installation or operational priority rank for this totem (1–5). May be null.
          * @type {number}
          * @memberof TotemBase
          */
         'priority'?: number | null;
         /**
-         * Free-text record of the site survey result or reference. May be null if no survey has been conducted.
+         * State of the site survey (místní šetření) for this totem (e.g. \"Realizováno\", \"K realizaci\", \"Prověřit - THMP\", \"Nelze osadit\"). May be null.
          * @type {string}
          * @memberof TotemBase
          */
@@ -5745,11 +6082,11 @@ export namespace GolemioPublicTransportApi {
          */
         'building_permit'?: boolean | null;
         /**
-         * Current state of the building permit process (e.g. PENDING, GRANTED, NOT_REQUIRED). May be null.
-         * @type {string}
+         * Current state of the building permit process. May be null.
+         * @type {BuildingPermitStateEnum}
          * @memberof TotemBase
          */
-        'building_permit_state'?: string | null;
+        'building_permit_state'?: BuildingPermitStateEnum | null;
         /**
          * Free-text note describing the precise physical placement of the totem at its site. May be null.
          * @type {string}
@@ -5763,11 +6100,11 @@ export namespace GolemioPublicTransportApi {
          */
         'site_survey_report'?: string | null;
         /**
-         * Current state of the procurement order for this totem (e.g. DRAFT, SUBMITTED, IN_PROGRESS, COMPLETED). May be null.
-         * @type {string}
+         * Current state of the procurement order for this totem. May be null.
+         * @type {OrderStateEnum}
          * @memberof TotemBase
          */
-        'order_state'?: string | null;
+        'order_state'?: OrderStateEnum | null;
         /**
          * Procurement order number associated with this totem. May be null if no order has been raised.
          * @type {string}
@@ -5871,7 +6208,7 @@ export namespace GolemioPublicTransportApi {
          */
         'insurance'?: boolean | null;
         /**
-         * Indicates whether the totem has been formally handed over to the OZP (public space department) for ongoing maintenance. May be null.
+         * Whether this totem has been formally handed over to OZP (Odbor životního prostředí) for management. May be null.
          * @type {boolean}
          * @memberof TotemBase
          */
@@ -5907,11 +6244,11 @@ export namespace GolemioPublicTransportApi {
          */
         'dpp_priority'?: number | null;
         /**
-         * Current state of the insurance coverage for this totem (e.g. ACTIVE, EXPIRED, NOT_REQUIRED). May be null.
-         * @type {string}
+         * Current state of the insurance coverage for this totem. May be null.
+         * @type {InsuranceStateEnum}
          * @memberof TotemBase
          */
-        'insurance_state'?: string | null;
+        'insurance_state'?: InsuranceStateEnum | null;
         /**
          * Free-text comments or operational remarks about this totem. May be null.
          * @type {string}
@@ -5919,13 +6256,13 @@ export namespace GolemioPublicTransportApi {
          */
         'comments'?: string | null;
         /**
-         * Node identifier in the ASW (automated stop information system) associated with this totem\'s location. May be null.
+         * Node identifier in the ASW system. May be null.
          * @type {string}
          * @memberof TotemBase
          */
         'asw_node_id'?: string | null;
         /**
-         * Stop identifier in the ASW system linked to this totem. May be null.
+         * Stop identifier from the ASW system on the ASW node. May be null.
          * @type {string}
          * @memberof TotemBase
          */
@@ -5937,7 +6274,7 @@ export namespace GolemioPublicTransportApi {
          */
         'power_consumption_watt'?: number | null;
         /**
-         * Element number assigned within the THMP (Technical Management of Public Infrastructure) register. May be null.
+         * Element number assigned within the THMP register. May be null.
          * @type {string}
          * @memberof TotemBase
          */
@@ -5949,13 +6286,13 @@ export namespace GolemioPublicTransportApi {
          */
         'electricity_supply_contract'?: string | null;
         /**
-         * Scheduled cleaning frequency for this totem (e.g. weekly, monthly, quarterly). May be null.
+         * Scheduled cleaning frequency for this totem. Free-text field. May be null.
          * @type {string}
          * @memberof TotemBase
          */
         'cleaning_frequency'?: string | null;
         /**
-         * Annual electricity consumption cost for this totem in Czech crowns, excluding VAT. May be null.
+         * Price for electricity consumption (cena za odběr elektřiny). May be null.
          * @type {number}
          * @memberof TotemBase
          */
@@ -5967,7 +6304,7 @@ export namespace GolemioPublicTransportApi {
          */
         'ropid_element_id'?: string | null;
         /**
-         * Construction or mounting type of the totem (e.g. STANDALONE, POLE_MOUNTED, WALL_MOUNTED). May be null.
+         * Construction type of the totem (\"SS\", \"VO\", \"TV\", \"Digi Panel\"). May be null.
          * @type {string}
          * @memberof TotemBase
          */
@@ -7661,6 +7998,33 @@ export namespace GolemioPublicTransportApi {
         'description_en': string;
     }
     
+        /**
+     * Binary yes/no indicator.
+     * @export
+     * @enum {string}
+     */
+    
+    export const YesNoEnum = {
+        Ano: 'ANO',
+        Ne: 'NE'
+    } as const;
+    
+    export type YesNoEnum = typeof YesNoEnum[keyof typeof YesNoEnum];
+    
+        /**
+     * Three-state yes/no/planned indicator.
+     * @export
+     * @enum {string}
+     */
+    
+    export const YesNoPlanEnum = {
+        Ano: 'ANO',
+        Ne: 'NE',
+        VPlnu: 'V PLÁNU'
+    } as const;
+    
+    export type YesNoPlanEnum = typeof YesNoPlanEnum[keyof typeof YesNoPlanEnum];
+    
         
         
                         /**
@@ -7709,7 +8073,25 @@ export namespace GolemioPublicTransportApi {
                 
         
         
-                            
+                                    /**
+         * @export
+         */
+        export const ListInformationPanelsScopesEnum = {
+                Routes: 'routes'
+            } as const;
+        export type ListInformationPanelsScopesEnum = typeof ListInformationPanelsScopesEnum[keyof typeof ListInformationPanelsScopesEnum];
+                        /**
+         * @export
+         */
+        export const ListInformationPanelsStateEnum = {
+                Plnovno: 'Plánováno',
+            VPprav: 'V přípravě',
+            Hotovo: 'Hotovo',
+            Zrueno: 'Zrušeno',
+            Neplnovno: 'Neplánováno'
+            } as const;
+        export type ListInformationPanelsStateEnum = typeof ListInformationPanelsStateEnum[keyof typeof ListInformationPanelsStateEnum];
+                    
         
         /**
          * Query parameters for listInformationPanels operation in FYPRV1Api.
@@ -7740,6 +8122,30 @@ export namespace GolemioPublicTransportApi {
              * @memberof FYPRV1ApiListInformationPanels
              */
             jis?: boolean
+        
+                //scopesisEnumScopesEnum
+            /**
+             * Extend the panel response with related resources. Currently only \&quot;routes\&quot; is supported — adds routes directly to each panel with preset routes grouped by preset name. Only valid for information-panels.
+             * @type     {'routes'}    
+             * @memberof FYPRV1ApiListInformationPanels
+             */
+            scopes?: ListInformationPanelsScopesEnum
+        
+                //stateisEnumStateEnum
+            /**
+             * Filter by element state. Repeat the parameter to match any of several states (e.g. state&#x3D;Hotovo&amp;state&#x3D;Plánováno). Only valid for information-panels.
+             * @type     {Array<'Plánováno' | 'V přípravě' | 'Hotovo' | 'Zrušeno' | 'Neplánováno'>}    
+             * @memberof FYPRV1ApiListInformationPanels
+             */
+            state?: Array<ListInformationPanelsStateEnum>
+        
+                //hasDeviceId
+            /**
+             * Filter by presence of a device_id. true returns only panels that have a device_id; false returns only panels without one. Only valid for information-panels.
+             * @type     {boolean}    
+             * @memberof FYPRV1ApiListInformationPanels
+             */
+            hasDeviceId?: boolean
             }
         
         
@@ -8033,7 +8439,7 @@ export namespace GolemioPublicTransportApi {
                 options: AxiosRequestConfig = {}
             ) {
         
-                                        const localVarPath = `/v1/fypr/elements/information-panels`;
+                                                                const localVarPath = `/v1/fypr/elements/information-panels`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;
@@ -8058,6 +8464,18 @@ export namespace GolemioPublicTransportApi {
         
                         if (queryParams.jis !== undefined) {
                                 requestQueryParameter['jis'] = queryParams.jis;
+                    }
+        
+                        if (queryParams.scopes !== undefined) {
+                                requestQueryParameter['scopes'] = queryParams.scopes;
+                    }
+        
+                    if (queryParams.state) {
+                            requestQueryParameter['state'] = queryParams.state;
+                        }
+            
+                        if (queryParams.hasDeviceId !== undefined) {
+                                requestQueryParameter['hasDeviceId'] = queryParams.hasDeviceId;
                     }
         
                 
@@ -9465,7 +9883,7 @@ export namespace GolemioPublicTransportApi {
         
                 //filter
             /**
-             * stringified json for filter parameters
+             * stringified json for filter parameters. The &#x60;in&#x60; operator expects an array of values (e.g. &#x60;{\&quot;zrizovatel_po\&quot;:{\&quot;in\&quot;:[\&quot;MČ Praha-Vinoř\&quot;,\&quot;Ministerstvo školství, mládeže a tělovýchovy ČR\&quot;]}}&#x60;), which safely supports values containing commas.
              * @type     {string}    
              * @memberof MVTMapsV2ApiV2MvtZXYGet
              */
@@ -10205,7 +10623,7 @@ export namespace GolemioPublicTransportApi {
             }
         
                 /**
-             * **DEPRECATED.** Minimal departure board endpoint backed entirely by Redis cache (no database queries).  Accepts one or more CIS node IDs. One CIS node may map to multiple GTFS stop IDs (e.g. platforms). All stop IDs for a node are resolved and queried together.  Response shape is a strict subset of `/v2/pid/departureboards` — `delay`, `last_stop`, and most `trip` fields are omitted.  The following parameters are hardcoded and cannot be overridden: - `limit`: 15 - `minutesAfter`: 30 - `mode`: `departures` - `filter`: `routeHeadingOnce` - `order`: `real` - `skip`: `canceled` 
+             * **DEPRECATED.** Minimal departure board endpoint backed entirely by Redis cache (no database queries).  Accepts one or more CIS node IDs. One CIS node may map to multiple GTFS stop IDs (e.g. platforms). All stop IDs for a node are resolved and queried together.  Response shape is a strict subset of `/v2/pid/departureboards` — `delay`, `last_stop`, and most `trip` fields are omitted.  The following parameters are hardcoded and cannot be overridden: - `limit`: 15 - `minutesBefore`: -1 (only departures at least 1 minute in the future are returned) - `minutesAfter`: 30 - `mode`: `departures` - `filter`: `routeHeadingOnce` - `order`: `real` - `skip`: `canceled` 
              * @summary [DEPRECATED] GET Departure Boards Minimal
         
                  * @param     {PIDDepartureBoardsV2ApiV2PidDepartureboardsMinimalGetQueryParams}     queryParams Query parameters.

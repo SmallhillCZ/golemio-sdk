@@ -227,11 +227,17 @@ const apiInstance = new FYPRV1Api(configuration);
 let limit: number; //Limits number of retrieved items. (optional) (default to 100)
 let offset: number; //Offset for pagination. The default value is 0. (optional) (default to 0)
 let jis: boolean; //Filter by JIS graphic flag. When true, returns only JIS panels; when false, returns only non-JIS panels. Panels with a null jis_graphic value are excluded when this parameter is provided. Omit to return all panels regardless of JIS status. (optional) (default to undefined)
+let scopes: 'routes'; //Extend the panel response with related resources. Currently only \"routes\" is supported — adds routes directly to each panel with preset routes grouped by preset name. Only valid for information-panels. (optional) (default to undefined)
+let state: Array<'Plánováno' | 'V přípravě' | 'Hotovo' | 'Zrušeno' | 'Neplánováno'>; //Filter by element state. Repeat the parameter to match any of several states (e.g. state=Hotovo&state=Plánováno). Only valid for information-panels. (optional) (default to undefined)
+let hasDeviceId: boolean; //Filter by presence of a device_id. true returns only panels that have a device_id; false returns only panels without one. Only valid for information-panels. (optional) (default to undefined)
 
 const { status, data } = await apiInstance.listInformationPanels(
     limit,
     offset,
-    jis
+    jis,
+    scopes,
+    state,
+    hasDeviceId
 );
 ```
 
@@ -242,6 +248,9 @@ const { status, data } = await apiInstance.listInformationPanels(
 | **limit** | [**number**] | Limits number of retrieved items. | (optional) defaults to 100|
 | **offset** | [**number**] | Offset for pagination. The default value is 0. | (optional) defaults to 0|
 | **jis** | [**boolean**] | Filter by JIS graphic flag. When true, returns only JIS panels; when false, returns only non-JIS panels. Panels with a null jis_graphic value are excluded when this parameter is provided. Omit to return all panels regardless of JIS status. | (optional) defaults to undefined|
+| **scopes** | [**&#39;routes&#39;**]**Array<&#39;routes&#39;>** | Extend the panel response with related resources. Currently only \&quot;routes\&quot; is supported — adds routes directly to each panel with preset routes grouped by preset name. Only valid for information-panels. | (optional) defaults to undefined|
+| **state** | **Array<&#39;Plánováno&#39; &#124; &#39;V přípravě&#39; &#124; &#39;Hotovo&#39; &#124; &#39;Zrušeno&#39; &#124; &#39;Neplánováno&#39;>** | Filter by element state. Repeat the parameter to match any of several states (e.g. state&#x3D;Hotovo&amp;state&#x3D;Plánováno). Only valid for information-panels. | (optional) defaults to undefined|
+| **hasDeviceId** | [**boolean**] | Filter by presence of a device_id. true returns only panels that have a device_id; false returns only panels without one. Only valid for information-panels. | (optional) defaults to undefined|
 
 
 ### Return type

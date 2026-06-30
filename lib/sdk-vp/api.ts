@@ -7083,6 +7083,12 @@ export namespace GolemioPublicTransportApi {
      */
     export interface V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner {
         /**
+         * Unique identifier of the route.
+         * @type {string}
+         * @memberof V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner
+         */
+        'id'?: string;
+        /**
          * 
          * @type {number}
          * @memberof V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner

@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**id** | **string** | Unique identifier of the route. | [optional] [default to undefined]
 **type** | **number** |  | [optional] [default to undefined]
 **name** | **string** |  | [optional] [default to undefined]
 
@@ -14,6 +15,7 @@ Name | Type | Description | Notes
 import { V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner } from 'golemio-public-transport-api';
 
 const instance: V3PidDeparturepresetsGet200ResponseInnerStopsRoutesInnerRoutesInner = {
+    id,
     type,
     name,
 };

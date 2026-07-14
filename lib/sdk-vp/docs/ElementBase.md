@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **city_district** | [**CityDistrictEnum**](CityDistrictEnum.md) | Prague city district where the element is physically located. May be null. | [optional] [default to undefined]
 **lat** | **number** | WGS-84 latitude coordinate of the element\&#39;s installation site. May be null if coordinates are not yet surveyed. | [optional] [default to undefined]
 **lon** | **number** | WGS-84 longitude coordinate of the element\&#39;s installation site. May be null if coordinates are not yet surveyed. | [optional] [default to undefined]
-**map_link** | **string** | URL to an external map view showing the element location. May be null. | [optional] [default to undefined]
+**map_link** | **string** | URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
 **planned_year_of_realization** | **string** | Year in which the element is planned to be realized or installed. May be null. | [optional] [default to undefined]
 **note** | **string** | Free-text operational note attached to the element by field staff. May be null. | [optional] [default to undefined]
 **handover** | **boolean** | Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown. | [optional] [default to undefined]

@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **city_district** | [**CityDistrictEnum**](CityDistrictEnum.md) | Prague city district where the element is physically located. May be null. | [optional] [default to undefined]
 **lat** | **number** | WGS-84 latitude coordinate of the element\&#39;s installation site. May be null if coordinates are not yet surveyed. | [optional] [default to undefined]
 **lon** | **number** | WGS-84 longitude coordinate of the element\&#39;s installation site. May be null if coordinates are not yet surveyed. | [optional] [default to undefined]
-**map_link** | **string** | URL to an external map view showing the element location. May be null. | [optional] [default to undefined]
+**map_link** | **string** | URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
 **planned_year_of_realization** | **string** | Year in which the element is planned to be realized or installed. May be null. | [optional] [default to undefined]
 **note** | **string** | Free-text operational note attached to the element by field staff. May be null. | [optional] [default to undefined]
 **handover** | **boolean** | Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown. | [optional] [default to undefined]
@@ -36,7 +36,7 @@ Name | Type | Description | Notes
 **insurance_state** | [**InsuranceStateEnum**](InsuranceStateEnum.md) | Current state of the insurance policy for the obelisk. May be null. | [optional] [default to undefined]
 **handed_over_to_ozp** | **boolean** | Whether this obelisk has been formally handed over to OZP (Odbor životního prostředí) for management. May be null. | [optional] [default to undefined]
 **comments** | **string** | Free-text comments or operational notes associated with the obelisk. May be null. | [optional] [default to undefined]
-**ropid_element_id** | **string** | Identifier assigned to this element within the ROPID external registry. May be null for elements not yet registered with ROPID. | [optional] [default to undefined]
+**ropid_element_id** | **string** | Identifier assigned to this element within the ROPID external registry. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
 **construction_type** | **string** | Construction type of the obelisk (\&quot;Široký\&quot;, \&quot;Standard\&quot;, \&quot;Úzký\&quot;). May be null. | [optional] [default to undefined]
 **price_without_vat** | **number** | Procurement or installation cost of the obelisk excluding VAT, expressed in the local currency (CZK). May be null if the cost is not recorded. | [optional] [default to undefined]
 

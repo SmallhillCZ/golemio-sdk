@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **city_district** | [**CityDistrictEnum**](CityDistrictEnum.md) | Prague city district where the element is physically located. May be null. | [optional] [default to undefined]
 **lat** | **number** | WGS-84 latitude coordinate of the element\&#39;s installation site. May be null if coordinates are not yet surveyed. | [optional] [default to undefined]
 **lon** | **number** | WGS-84 longitude coordinate of the element\&#39;s installation site. May be null if coordinates are not yet surveyed. | [optional] [default to undefined]
-**map_link** | **string** | URL to an external map view showing the element location. May be null. | [optional] [default to undefined]
+**map_link** | **string** | URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
 **planned_year_of_realization** | **string** | Year in which the element is planned to be realized or installed. May be null. | [optional] [default to undefined]
 **note** | **string** | Free-text operational note attached to the element by field staff. May be null. | [optional] [default to undefined]
 **handover** | **boolean** | Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown. | [optional] [default to undefined]
@@ -28,7 +28,7 @@ Name | Type | Description | Notes
 **stop_name** | **string** | Human-readable name of the stop where the panel is installed. May be null. | [optional] [default to undefined]
 **stop_direction** | **string** | Direction label shown on the panel for the associated stop. May be null. | [optional] [default to undefined]
 **platform_code** | **string** | Platform or stand identifier within the stop. May be null. | [optional] [default to undefined]
-**stop_type** | **Array&lt;string&gt;** | List of transport mode types served at the stop (e.g. bus, tram, metro). May be null. | [optional] [default to undefined]
+**stop_type** | **Array&lt;string&gt;** | Transport mode type at the stop (e.g. bus, tram, metro). The source is single-select, so the array holds at most one value; it remains an array for backward compatibility. May be null. | [optional] [default to undefined]
 **thmp_stop_id** | **string** | Stop identifier in the THMP registry. May be null. | [optional] [default to undefined]
 **land_parcel_number** | **string** | Cadastral parcel number of the land where the panel is installed. May be null. | [optional] [default to undefined]
 **land_owner** | [**LandOwnerEnum**](LandOwnerEnum.md) | Owner of the land parcel. May be null. | [optional] [default to undefined]
@@ -60,8 +60,8 @@ Name | Type | Description | Notes
 **realization_registry_publication** | [**YesNoEnum**](YesNoEnum.md) | Whether the realization order was published in the public procurement registry. May be null. | [optional] [default to undefined]
 **realization_invoice_paid** | [**YesNoEnum**](YesNoEnum.md) | Whether the realization phase invoice has been paid. May be null. | [optional] [default to undefined]
 **name_for_visually_impaired** | **string** | Accessible name of the stop used in audio announcements for visually impaired passengers. May be null. | [optional] [default to undefined]
-**voice_day** | **string** | Voice announcement schedule for daytime operation. May be null. | [optional] [default to undefined]
-**voice_night** | **string** | Voice announcement schedule for night-time operation. May be null. | [optional] [default to undefined]
+**voice_day** | **string** | Voice announcement schedule for daytime operation. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
+**voice_night** | **string** | Voice announcement schedule for night-time operation. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
 **templates** | **string** | Display template identifier or name used to render content on this panel. May be null. | [optional] [default to undefined]
 **presets** | **Array&lt;string&gt;** | Departure preset identifiers assigned to this panel. Null if no presets are configured | [optional] [default to undefined]
 **data_source** | **string** | Data source feeding real-time information to this panel (e.g. \&quot;Golemio\&quot;, \&quot;MPV\&quot;, \&quot;GTFS-RT\&quot;, \&quot;CIS\&quot;, \&quot;Ostatní\&quot;). May be null. | [optional] [default to undefined]
@@ -100,13 +100,14 @@ Name | Type | Description | Notes
 **production_price_without_vat** | **number** | Contracted price for the production phase excluding VAT, in CZK. May be null. | [optional] [default to undefined]
 **realization_price_without_vat** | **number** | Contracted price for the realization phase excluding VAT, in CZK. May be null. | [optional] [default to undefined]
 **serial_number** | **string** | Manufacturer\&#39;s serial number of the panel unit. May be null. | [optional] [default to undefined]
-**producer** | **string** | Name of the panel manufacturer. May be null. | [optional] [default to undefined]
+**producer** | **string** | Name of the panel manufacturer. Deprecated: the source field was removed in Strapi and replaced by supplier; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
+**supplier** | **string** | Name of the supplier of this panel. Replaces producer. May be null. | [optional] [default to undefined]
 **producer_contact_person** | **string** | Contact person at the panel manufacturer. May be null. | [optional] [default to undefined]
 **panel_technology** | **string** | Display technology of the panel (e.g. LCD, e-paper). May be null. | [optional] [default to undefined]
 **panel_model** | **string** | Model designation of the panel unit. May be null. | [optional] [default to undefined]
 **owner_contact** | **string** | Contact information for the element owner. May be null. | [optional] [default to undefined]
 **connectivity_internet** | **string** | Internet connectivity type for the panel. May be null. | [optional] [default to undefined]
-**phone_number** | **string** | Phone number associated with the panel\&#39;s SIM or connectivity. May be null. | [optional] [default to undefined]
+**phone_number** | **string** | Phone number associated with the panel\&#39;s SIM or connectivity. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
 **jis_graphic** | **boolean** | Whether this panel uses JIS (Jednotný Informační Systém) graphics. Sourced from the Strapi boolean field grafika_jis. May be null if not yet set in the source system. | [optional] [default to undefined]
 **supported_functions** | **Array&lt;string&gt;** | List of functions supported by this panel, derived from a multiselect field in Strapi (podporovane_funkce). May be null. | [optional] [default to undefined]
 **routes** | [**Array&lt;InformationPanelScopesRoutesInner&gt;**](InformationPanelScopesRoutesInner.md) | Preset routes grouped by preset name. | [optional] [default to undefined]
@@ -212,6 +213,7 @@ const instance: InformationPanel = {
     realization_price_without_vat,
     serial_number,
     producer,
+    supplier,
     producer_contact_person,
     panel_technology,
     panel_model,

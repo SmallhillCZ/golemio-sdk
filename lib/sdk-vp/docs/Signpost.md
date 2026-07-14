@@ -20,7 +20,7 @@ Name | Type | Description | Notes
 **city_district** | [**CityDistrictEnum**](CityDistrictEnum.md) | Prague city district where the element is physically located. May be null. | [optional] [default to undefined]
 **lat** | **number** | WGS-84 latitude coordinate of the element\&#39;s installation site. May be null if coordinates are not yet surveyed. | [optional] [default to undefined]
 **lon** | **number** | WGS-84 longitude coordinate of the element\&#39;s installation site. May be null if coordinates are not yet surveyed. | [optional] [default to undefined]
-**map_link** | **string** | URL to an external map view showing the element location. May be null. | [optional] [default to undefined]
+**map_link** | **string** | URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
 **planned_year_of_realization** | **string** | Year in which the element is planned to be realized or installed. May be null. | [optional] [default to undefined]
 **note** | **string** | Free-text operational note attached to the element by field staff. May be null. | [optional] [default to undefined]
 **handover** | **boolean** | Indicates whether the element has been handed over to the maintenance team. May be null if handover status is unknown. | [optional] [default to undefined]
@@ -38,7 +38,7 @@ Name | Type | Description | Notes
 **insurance_state** | [**InsuranceStateEnum**](InsuranceStateEnum.md) | Current state of the insurance coverage for the signpost. May be null. | [optional] [default to undefined]
 **handed_over_to_ozp** | **boolean** | Whether this signpost has been formally handed over to OZP (Odbor životního prostředí) for management. May be null. | [optional] [default to undefined]
 **comments** | **string** | Free-text comments or operational notes recorded by field staff. May be null. | [optional] [default to undefined]
-**ropid_element_id** | **string** | Identifier assigned to this signpost within the ROPID system. May be null if no ROPID identifier has been assigned. | [optional] [default to undefined]
+**ropid_element_id** | **string** | Identifier assigned to this signpost within the ROPID system. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
 **construction_type** | **string** | Construction type of the signpost (\&quot;Samostatně stojící\&quot;, \&quot;Na konstrukci - VO\&quot;, \&quot;Totem\&quot;). May be null. | [optional] [default to undefined]
 **price_without_vat** | **number** | Procurement or installation price of the signpost, excluding VAT. Currency is CZK. May be null if pricing data is unavailable. | [optional] [default to undefined]
 

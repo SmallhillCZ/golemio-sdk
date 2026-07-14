@@ -25,6 +25,7 @@ export type { ConfigurationParameters as GolemioPublicTransportApiConfiguration 
 export class GolemioPublicTransportApi {
         FYPRV1Api: GolemioPublicTransportApi.FYPRV1Api;
         GTFSRealtimeV2Api: GolemioPublicTransportApi.GTFSRealtimeV2Api;
+        GTFSRealtimeV2InternalApi: GolemioPublicTransportApi.GTFSRealtimeV2InternalApi;
         GTFSStaticV2Api: GolemioPublicTransportApi.GTFSStaticV2Api;
         JISV1InternalApi: GolemioPublicTransportApi.JISV1InternalApi;
         MVTMapsV2Api: GolemioPublicTransportApi.MVTMapsV2Api;
@@ -44,6 +45,7 @@ export class GolemioPublicTransportApi {
 
             this.FYPRV1Api = new GolemioPublicTransportApi.FYPRV1Api(configuration, axios!);
             this.GTFSRealtimeV2Api = new GolemioPublicTransportApi.GTFSRealtimeV2Api(configuration, axios!);
+            this.GTFSRealtimeV2InternalApi = new GolemioPublicTransportApi.GTFSRealtimeV2InternalApi(configuration, axios!);
             this.GTFSStaticV2Api = new GolemioPublicTransportApi.GTFSStaticV2Api(configuration, axios!);
             this.JISV1InternalApi = new GolemioPublicTransportApi.JISV1InternalApi(configuration, axios!);
             this.MVTMapsV2Api = new GolemioPublicTransportApi.MVTMapsV2Api(configuration, axios!);
@@ -254,9 +256,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof DisplayCase
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -302,7 +305,7 @@ export namespace GolemioPublicTransportApi {
          */
         'platform_code'?: string | null;
         /**
-         * List of transport mode types served by the associated stop (e.g. bus, tram, metro). May be null if stop type is unknown.
+         * Transport mode type at the associated stop (e.g. bus, tram, metro). The source is single-select, so the array holds at most one value; it remains an array for backward compatibility. May be null.
          * @type {Array<string>}
          * @memberof DisplayCase
          */
@@ -368,9 +371,10 @@ export namespace GolemioPublicTransportApi {
          */
         'street_name'?: string | null;
         /**
-         * Element identifier assigned by ROPID (Prague Integrated Transport organizer). May be null if not yet registered with ROPID.
+         * Element identifier assigned by ROPID (Prague Integrated Transport organizer). Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof DisplayCase
+         * @deprecated
          */
         'ropid_element_id'?: string | null;
         /**
@@ -477,9 +481,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof DisplayCaseBase
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -525,7 +530,7 @@ export namespace GolemioPublicTransportApi {
          */
         'platform_code'?: string | null;
         /**
-         * List of transport mode types served by the associated stop (e.g. bus, tram, metro). May be null if stop type is unknown.
+         * Transport mode type at the associated stop (e.g. bus, tram, metro). The source is single-select, so the array holds at most one value; it remains an array for backward compatibility. May be null.
          * @type {Array<string>}
          * @memberof DisplayCaseBase
          */
@@ -591,9 +596,10 @@ export namespace GolemioPublicTransportApi {
          */
         'street_name'?: string | null;
         /**
-         * Element identifier assigned by ROPID (Prague Integrated Transport organizer). May be null if not yet registered with ROPID.
+         * Element identifier assigned by ROPID (Prague Integrated Transport organizer). Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof DisplayCaseBase
+         * @deprecated
          */
         'ropid_element_id'?: string | null;
         /**
@@ -720,9 +726,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof ElementBase
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -1816,9 +1823,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof InformationPanel
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -1864,7 +1872,7 @@ export namespace GolemioPublicTransportApi {
          */
         'platform_code'?: string | null;
         /**
-         * List of transport mode types served at the stop (e.g. bus, tram, metro). May be null.
+         * Transport mode type at the stop (e.g. bus, tram, metro). The source is single-select, so the array holds at most one value; it remains an array for backward compatibility. May be null.
          * @type {Array<string>}
          * @memberof InformationPanel
          */
@@ -2056,15 +2064,17 @@ export namespace GolemioPublicTransportApi {
          */
         'name_for_visually_impaired'?: string | null;
         /**
-         * Voice announcement schedule for daytime operation. May be null.
+         * Voice announcement schedule for daytime operation. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof InformationPanel
+         * @deprecated
          */
         'voice_day'?: string | null;
         /**
-         * Voice announcement schedule for night-time operation. May be null.
+         * Voice announcement schedule for night-time operation. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof InformationPanel
+         * @deprecated
          */
         'voice_night'?: string | null;
         /**
@@ -2296,11 +2306,18 @@ export namespace GolemioPublicTransportApi {
          */
         'serial_number'?: string | null;
         /**
-         * Name of the panel manufacturer. May be null.
+         * Name of the panel manufacturer. Deprecated: the source field was removed in Strapi and replaced by supplier; always null for newly synced data, retained for backward compatibility.
+         * @type {string}
+         * @memberof InformationPanel
+         * @deprecated
+         */
+        'producer'?: string | null;
+        /**
+         * Name of the supplier of this panel. Replaces producer. May be null.
          * @type {string}
          * @memberof InformationPanel
          */
-        'producer'?: string | null;
+        'supplier'?: string | null;
         /**
          * Contact person at the panel manufacturer. May be null.
          * @type {string}
@@ -2332,9 +2349,10 @@ export namespace GolemioPublicTransportApi {
          */
         'connectivity_internet'?: string | null;
         /**
-         * Phone number associated with the panel\'s SIM or connectivity. May be null.
+         * Phone number associated with the panel\'s SIM or connectivity. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof InformationPanel
+         * @deprecated
          */
         'phone_number'?: string | null;
         /**
@@ -2435,9 +2453,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof InformationPanelBase
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -2483,7 +2502,7 @@ export namespace GolemioPublicTransportApi {
          */
         'platform_code'?: string | null;
         /**
-         * List of transport mode types served at the stop (e.g. bus, tram, metro). May be null.
+         * Transport mode type at the stop (e.g. bus, tram, metro). The source is single-select, so the array holds at most one value; it remains an array for backward compatibility. May be null.
          * @type {Array<string>}
          * @memberof InformationPanelBase
          */
@@ -2675,15 +2694,17 @@ export namespace GolemioPublicTransportApi {
          */
         'name_for_visually_impaired'?: string | null;
         /**
-         * Voice announcement schedule for daytime operation. May be null.
+         * Voice announcement schedule for daytime operation. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof InformationPanelBase
+         * @deprecated
          */
         'voice_day'?: string | null;
         /**
-         * Voice announcement schedule for night-time operation. May be null.
+         * Voice announcement schedule for night-time operation. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof InformationPanelBase
+         * @deprecated
          */
         'voice_night'?: string | null;
         /**
@@ -2915,11 +2936,18 @@ export namespace GolemioPublicTransportApi {
          */
         'serial_number'?: string | null;
         /**
-         * Name of the panel manufacturer. May be null.
+         * Name of the panel manufacturer. Deprecated: the source field was removed in Strapi and replaced by supplier; always null for newly synced data, retained for backward compatibility.
+         * @type {string}
+         * @memberof InformationPanelBase
+         * @deprecated
+         */
+        'producer'?: string | null;
+        /**
+         * Name of the supplier of this panel. Replaces producer. May be null.
          * @type {string}
          * @memberof InformationPanelBase
          */
-        'producer'?: string | null;
+        'supplier'?: string | null;
         /**
          * Contact person at the panel manufacturer. May be null.
          * @type {string}
@@ -2951,9 +2979,10 @@ export namespace GolemioPublicTransportApi {
          */
         'connectivity_internet'?: string | null;
         /**
-         * Phone number associated with the panel\'s SIM or connectivity. May be null.
+         * Phone number associated with the panel\'s SIM or connectivity. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof InformationPanelBase
+         * @deprecated
          */
         'phone_number'?: string | null;
         /**
@@ -3051,6 +3080,12 @@ export namespace GolemioPublicTransportApi {
          * @memberof InformationPanelScopesRoutesInnerRoutesInner
          */
         'route_short_name': string;
+        /**
+         * GTFS route identifier (e.g. L22 for tram 22, L991 for metro A, L992 for metro B).
+         * @type {string}
+         * @memberof InformationPanelScopesRoutesInnerRoutesInner
+         */
+        'route_id': string;
     }
     
         /**
@@ -3351,9 +3386,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof Obelisk
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -3447,9 +3483,10 @@ export namespace GolemioPublicTransportApi {
          */
         'comments'?: string | null;
         /**
-         * Identifier assigned to this element within the ROPID external registry. May be null for elements not yet registered with ROPID.
+         * Identifier assigned to this element within the ROPID external registry. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof Obelisk
+         * @deprecated
          */
         'ropid_element_id'?: string | null;
         /**
@@ -3544,9 +3581,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof ObeliskBase
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -3640,9 +3678,10 @@ export namespace GolemioPublicTransportApi {
          */
         'comments'?: string | null;
         /**
-         * Identifier assigned to this element within the ROPID external registry. May be null for elements not yet registered with ROPID.
+         * Identifier assigned to this element within the ROPID external registry. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof ObeliskBase
+         * @deprecated
          */
         'ropid_element_id'?: string | null;
         /**
@@ -5120,9 +5159,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof Signpost
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -5228,9 +5268,10 @@ export namespace GolemioPublicTransportApi {
          */
         'comments'?: string | null;
         /**
-         * Identifier assigned to this signpost within the ROPID system. May be null if no ROPID identifier has been assigned.
+         * Identifier assigned to this signpost within the ROPID system. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof Signpost
+         * @deprecated
          */
         'ropid_element_id'?: string | null;
         /**
@@ -5325,9 +5366,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof SignpostBase
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -5433,9 +5475,10 @@ export namespace GolemioPublicTransportApi {
          */
         'comments'?: string | null;
         /**
-         * Identifier assigned to this signpost within the ROPID system. May be null if no ROPID identifier has been assigned.
+         * Identifier assigned to this signpost within the ROPID system. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof SignpostBase
+         * @deprecated
          */
         'ropid_element_id'?: string | null;
         /**
@@ -5571,9 +5614,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof Totem
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -5739,7 +5783,7 @@ export namespace GolemioPublicTransportApi {
          */
         'stop_name'?: string | null;
         /**
-         * List of transport mode types at the associated stop (e.g. bus, tram, metro). May be null.
+         * Transport mode type at the associated stop (e.g. bus, tram, metro). The source is single-select, so the array holds at most one value; it remains an array for backward compatibility. May be null.
          * @type {Array<string>}
          * @memberof Totem
          */
@@ -5883,9 +5927,10 @@ export namespace GolemioPublicTransportApi {
          */
         'electricity_consumption_price'?: number | null;
         /**
-         * Element identifier assigned by ROPID in their own internal register. May be null.
+         * Element identifier assigned by ROPID in their own internal register. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof Totem
+         * @deprecated
          */
         'ropid_element_id'?: string | null;
         /**
@@ -5986,9 +6031,10 @@ export namespace GolemioPublicTransportApi {
          */
         'lon'?: number | null;
         /**
-         * URL to an external map view showing the element location. May be null.
+         * URL to an external map view showing the element location. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof TotemBase
+         * @deprecated
          */
         'map_link'?: string | null;
         /**
@@ -6154,7 +6200,7 @@ export namespace GolemioPublicTransportApi {
          */
         'stop_name'?: string | null;
         /**
-         * List of transport mode types at the associated stop (e.g. bus, tram, metro). May be null.
+         * Transport mode type at the associated stop (e.g. bus, tram, metro). The source is single-select, so the array holds at most one value; it remains an array for backward compatibility. May be null.
          * @type {Array<string>}
          * @memberof TotemBase
          */
@@ -6298,9 +6344,10 @@ export namespace GolemioPublicTransportApi {
          */
         'electricity_consumption_price'?: number | null;
         /**
-         * Element identifier assigned by ROPID in their own internal register. May be null.
+         * Element identifier assigned by ROPID in their own internal register. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility.
          * @type {string}
          * @memberof TotemBase
+         * @deprecated
          */
         'ropid_element_id'?: string | null;
         /**
@@ -8807,6 +8854,64 @@ export namespace GolemioPublicTransportApi {
             ) {
         
                 const localVarPath = `/v2/vehiclepositions/gtfsrt/vehicle_positions.pb`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                    
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<File>(axiosRequestConfig);
+            }
+            }
+        
+        
+                
+        
+        
+            
+        /**
+         * GTFSRealtimeV2InternalApi - object-oriented interface
+         * @export
+         * @class GTFSRealtimeV2InternalApi
+         * @extends {BaseAPI}
+         */
+        export class GTFSRealtimeV2InternalApi extends BaseAPI {
+        
+            constructor(protected override configuration: GolemioPublicTransportApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
+                super(configuration, configuration.basePath, axios);
+            }
+        
+            /**
+             * Experimental feed with infotext alerts targeted at specific stops for e-paper displays. Uses stopId in informedEntity instead of routeId.
+             * @summary GET GTFS-RT Display Alerts Feed
+        
+                 * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof GTFSRealtimeV2InternalApi
+             */
+            
+            public async v2VehiclepositionsGtfsrtPidDisplayAlertsPbGet(
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                const localVarPath = `/v2/vehiclepositions/gtfsrt/pid_display_alerts.pb`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;

@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **description_html** | [**EventCustomFormatDescriptionHtml**](EventCustomFormatDescriptionHtml.md) |  | [default to undefined]
 **organization_name** | **string** |  | [default to undefined]
 **informed_entity** | [**EventCustomFormatInformedEntity**](EventCustomFormatInformedEntity.md) |  | [default to undefined]
+**attachments** | [**Array&lt;EventCustomFormatAttachmentsInner&gt;**](EventCustomFormatAttachmentsInner.md) | Downloadable documents/links attached to the event. Inline images are not included here. | [default to undefined]
 **last_modified_timestamp** | **string** | Timestamp from when the event was last modified in VYMI | [default to undefined]
 **created_timestamp** | **string** | Timestamp from when the event was created in VYMI | [default to undefined]
 
@@ -40,6 +41,7 @@ const instance: EventCustomFormat = {
     description_html,
     organization_name,
     informed_entity,
+    attachments,
     last_modified_timestamp,
     created_timestamp,
 };

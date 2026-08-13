@@ -1,20 +1,20 @@
-# EventCustomFormatCause
+# EventCustomFormatAttachmentsInnerName
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**cs** | **string** |  | [default to undefined]
+**cs** | **string** |  | [optional] [default to undefined]
 **en** | **string** |  | [optional] [default to undefined]
-**de** | **string** | Provisional German translation pending official values; prefixed with \&quot;TMP:\&quot;. | [optional] [default to undefined]
+**de** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
 ```typescript
-import { EventCustomFormatCause } from 'golemio-public-transport-api';
+import { EventCustomFormatAttachmentsInnerName } from 'golemio-public-transport-api';
 
-const instance: EventCustomFormatCause = {
+const instance: EventCustomFormatAttachmentsInnerName = {
     cs,
     en,
     de,

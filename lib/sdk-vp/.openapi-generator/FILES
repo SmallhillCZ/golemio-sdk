@@ -17,6 +17,8 @@ docs/ElementReadOnly.md
 docs/ElementStateEnum.md
 docs/EventCustomFormat.md
 docs/EventCustomFormatActivePeriod.md
+docs/EventCustomFormatAttachmentsInner.md
+docs/EventCustomFormatAttachmentsInnerName.md
 docs/EventCustomFormatCause.md
 docs/EventCustomFormatCauseDetail.md
 docs/EventCustomFormatDescriptionHtml.md

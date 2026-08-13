@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **cs** | **string** | Event description in Czech in HTML format | [default to undefined]
 **en** | **string** | Event description in English in HTML format | [optional] [default to undefined]
+**de** | **string** | Event description in German in HTML format | [optional] [default to undefined]
 
 ## Example
 
@@ -17,6 +18,7 @@ import { EventCustomFormatDescriptionHtml } from 'golemio-public-transport-api';
 const instance: EventCustomFormatDescriptionHtml = {
     cs,
     en,
+    de,
 };
 ```
 

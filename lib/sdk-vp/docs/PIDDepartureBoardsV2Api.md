@@ -171,7 +171,7 @@ const { status, data } = await apiInstance.v2PidDepartureboardsMinimalGet(
 # **v2PidDepartureboardsXmlGet**
 > string v2PidDepartureboardsXmlGet()
 
-**DEPRECATED.** Legacy MPVnet XML for ROPID information panels that cannot consume JSON. For new integrations use `/v2/pid/departureboards` (JSON).  UTF-8, no `<?xml ...?>` prologue. Only `mode=departures` is supported (others return 400). Same query parameters and identifier rules as the JSON endpoint (`ids` / `cisIds` / `aswIds` / `names`, at least one required, max 100 stops).  See the example response below for the exact attribute set. 
+**DEPRECATED.** Legacy MPVnet XML for ROPID information panels that cannot consume JSON. For new integrations use `/v2/pid/departureboards` (JSON).  UTF-8, no `<?xml ...?>` prologue. Only `mode=departures` is supported (others return 400). Same query parameters and identifier rules as the JSON endpoint (`ids` / `cisIds` / `aswIds` / `names`, at least one required, max 100 stops).  See the example response below for the exact attribute set.  **Error responses on this endpoint are XML** (see the `400`, `404`, `413` and `500` responses below), except for errors raised before the request reaches this endpoint\'s handler (e.g. authentication failures) — those still return the standard JSON error envelope. 
 
 ### Example
 
@@ -273,6 +273,8 @@ const { status, data } = await apiInstance.v2PidDepartureboardsXmlGet(
 |**400** | Bad request - invalid query parameters |  -  |
 |**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
 |**404** | Not found |  -  |
+|**413** | Payload too large |  -  |
+|**500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

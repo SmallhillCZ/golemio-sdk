@@ -902,6 +902,12 @@ export namespace GolemioPublicTransportApi {
          */
         'informed_entity': EventCustomFormatInformedEntity | null;
         /**
+         * Downloadable documents/links attached to the event. Inline images are not included here.
+         * @type {Array<EventCustomFormatAttachmentsInner>}
+         * @memberof EventCustomFormat
+         */
+        'attachments': Array<EventCustomFormatAttachmentsInner>;
+        /**
          * Timestamp from when the event was last modified in VYMI
          * @type {string}
          * @memberof EventCustomFormat
@@ -954,6 +960,52 @@ export namespace GolemioPublicTransportApi {
         /**
      * 
      * @export
+     * @interface EventCustomFormatAttachmentsInner
+     */
+    export interface EventCustomFormatAttachmentsInner {
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatAttachmentsInner
+         */
+        'url': string;
+        /**
+         * 
+         * @type {EventCustomFormatAttachmentsInnerName}
+         * @memberof EventCustomFormatAttachmentsInner
+         */
+        'name'?: EventCustomFormatAttachmentsInnerName;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EventCustomFormatAttachmentsInnerName
+     */
+    export interface EventCustomFormatAttachmentsInnerName {
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatAttachmentsInnerName
+         */
+        'cs'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatAttachmentsInnerName
+         */
+        'en'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatAttachmentsInnerName
+         */
+        'de'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
      * @interface EventCustomFormatCause
      */
     export interface EventCustomFormatCause {
@@ -969,6 +1021,12 @@ export namespace GolemioPublicTransportApi {
          * @memberof EventCustomFormatCause
          */
         'en'?: string | null;
+        /**
+         * Provisional German translation pending official values; prefixed with \"TMP:\".
+         * @type {string}
+         * @memberof EventCustomFormatCause
+         */
+        'de'?: string | null;
     }
     
         /**
@@ -1009,6 +1067,12 @@ export namespace GolemioPublicTransportApi {
          * @memberof EventCustomFormatDescriptionHtml
          */
         'en'?: string | null;
+        /**
+         * Event description in German in HTML format
+         * @type {string}
+         * @memberof EventCustomFormatDescriptionHtml
+         */
+        'de'?: string | null;
     }
     
         /**
@@ -1029,6 +1093,12 @@ export namespace GolemioPublicTransportApi {
          * @memberof EventCustomFormatDescriptionText
          */
         'en'?: string | null;
+        /**
+         * Event description in German in plain text
+         * @type {string}
+         * @memberof EventCustomFormatDescriptionText
+         */
+        'de'?: string | null;
     }
     
         /**
@@ -1069,6 +1139,12 @@ export namespace GolemioPublicTransportApi {
          * @memberof EventCustomFormatHeaderText
          */
         'en'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EventCustomFormatHeaderText
+         */
+        'de'?: string | null;
     }
     
         /**
@@ -10781,7 +10857,7 @@ export namespace GolemioPublicTransportApi {
             }
         
                 /**
-             * **DEPRECATED.** Legacy MPVnet XML for ROPID information panels that cannot consume JSON. For new integrations use `/v2/pid/departureboards` (JSON).  UTF-8, no `<?xml ...?>` prologue. Only `mode=departures` is supported (others return 400). Same query parameters and identifier rules as the JSON endpoint (`ids` / `cisIds` / `aswIds` / `names`, at least one required, max 100 stops).  See the example response below for the exact attribute set. 
+             * **DEPRECATED.** Legacy MPVnet XML for ROPID information panels that cannot consume JSON. For new integrations use `/v2/pid/departureboards` (JSON).  UTF-8, no `<?xml ...?>` prologue. Only `mode=departures` is supported (others return 400). Same query parameters and identifier rules as the JSON endpoint (`ids` / `cisIds` / `aswIds` / `names`, at least one required, max 100 stops).  See the example response below for the exact attribute set.  **Error responses on this endpoint are XML** (see the `400`, `404`, `413` and `500` responses below), except for errors raised before the request reaches this endpoint\'s handler (e.g. authentication failures) — those still return the standard JSON error envelope. 
              * @summary [DEPRECATED] GET Departure Boards (legacy MPVnet XML)
         
                  * @param     {PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGetQueryParams}     queryParams Query parameters.

@@ -1,4 +1,4 @@
-# V2EnergeticsDevicesGet401Response
+# V2EnergeticsDedBuildingsGet401Response
 
 
 ## Properties
@@ -12,9 +12,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { V2EnergeticsDevicesGet401Response } from 'golemio-api';
+import { V2EnergeticsDedBuildingsGet401Response } from 'golemio-api';
 
-const instance: V2EnergeticsDevicesGet401Response = {
+const instance: V2EnergeticsDedBuildingsGet401Response = {
     error_message,
     error_status,
     error_info,

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **cs** | **string** |  | [default to undefined]
 **en** | **string** |  | [optional] [default to undefined]
+**de** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -16,6 +17,7 @@ import { EventCustomFormatHeaderText } from 'golemio-public-transport-api';
 const instance: EventCustomFormatHeaderText = {
     cs,
     en,
+    de,
 };
 ```
 

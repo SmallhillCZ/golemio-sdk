@@ -26,6 +26,7 @@ export class GolemioApi {
         AirQualityV2Api: GolemioApi.AirQualityV2Api;
         BicycleCountersV2Api: GolemioApi.BicycleCountersV2Api;
         BulkyWasteV1Api: GolemioApi.BulkyWasteV1Api;
+        EnergeticsDeDV2Api: GolemioApi.EnergeticsDeDV2Api;
         EnergeticsV2Api: GolemioApi.EnergeticsV2Api;
         FloatingCarDataV2Api: GolemioApi.FloatingCarDataV2Api;
         GBFSV2Api: GolemioApi.GBFSV2Api;
@@ -60,6 +61,7 @@ export class GolemioApi {
             this.AirQualityV2Api = new GolemioApi.AirQualityV2Api(configuration, axios!);
             this.BicycleCountersV2Api = new GolemioApi.BicycleCountersV2Api(configuration, axios!);
             this.BulkyWasteV1Api = new GolemioApi.BulkyWasteV1Api(configuration, axios!);
+            this.EnergeticsDeDV2Api = new GolemioApi.EnergeticsDeDV2Api(configuration, axios!);
             this.EnergeticsV2Api = new GolemioApi.EnergeticsV2Api(configuration, axios!);
             this.FloatingCarDataV2Api = new GolemioApi.FloatingCarDataV2Api(configuration, axios!);
             this.GBFSV2Api = new GolemioApi.GBFSV2Api(configuration, axios!);
@@ -1943,6 +1945,214 @@ export namespace GolemioApi {
         /**
      * 
      * @export
+     * @interface EnergeticsDedBuildingSearch
+     */
+    export interface EnergeticsDedBuildingSearch {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsDedBuildingSearch
+         */
+        'query': string;
+        /**
+         * True when the query resolved to an exact EAN, EIC, OM identifier or GID. In that case the results contain only exact matches.
+         * @type {boolean}
+         * @memberof EnergeticsDedBuildingSearch
+         */
+        'matched_exactly': boolean;
+        /**
+         * 
+         * @type {Array<EnergeticsDedBuildingSearchResult>}
+         * @memberof EnergeticsDedBuildingSearch
+         */
+        'results': Array<EnergeticsDedBuildingSearchResult>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EnergeticsDedBuildingSearchResult
+     */
+    export interface EnergeticsDedBuildingSearchResult {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'gid': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'name': string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'designation': string | null;
+        /**
+         * Evidenční jednotka (eno_ciselnik_evidencni_jednotka) resolved through eno_majetek; null when the building has no majetek record. Its name is part of the search vector.
+         * @type {EnergeticsEnoRegistrationUnit}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'registration_unit': EnergeticsEnoRegistrationUnit | null;
+        /**
+         * Main address of the building.
+         * @type {string}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'address': string | null;
+        /**
+         * Every distinct address of the building, the main one first.
+         * @type {Array<string>}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'addresses': Array<string>;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'matched_by': EnergeticsDedBuildingSearchResultMatchedByEnum;
+        /**
+         * The identifier that matched. Null for non-exact matches.
+         * @type {string}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'matched_value': string | null;
+        /**
+         * Relevance score. Exact matches always score 1000.
+         * @type {number}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'score': number;
+        /**
+         * 
+         * @type {EnergeticsDedBuildingSearchResultIdentifiers}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'identifiers': EnergeticsDedBuildingSearchResultIdentifiers;
+        /**
+         * 
+         * @type {EnergeticsDedBuildingSearchResultGeometry}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'geometry': EnergeticsDedBuildingSearchResultGeometry | null;
+        /**
+         * [minLon, minLat, maxLon, maxLat] in WGS84, for zooming the map.
+         * @type {Array<number>}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'bbox': Array<number> | null;
+        /**
+         * 
+         * @type {EnergeticsDedBuildingSearchResultCentroid}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'centroid': EnergeticsDedBuildingSearchResultCentroid | null;
+        /**
+         * Source of the geometry, null when the building has none.
+         * @type {string}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'geometry_source': string | null;
+        /**
+         * False when the GID is known only through the consumption-point mapping or Porsenna and has no eno_budova record. Such results are ranked below described buildings.
+         * @type {boolean}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'has_building_record': boolean;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'active_points_count': number;
+    }
+    
+    export const EnergeticsDedBuildingSearchResultMatchedByEnum = {
+        Ean: 'ean',
+        Eic: 'eic',
+        Om: 'om',
+        Gid: 'gid',
+        Name: 'name',
+        Address: 'address'
+    } as const;
+    
+    export type EnergeticsDedBuildingSearchResultMatchedByEnum = typeof EnergeticsDedBuildingSearchResultMatchedByEnum[keyof typeof EnergeticsDedBuildingSearchResultMatchedByEnum];
+    
+    
+        /**
+     * 
+     * @export
+     * @interface EnergeticsDedBuildingSearchResultCentroid
+     */
+    export interface EnergeticsDedBuildingSearchResultCentroid {
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsDedBuildingSearchResultCentroid
+         */
+        'lat'?: number;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsDedBuildingSearchResultCentroid
+         */
+        'lon'?: number;
+    }
+    
+        /**
+     * Building outline as GeoJSON geometry in WGS84 (EPSG:4326).
+     * @export
+     * @interface EnergeticsDedBuildingSearchResultGeometry
+     */
+    export interface EnergeticsDedBuildingSearchResultGeometry {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsDedBuildingSearchResultGeometry
+         */
+        'type'?: string;
+        /**
+         * 
+         * @type {Array<any>}
+         * @memberof EnergeticsDedBuildingSearchResultGeometry
+         */
+        'coordinates'?: Array<any>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EnergeticsDedBuildingSearchResultIdentifiers
+     */
+    export interface EnergeticsDedBuildingSearchResultIdentifiers {
+        /**
+         * 
+         * @type {Array<string>}
+         * @memberof EnergeticsDedBuildingSearchResultIdentifiers
+         */
+        'ean'?: Array<string>;
+        /**
+         * 
+         * @type {Array<string>}
+         * @memberof EnergeticsDedBuildingSearchResultIdentifiers
+         */
+        'eic'?: Array<string>;
+        /**
+         * 
+         * @type {Array<string>}
+         * @memberof EnergeticsDedBuildingSearchResultIdentifiers
+         */
+        'om'?: Array<string>;
+    }
+    
+        /**
+     * 
+     * @export
      * @interface EnergeticsDevice
      */
     export interface EnergeticsDevice {
@@ -2030,6 +2240,613 @@ export namespace GolemioApi {
          * @memberof EnergeticsDevice
          */
         'building_id'?: number | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EnergeticsEnoBuildingDetail
+     */
+    export interface EnergeticsEnoBuildingDetail {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'gid'?: string;
+        /**
+         * 
+         * @type {EnergeticsEnoBuildingDetailBuilding}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'building'?: EnergeticsEnoBuildingDetailBuilding | null;
+        /**
+         * 
+         * @type {EnergeticsEnoBuildingDetailProperty}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'property'?: EnergeticsEnoBuildingDetailProperty | null;
+        /**
+         * 
+         * @type {Array<EnergeticsEnoBuildingDetailAddressesInner>}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'addresses'?: Array<EnergeticsEnoBuildingDetailAddressesInner>;
+        /**
+         * 
+         * @type {EnergeticsEnoBuildingDetailEnergyManagement}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'energy_management'?: EnergeticsEnoBuildingDetailEnergyManagement | null;
+        /**
+         * 
+         * @type {Array<EnergeticsEnoConsumptionPoint>}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'consumption_points'?: Array<EnergeticsEnoConsumptionPoint>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EnergeticsEnoBuildingDetailAddressesInner
+     */
+    export interface EnergeticsEnoBuildingDetailAddressesInner {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailAddressesInner
+         */
+        'popis'?: string | null;
+        /**
+         * 
+         * @type {boolean}
+         * @memberof EnergeticsEnoBuildingDetailAddressesInner
+         */
+        'hlavni'?: boolean | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailAddressesInner
+         */
+        'poradi'?: number;
+    }
+    
+        /**
+     * All available eno_budova attributes (Czech identifiers mirror the upstream ENO source). Null when the GID has no ENO building record and is known only through the consumption-point mapping.
+     * @export
+     * @interface EnergeticsEnoBuildingDetailBuilding
+     */
+    export interface EnergeticsEnoBuildingDetailBuilding {
+        [key: string]: any;
+    
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'zdroj'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'nazev'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'oznaceni'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'druh_vytapeni'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'pripojka_elektro'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'pripojka_voda'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'pripojka_kanalizace'?: string | null;
+    }
+    
+        /**
+     * Porsenna (e-manazer) tracking summary; null when the building is not tracked there
+     * @export
+     * @interface EnergeticsEnoBuildingDetailEnergyManagement
+     */
+    export interface EnergeticsEnoBuildingDetailEnergyManagement {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailEnergyManagement
+         */
+        'source'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailEnergyManagement
+         */
+        'building_name'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailEnergyManagement
+         */
+        'address'?: string | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailEnergyManagement
+         */
+        'devices_total'?: number;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailEnergyManagement
+         */
+        'devices_active'?: number;
+    }
+    
+        /**
+     * ENO lookup data (eno_ciselnik_*) resolved through the building\'s eno_majetek record. Null when the building has no majetek record.
+     * @export
+     * @interface EnergeticsEnoBuildingDetailProperty
+     */
+    export interface EnergeticsEnoBuildingDetailProperty {
+        /**
+         * Evidenční jednotka (eno_ciselnik_evidencni_jednotka).
+         * @type {EnergeticsEnoRegistrationUnit}
+         * @memberof EnergeticsEnoBuildingDetailProperty
+         */
+        'registration_unit'?: EnergeticsEnoRegistrationUnit | null;
+        /**
+         * 
+         * @type {EnergeticsEnoBuildingDetailPropertyManagers}
+         * @memberof EnergeticsEnoBuildingDetailProperty
+         */
+        'managers'?: EnergeticsEnoBuildingDetailPropertyManagers;
+    }
+    
+        /**
+     * Správci (eno_ciselnik_spravce) from the mandate and accounting-unit references.
+     * @export
+     * @interface EnergeticsEnoBuildingDetailPropertyManagers
+     */
+    export interface EnergeticsEnoBuildingDetailPropertyManagers {
+        /**
+         * 
+         * @type {EnergeticsEnoBuildingDetailPropertyManagersMandate}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagers
+         */
+        'mandate'?: EnergeticsEnoBuildingDetailPropertyManagersMandate | null;
+        /**
+         * 
+         * @type {EnergeticsEnoBuildingDetailPropertyManagersAccountingUnit}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagers
+         */
+        'accounting_unit'?: EnergeticsEnoBuildingDetailPropertyManagersAccountingUnit | null;
+    }
+    
+        /**
+     * Správce referenced by eno_majetek.id_maj_spravce_ucet_jednotka.
+     * @export
+     * @interface EnergeticsEnoBuildingDetailPropertyManagersAccountingUnit
+     */
+    export interface EnergeticsEnoBuildingDetailPropertyManagersAccountingUnit {
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersAccountingUnit
+         */
+        'id'?: number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersAccountingUnit
+         */
+        'kod'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersAccountingUnit
+         */
+        'nazev'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersAccountingUnit
+         */
+        'ic'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersAccountingUnit
+         */
+        'dic'?: string | null;
+    }
+    
+        /**
+     * Správce referenced by eno_majetek.id_maj_spravce_mandatni.
+     * @export
+     * @interface EnergeticsEnoBuildingDetailPropertyManagersMandate
+     */
+    export interface EnergeticsEnoBuildingDetailPropertyManagersMandate {
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersMandate
+         */
+        'id'?: number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersMandate
+         */
+        'kod'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersMandate
+         */
+        'nazev'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersMandate
+         */
+        'ic'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailPropertyManagersMandate
+         */
+        'dic'?: string | null;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EnergeticsEnoConsumptionPoint
+     */
+    export interface EnergeticsEnoConsumptionPoint {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'place_id'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'id_type'?: EnergeticsEnoConsumptionPointIdTypeEnum;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'commodity'?: EnergeticsEnoConsumptionPointCommodityEnum;
+        /**
+         * 
+         * @type {boolean}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'is_first_gid'?: boolean;
+        /**
+         * Derived from valid_to (null or in the future means the mapping is active)
+         * @type {boolean}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'is_active'?: boolean;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'link_source'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'valid_from'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'valid_to'?: string | null;
+        /**
+         * Consumption point address from the best available source
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'address'?: string | null;
+        /**
+         * 
+         * @type {EnergeticsEnoConsumptionPointElectricity}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'electricity'?: EnergeticsEnoConsumptionPointElectricity;
+        /**
+         * 
+         * @type {EnergeticsEnoConsumptionPointGas}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'gas'?: EnergeticsEnoConsumptionPointGas;
+        /**
+         * 
+         * @type {EnergeticsEnoConsumptionPointHeat}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'heat'?: EnergeticsEnoConsumptionPointHeat;
+        /**
+         * 
+         * @type {EnergeticsEnoConsumptionPointWater}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'water'?: EnergeticsEnoConsumptionPointWater;
+    }
+    
+    export const EnergeticsEnoConsumptionPointIdTypeEnum = {
+        Ean: 'ean',
+        Eic: 'eic',
+        Om: 'om'
+    } as const;
+    
+    export type EnergeticsEnoConsumptionPointIdTypeEnum = typeof EnergeticsEnoConsumptionPointIdTypeEnum[keyof typeof EnergeticsEnoConsumptionPointIdTypeEnum];
+    export const EnergeticsEnoConsumptionPointCommodityEnum = {
+        Electricity: 'electricity',
+        Gas: 'gas',
+        Heat: 'heat',
+        Water: 'water'
+    } as const;
+    
+    export type EnergeticsEnoConsumptionPointCommodityEnum = typeof EnergeticsEnoConsumptionPointCommodityEnum[keyof typeof EnergeticsEnoConsumptionPointCommodityEnum];
+    
+    
+        /**
+     * Electricity-specific data (present only for commodity = electricity, omitted otherwise)
+     * @export
+     * @interface EnergeticsEnoConsumptionPointElectricity
+     */
+    export interface EnergeticsEnoConsumptionPointElectricity {
+        /**
+         * Latest available month of PRE metadata for the EAN
+         * @type {{ [key: string]: any; }}
+         * @memberof EnergeticsEnoConsumptionPointElectricity
+         */
+        'metadata'?: { [key: string]: any; } | null;
+        /**
+         * 
+         * @type {EnergeticsEnoPorsennaBlock}
+         * @memberof EnergeticsEnoConsumptionPointElectricity
+         */
+        'porsenna'?: EnergeticsEnoPorsennaBlock;
+    }
+    
+        /**
+     * Gas-specific data (present only for commodity = gas, omitted otherwise)
+     * @export
+     * @interface EnergeticsEnoConsumptionPointGas
+     */
+    export interface EnergeticsEnoConsumptionPointGas {
+        /**
+         * 
+         * @type {EnergeticsEnoPorsennaBlock}
+         * @memberof EnergeticsEnoConsumptionPointGas
+         */
+        'porsenna'?: EnergeticsEnoPorsennaBlock;
+        /**
+         * 
+         * @type {EnergeticsEnoConsumptionPointGasDistribution}
+         * @memberof EnergeticsEnoConsumptionPointGas
+         */
+        'distribution'?: EnergeticsEnoConsumptionPointGasDistribution | null;
+        /**
+         * 
+         * @type {EnergeticsEnoConsumptionPointGasCommercial}
+         * @memberof EnergeticsEnoConsumptionPointGas
+         */
+        'commercial'?: EnergeticsEnoConsumptionPointGasCommercial | null;
+    }
+    
+        /**
+     * Latest non-canceled PPAS commercial invoice with its installation, devices and prices
+     * @export
+     * @interface EnergeticsEnoConsumptionPointGasCommercial
+     */
+    export interface EnergeticsEnoConsumptionPointGasCommercial {
+        /**
+         * 
+         * @type {{ [key: string]: any; }}
+         * @memberof EnergeticsEnoConsumptionPointGasCommercial
+         */
+        'invoice'?: { [key: string]: any; };
+        /**
+         * 
+         * @type {{ [key: string]: any; }}
+         * @memberof EnergeticsEnoConsumptionPointGasCommercial
+         */
+        'installation'?: { [key: string]: any; };
+        /**
+         * 
+         * @type {Array<{ [key: string]: any; }>}
+         * @memberof EnergeticsEnoConsumptionPointGasCommercial
+         */
+        'devices'?: Array<{ [key: string]: any; }>;
+        /**
+         * 
+         * @type {Array<{ [key: string]: any; }>}
+         * @memberof EnergeticsEnoConsumptionPointGasCommercial
+         */
+        'prices'?: Array<{ [key: string]: any; }>;
+    }
+    
+        /**
+     * Latest non-canceled PPAS distribution invoice with its installation, devices and prices
+     * @export
+     * @interface EnergeticsEnoConsumptionPointGasDistribution
+     */
+    export interface EnergeticsEnoConsumptionPointGasDistribution {
+        /**
+         * 
+         * @type {{ [key: string]: any; }}
+         * @memberof EnergeticsEnoConsumptionPointGasDistribution
+         */
+        'invoice'?: { [key: string]: any; };
+        /**
+         * 
+         * @type {{ [key: string]: any; }}
+         * @memberof EnergeticsEnoConsumptionPointGasDistribution
+         */
+        'installation'?: { [key: string]: any; };
+        /**
+         * 
+         * @type {Array<{ [key: string]: any; }>}
+         * @memberof EnergeticsEnoConsumptionPointGasDistribution
+         */
+        'devices'?: Array<{ [key: string]: any; }>;
+        /**
+         * 
+         * @type {Array<{ [key: string]: any; }>}
+         * @memberof EnergeticsEnoConsumptionPointGasDistribution
+         */
+        'prices'?: Array<{ [key: string]: any; }>;
+    }
+    
+        /**
+     * Heat-specific data (present only for commodity = heat, omitted otherwise; Porsenna-sourced)
+     * @export
+     * @interface EnergeticsEnoConsumptionPointHeat
+     */
+    export interface EnergeticsEnoConsumptionPointHeat {
+        /**
+         * 
+         * @type {EnergeticsEnoPorsennaBlock}
+         * @memberof EnergeticsEnoConsumptionPointHeat
+         */
+        'porsenna'?: EnergeticsEnoPorsennaBlock;
+    }
+    
+        /**
+     * Water-specific data (present only for commodity = water, omitted otherwise; Porsenna-sourced)
+     * @export
+     * @interface EnergeticsEnoConsumptionPointWater
+     */
+    export interface EnergeticsEnoConsumptionPointWater {
+        /**
+         * 
+         * @type {EnergeticsEnoPorsennaBlock}
+         * @memberof EnergeticsEnoConsumptionPointWater
+         */
+        'porsenna'?: EnergeticsEnoPorsennaBlock;
+    }
+    
+        /**
+     * Porsenna (e-manazer) device detail with sub-meters and yearly consumption aggregates
+     * @export
+     * @interface EnergeticsEnoPorsennaBlock
+     */
+    export interface EnergeticsEnoPorsennaBlock {
+        /**
+         * 
+         * @type {{ [key: string]: any; }}
+         * @memberof EnergeticsEnoPorsennaBlock
+         */
+        'device'?: { [key: string]: any; };
+        /**
+         * 
+         * @type {Array<{ [key: string]: any; }>}
+         * @memberof EnergeticsEnoPorsennaBlock
+         */
+        'sub_devices'?: Array<{ [key: string]: any; }>;
+        /**
+         * 
+         * @type {Array<EnergeticsEnoPorsennaBlockYearlyConsumptionInner>}
+         * @memberof EnergeticsEnoPorsennaBlock
+         */
+        'yearly_consumption'?: Array<EnergeticsEnoPorsennaBlockYearlyConsumptionInner>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EnergeticsEnoPorsennaBlockYearlyConsumptionInner
+     */
+    export interface EnergeticsEnoPorsennaBlockYearlyConsumptionInner {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoPorsennaBlockYearlyConsumptionInner
+         */
+        'period'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoPorsennaBlockYearlyConsumptionInner
+         */
+        'value'?: number;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoPorsennaBlockYearlyConsumptionInner
+         */
+        'unit'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoPorsennaBlockYearlyConsumptionInner
+         */
+        'days_covered'?: number | null;
+    }
+    
+        /**
+     * Evidenční jednotka (eno_ciselnik_evidencni_jednotka) resolved through the building\'s eno_majetek record. The same shape is returned by the search and the detail endpoint.
+     * @export
+     * @interface EnergeticsEnoRegistrationUnit
+     */
+    export interface EnergeticsEnoRegistrationUnit {
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoRegistrationUnit
+         */
+        'id': number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoRegistrationUnit
+         */
+        'kod': string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoRegistrationUnit
+         */
+        'nazev': string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoRegistrationUnit
+         */
+        'typ': string | null;
     }
     
         /**
@@ -8559,25 +9376,25 @@ export namespace GolemioApi {
         /**
      * 
      * @export
-     * @interface V2EnergeticsDevicesDeviceIdGet404Response
+     * @interface V2EnergeticsDedBuildingsGet400Response
      */
-    export interface V2EnergeticsDevicesDeviceIdGet404Response {
+    export interface V2EnergeticsDedBuildingsGet400Response {
         /**
          * 
          * @type {string}
-         * @memberof V2EnergeticsDevicesDeviceIdGet404Response
+         * @memberof V2EnergeticsDedBuildingsGet400Response
          */
         'error_message'?: string;
         /**
          * 
          * @type {number}
-         * @memberof V2EnergeticsDevicesDeviceIdGet404Response
+         * @memberof V2EnergeticsDedBuildingsGet400Response
          */
         'error_status'?: number;
         /**
          * 
          * @type {string}
-         * @memberof V2EnergeticsDevicesDeviceIdGet404Response
+         * @memberof V2EnergeticsDedBuildingsGet400Response
          */
         'error_info'?: string;
     }
@@ -8585,25 +9402,25 @@ export namespace GolemioApi {
         /**
      * 
      * @export
-     * @interface V2EnergeticsDevicesGet401Response
+     * @interface V2EnergeticsDedBuildingsGet401Response
      */
-    export interface V2EnergeticsDevicesGet401Response {
+    export interface V2EnergeticsDedBuildingsGet401Response {
         /**
          * 
          * @type {string}
-         * @memberof V2EnergeticsDevicesGet401Response
+         * @memberof V2EnergeticsDedBuildingsGet401Response
          */
         'error_message'?: string;
         /**
          * 
          * @type {number}
-         * @memberof V2EnergeticsDevicesGet401Response
+         * @memberof V2EnergeticsDedBuildingsGet401Response
          */
         'error_status'?: number;
         /**
          * 
          * @type {string}
-         * @memberof V2EnergeticsDevicesGet401Response
+         * @memberof V2EnergeticsDedBuildingsGet401Response
          */
         'error_info'?: string;
     }
@@ -8611,25 +9428,51 @@ export namespace GolemioApi {
         /**
      * 
      * @export
-     * @interface V2EnergeticsDevicesGet500Response
+     * @interface V2EnergeticsDedBuildingsGet500Response
      */
-    export interface V2EnergeticsDevicesGet500Response {
+    export interface V2EnergeticsDedBuildingsGet500Response {
         /**
          * 
          * @type {string}
-         * @memberof V2EnergeticsDevicesGet500Response
+         * @memberof V2EnergeticsDedBuildingsGet500Response
          */
         'error_message'?: string;
         /**
          * 
          * @type {number}
-         * @memberof V2EnergeticsDevicesGet500Response
+         * @memberof V2EnergeticsDedBuildingsGet500Response
          */
         'error_status'?: number;
         /**
          * 
          * @type {string}
-         * @memberof V2EnergeticsDevicesGet500Response
+         * @memberof V2EnergeticsDedBuildingsGet500Response
+         */
+        'error_info'?: string;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface V2EnergeticsDedBuildingsGidGet404Response
+     */
+    export interface V2EnergeticsDedBuildingsGidGet404Response {
+        /**
+         * 
+         * @type {string}
+         * @memberof V2EnergeticsDedBuildingsGidGet404Response
+         */
+        'error_message'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof V2EnergeticsDedBuildingsGidGet404Response
+         */
+        'error_status'?: number;
+        /**
+         * 
+         * @type {string}
+         * @memberof V2EnergeticsDedBuildingsGidGet404Response
          */
         'error_info'?: string;
     }
@@ -8640,32 +9483,6 @@ export namespace GolemioApi {
      * @interface V2EnergeticsOrganizationsGet200Response
      */
     export interface V2EnergeticsOrganizationsGet200Response {
-    }
-    
-        /**
-     * 
-     * @export
-     * @interface V2EnergeticsOrganizationsOrganizationIdGet400Response
-     */
-    export interface V2EnergeticsOrganizationsOrganizationIdGet400Response {
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsOrganizationsOrganizationIdGet400Response
-         */
-        'error_message'?: string;
-        /**
-         * 
-         * @type {number}
-         * @memberof V2EnergeticsOrganizationsOrganizationIdGet400Response
-         */
-        'error_status'?: number;
-        /**
-         * 
-         * @type {string}
-         * @memberof V2EnergeticsOrganizationsOrganizationIdGet400Response
-         */
-        'error_info'?: string;
     }
     
         /**
@@ -10391,6 +11208,149 @@ export namespace GolemioApi {
                 axiosRequestConfig["baseURL"] = this.configuration.basePath;
                 
                 return this.axios.request<BulkyContainer>(axiosRequestConfig);
+            }
+            }
+        
+        
+                        
+        
+        /**
+         * Query parameters for v2EnergeticsDedBuildingsGet operation in EnergeticsDeDV2Api.
+         * @export
+         * @interface EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGetQueryParams
+         */
+        export interface EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGetQueryParams {
+            //q
+            /**
+             * Search text — name, address, GID, EAN, EIC or OM identifier.
+             * @type     {string}    
+             * @memberof EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGet
+             */
+            q: string
+        
+                //limit
+            /**
+             * Maximum number of suggestions returned.
+             * @type     {number}    
+             * @memberof EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGet
+             */
+            limit?: number
+            }
+        
+        
+                    
+        
+        
+            
+        /**
+         * EnergeticsDeDV2Api - object-oriented interface
+         * @export
+         * @class EnergeticsDeDV2Api
+         * @extends {BaseAPI}
+         */
+        export class EnergeticsDeDV2Api extends BaseAPI {
+        
+            constructor(protected override configuration: GolemioApiConfiguration, protected override axios: AxiosInstance = globalAxios) {
+                super(configuration, configuration.basePath, axios);
+            }
+        
+            /**
+             * Suggestion endpoint for the DeD map. A single free-text query `q` is matched against the building name, its addresses, the GID and the identifiers of every consumption point mapped to the building. Matching runs in two tiers. An exact match on an EAN, EIC, OM identifier or GID is returned on its own — fuzzy candidates are dropped entirely and `matched_exactly` is `true`. Note that one identifier can be mapped to several buildings, so an exact match may still return more than one result; the map should zoom automatically only when exactly one result is returned. Otherwise results are ranked by a weighted full-text and trigram score over the name (highest weight), the main address, the secondary addresses and the identifiers. Queries typed without Czech diacritics match normally. Every result carries the building outline as GeoJSON together with its bounding box and centroid, all in WGS84 (EPSG:4326), so the map can zoom to a hit. They are `null` when the building has no usable geometry, signalled by `geometry_source: null`.
+             * @summary Search buildings by name, address, GID, EAN, EIC or OM identifier
+        
+                 * @param     {EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGetQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof EnergeticsDeDV2Api
+             */
+            
+            public async v2EnergeticsDedBuildingsGet(
+                queryParams: EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGetQueryParams,
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                    // verify required parameter 'q' is not null or undefined
+                assertParamExists('v2EnergeticsDedBuildingsGet', 'q', queryParams.q)
+                
+                            const localVarPath = `/v2/energetics/ded/buildings`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.q !== undefined) {
+                                requestQueryParameter['q'] = queryParams.q;
+                    }
+        
+                        if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<EnergeticsDedBuildingSearch>(axiosRequestConfig);
+            }
+        
+                /**
+             * Returns the ENO building (eno_budova) identified by GID together with its addresses and all consumption points mapped to it. Commodity-specific data is nested under the `electricity`/`gas`/`heat`/`water` keys of each consumption point; only the key matching the `commodity` field is present, the others are omitted entirely. Consumption points come from two independent sources: the energobroker mapping (EAN/EIC, enriched with PRE metadata and PPAS invoices) and Porsenna e-manazer devices (`link_source: porsenna`) — heat and water meters, plus any EAN/EIC the mapping lacks. An OM known to both sources is returned once, with the Porsenna data nested as a `porsenna` sub-block (device, sub-meters, yearly consumption) inside its commodity block. Buildings tracked in Porsenna also carry an `energy_management` summary. The endpoint returns whatever data exists for the GID: if there is any building record, address, or consumption point, the response is 200 with the missing parts as `null` or empty arrays (e.g. `building: null` when only consumption points or addresses are known). 404 is returned only when no source holds any data for the GID.
+             * @summary ENO building detail with consumption points (OM) and technical parameters
+        
+             * @param     {string}     gid 
+                 * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof EnergeticsDeDV2Api
+             */
+            
+            public async v2EnergeticsDedBuildingsGidGet(
+                gid: string,
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                    // verify required parameter 'gid' is not null or undefined
+                assertParamExists('v2EnergeticsDedBuildingsGidGet', 'gid', gid)
+                
+                    const localVarPath = `/v2/energetics/ded/buildings/{gid}`
+                    .replace(`{${"gid"}}`, encodeURIComponent(String(gid)));
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                    
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<EnergeticsEnoBuildingDetail>(axiosRequestConfig);
             }
             }
         

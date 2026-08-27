@@ -114,6 +114,7 @@ Name | Type | Description | Notes
 **phone_number** | **string** | Phone number associated with the panel\&#39;s SIM or connectivity. Deprecated: the source field was removed in Strapi; always null for newly synced data, retained for backward compatibility. | [optional] [default to undefined]
 **jis_graphic** | **boolean** | Whether this panel uses JIS (Jednotný Informační Systém) graphics. Sourced from the Strapi boolean field grafika_jis. May be null if not yet set in the source system. | [optional] [default to undefined]
 **supported_functions** | **Array&lt;string&gt;** | List of functions supported by this panel, derived from a multiselect field in Strapi (podporovane_funkce). May be null. | [optional] [default to undefined]
+**device_status** | [**DeviceStatus**](DeviceStatus.md) | Latest DCIP status for the panel\&#39;s device_id, or null when no status has been reported for that device. Only present when ?scopes&#x3D;device_status is requested. | [optional] [default to undefined]
 **routes** | [**Array&lt;InformationPanelScopesRoutesInner&gt;**](InformationPanelScopesRoutesInner.md) | Preset routes grouped by preset name. | [optional] [default to undefined]
 **insurance_state** | [**InsuranceStateEnum**](InsuranceStateEnum.md) | Current state of the insurance coverage for this totem. May be null. | [optional] [default to undefined]
 **sheet_count** | **number** | Number of direction sheets (panels) mounted on the signpost. Whole number. May be null if not yet counted. | [optional] [default to undefined]
@@ -252,6 +253,7 @@ const instance: GetFyprElementDetail200Response = {
     phone_number,
     jis_graphic,
     supported_functions,
+    device_status,
     routes,
     insurance_state,
     sheet_count,

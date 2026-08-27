@@ -166,6 +166,39 @@ export namespace GolemioPublicTransportApi {
     export type CityDistrictEnum = typeof CityDistrictEnum[keyof typeof CityDistrictEnum];
     
         /**
+     * 
+     * @export
+     * @interface DeviceStatus
+     */
+    export interface DeviceStatus {
+        /**
+         * Timestamp of the device\'s last reported contact. Null means the device has never reported a status (not yet in service, decommissioned but not physically removed, or its source cannot be monitored).
+         * @type {string}
+         * @memberof DeviceStatus
+         */
+        'last_contact': string | null;
+        /**
+         * Current operational status of the device, as reported by DCIP. Approximate meaning of the values: `ok` — device is working normally; `not_ok` — device has been down for a longer continuous period (it should be working, but is not); `intermittent_outages` — many short outages in a row; `not_monitored` — device is registered, but there is no way to monitor it; `off` — device is not working and this is known (set manually); `not_charging` — reserved (device works, but is not charging); `low_power` — reserved (device works, but its battery is drained).
+         * @type {string}
+         * @memberof DeviceStatus
+         */
+        'status': DeviceStatusStatusEnum;
+    }
+    
+    export const DeviceStatusStatusEnum = {
+        NotCharging: 'not_charging',
+        LowPower: 'low_power',
+        Ok: 'ok',
+        NotOk: 'not_ok',
+        IntermittentOutages: 'intermittent_outages',
+        NotMonitored: 'not_monitored',
+        Off: 'off'
+    } as const;
+    
+    export type DeviceStatusStatusEnum = typeof DeviceStatusStatusEnum[keyof typeof DeviceStatusStatusEnum];
+    
+    
+        /**
      * Fully composed DisplayCase schema for list responses. Combines DisplayCaseBase (writable display-case-specific and base fields) with server-set read-only fields from ElementReadOnly. The required array enforces that id and source_updated_at are always present in responses.
      * @export
      * @interface DisplayCase
@@ -1809,7 +1842,7 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
-     * Fully composed information panel schema. Combines InformationPanelBase (writable type-specific and base fields) with ElementReadOnly (server-set timestamps and id). Returned by the list endpoint GET /v1/information-panels. When ?scopes=routes is provided, the response includes a routes array directly on each panel with preset routes grouped by preset name.
+     * Fully composed information panel schema. Combines InformationPanelBase (writable type-specific and base fields) with ElementReadOnly (server-set timestamps and id). Returned by the list endpoint GET /v1/information-panels. When ?scopes=routes is provided, the response includes a routes array directly on each panel with preset routes grouped by preset name. When ?scopes=device_status is provided, the response includes a device_status object (or null) with the latest DCIP status matched by device_id.
      * @export
      * @interface InformationPanel
      */
@@ -2443,6 +2476,12 @@ export namespace GolemioPublicTransportApi {
          * @memberof InformationPanel
          */
         'supported_functions'?: Array<string> | null;
+        /**
+         * Latest DCIP status for the panel\'s device_id, or null when no status has been reported for that device. Only present when ?scopes=device_status is requested.
+         * @type {DeviceStatus}
+         * @memberof InformationPanel
+         */
+        'device_status'?: DeviceStatus | null;
         /**
          * Preset routes grouped by preset name.
          * @type {Array<InformationPanelScopesRoutesInner>}
@@ -3087,11 +3126,17 @@ export namespace GolemioPublicTransportApi {
     
     
         /**
-     * Additional resources included when ?scopes=routes is requested. Present only when the panel has presets with associated routes.
+     * Additional resources included when ?scopes=routes or ?scopes=device_status is requested. routes is present only when the panel has presets with associated routes; device_status is present (possibly null) whenever ?scopes=device_status is requested.
      * @export
      * @interface InformationPanelScopes
      */
     export interface InformationPanelScopes {
+        /**
+         * Latest DCIP status for the panel\'s device_id, or null when no status has been reported for that device. Only present when ?scopes=device_status is requested.
+         * @type {DeviceStatus}
+         * @memberof InformationPanelScopes
+         */
+        'device_status'?: DeviceStatus | null;
         /**
          * Preset routes grouped by preset name.
          * @type {Array<InformationPanelScopesRoutesInner>}
@@ -3171,11 +3216,17 @@ export namespace GolemioPublicTransportApi {
      */
     export interface InformedEntityRoute {
         /**
-         * 
+         * Identifier of the route as informed by VYMI
          * @type {string}
          * @memberof InformedEntityRoute
          */
         'id': string;
+        /**
+         * GTFS route_id resolved from the route_details snapshot (or, for legacy rows, from GTFS data)
+         * @type {string}
+         * @memberof InformedEntityRoute
+         */
+        'route_id': string;
         /**
          * 
          * @type {string}
@@ -3187,7 +3238,7 @@ export namespace GolemioPublicTransportApi {
          * @type {string}
          * @memberof InformedEntityRoute
          */
-        'route_long_name': string;
+        'route_long_name': string | null;
         /**
          * 
          * @type {RouteType}
@@ -8206,7 +8257,8 @@ export namespace GolemioPublicTransportApi {
          * @export
          */
         export const ListInformationPanelsScopesEnum = {
-                Routes: 'routes'
+                Routes: 'routes',
+            DeviceStatus: 'device_status'
             } as const;
         export type ListInformationPanelsScopesEnum = typeof ListInformationPanelsScopesEnum[keyof typeof ListInformationPanelsScopesEnum];
                         /**
@@ -8254,11 +8306,11 @@ export namespace GolemioPublicTransportApi {
         
                 //scopesisEnumScopesEnum
             /**
-             * Extend the panel response with related resources. Currently only \&quot;routes\&quot; is supported — adds routes directly to each panel with preset routes grouped by preset name. Only valid for information-panels.
-             * @type     {'routes'}    
+             * Extend the panel response with related resources. Repeat the parameter to request more than one (e.g. scopes&#x3D;routes&amp;scopes&#x3D;device_status). \&quot;routes\&quot; adds routes directly to each panel with preset routes grouped by preset name. \&quot;device_status\&quot; adds the latest DCIP device status (matched by device_id) as a device_status object, or null when no status has been reported for that device. Only valid for information-panels.
+             * @type     {Array<'routes' | 'device_status'>}    
              * @memberof FYPRV1ApiListInformationPanels
              */
-            scopes?: ListInformationPanelsScopesEnum
+            scopes?: Array<ListInformationPanelsScopesEnum>
         
                 //stateisEnumStateEnum
             /**
@@ -8595,10 +8647,10 @@ export namespace GolemioPublicTransportApi {
                                 requestQueryParameter['jis'] = queryParams.jis;
                     }
         
-                        if (queryParams.scopes !== undefined) {
-                                requestQueryParameter['scopes'] = queryParams.scopes;
-                    }
-        
+                    if (queryParams.scopes) {
+                            requestQueryParameter['scopes'] = queryParams.scopes;
+                        }
+            
                     if (queryParams.state) {
                             requestQueryParameter['state'] = queryParams.state;
                         }

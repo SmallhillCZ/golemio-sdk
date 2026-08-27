@@ -9,6 +9,7 @@ configuration.ts
 docs/ASWid.md
 docs/BuildingPermitStateEnum.md
 docs/CityDistrictEnum.md
+docs/DeviceStatus.md
 docs/DisplayCase.md
 docs/DisplayCaseBase.md
 docs/Effect.md

@@ -67,7 +67,7 @@ const { status, data } = await apiInstance.v2EnergeticsDedBuildingsGet(
 # **v2EnergeticsDedBuildingsGidGet**
 > EnergeticsEnoBuildingDetail v2EnergeticsDedBuildingsGidGet()
 
-Returns the ENO building (eno_budova) identified by GID together with its addresses and all consumption points mapped to it. Commodity-specific data is nested under the `electricity`/`gas`/`heat`/`water` keys of each consumption point; only the key matching the `commodity` field is present, the others are omitted entirely. Consumption points come from two independent sources: the energobroker mapping (EAN/EIC, enriched with PRE metadata and PPAS invoices) and Porsenna e-manazer devices (`link_source: porsenna`) — heat and water meters, plus any EAN/EIC the mapping lacks. An OM known to both sources is returned once, with the Porsenna data nested as a `porsenna` sub-block (device, sub-meters, yearly consumption) inside its commodity block. Buildings tracked in Porsenna also carry an `energy_management` summary. The endpoint returns whatever data exists for the GID: if there is any building record, address, or consumption point, the response is 200 with the missing parts as `null` or empty arrays (e.g. `building: null` when only consumption points or addresses are known). 404 is returned only when no source holds any data for the GID.
+Returns the ENO building (eno_budova) identified by GID together with its addresses and all consumption points mapped to it. Commodity-specific data is nested under the `electricity`/`gas`/`heat`/`water` keys of each consumption point; only the key matching the `commodity` field is present, the others are omitted entirely. Consumption points come from two independent sources: the energobroker mapping (EAN/EIC, enriched with PRE metadata and PPAS invoices) and Porsenna e-manazer devices (`link_source: porsenna`) — heat and water meters, plus any EAN/EIC the mapping lacks. An OM known to both sources is returned once, with the Porsenna data nested as a `porsenna` sub-block (device, sub-meters, yearly consumption) inside its commodity block. Buildings tracked in Porsenna also carry an `energy_management` summary. The endpoint returns whatever data exists for the GID: if there is any building record, address, or consumption point, the response is 200 with the missing parts as `null` or empty arrays (e.g. `building: null` when only consumption points or addresses are known). 404 is returned only when no source holds any data for the GID. `consumption_history` carries monthly and yearly consumption per commodity, at building level and again per consumption point. Sources are returned **in parallel** rather than merged into one canonical series: metered readings and invoiced amounts legitimately disagree, and which one a client wants depends on what it shows. `is_metered` distinguishes them. Coverage differs sharply by commodity and is a property of the data, not of the endpoint. Gas has roughly three years of invoice history for about three quarters of its points. Electricity is metered-only and starts in 2025, covering under a tenth of its points, so most months come back `null`. Heat and water exist only as Porsenna yearly figures. `measurement_data_from` and the per-series `data_from` say when data actually begins, so a run of leading `null`s is explicable rather than looking like a fault. Every aggregate carries its own provenance, so a client never has to present a summed figure as if it were exact: `points_total`/`points_with_data` say how many consumption points stand behind a period, `invoice_ids` names the billing documents an allocated period came from, `coverage_count`/`expected_count` mark a partial period, and a point\'s `shared_with` names the other buildings its meters also serve.
 
 ### Example
 
@@ -81,9 +81,11 @@ const configuration = new Configuration();
 const apiInstance = new EnergeticsDeDV2Api(configuration);
 
 let gid: string; // (default to undefined)
+let months: number; //Months of consumption history to return, counted back from the last **complete** month. The current, partial month is always excluded: it is mid-accumulation and on a trend chart reads as a collapse rather than as incomplete data. The maximum matches the window the underlying index is built over. (optional) (default to 36)
 
 const { status, data } = await apiInstance.v2EnergeticsDedBuildingsGidGet(
-    gid
+    gid,
+    months
 );
 ```
 
@@ -92,6 +94,7 @@ const { status, data } = await apiInstance.v2EnergeticsDedBuildingsGidGet(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **gid** | [**string**] |  | defaults to undefined|
+| **months** | [**number**] | Months of consumption history to return, counted back from the last **complete** month. The current, partial month is always excluded: it is mid-accumulation and on a trend chart reads as a collapse rather than as incomplete data. The maximum matches the window the underlying index is built over. | (optional) defaults to 36|
 
 
 ### Return type

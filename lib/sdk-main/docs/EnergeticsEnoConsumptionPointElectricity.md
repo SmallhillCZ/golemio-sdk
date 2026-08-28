@@ -6,8 +6,9 @@ Electricity-specific data (present only for commodity = electricity, omitted oth
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**metadata** | **{ [key: string]: any; }** | Latest available month of PRE metadata for the EAN | [optional] [default to undefined]
+**metadata** | [**EnergeticsEnoElectricityMetadata**](EnergeticsEnoElectricityMetadata.md) | Latest available month of PRE metadata for the EAN; null when PRE has never reported it. | [optional] [default to undefined]
 **porsenna** | [**EnergeticsEnoPorsennaBlock**](EnergeticsEnoPorsennaBlock.md) |  | [optional] [default to undefined]
+**consumption_history** | [**Array&lt;EnergeticsEnoConsumptionSeries&gt;**](EnergeticsEnoConsumptionSeries.md) | Per-source series for this point; empty when no source knows it. | [optional] [default to undefined]
 
 ## Example
 
@@ -17,6 +18,7 @@ import { EnergeticsEnoConsumptionPointElectricity } from 'golemio-api';
 const instance: EnergeticsEnoConsumptionPointElectricity = {
     metadata,
     porsenna,
+    consumption_history,
 };
 ```
 

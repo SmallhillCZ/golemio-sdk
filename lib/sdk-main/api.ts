@@ -2255,6 +2255,18 @@ export namespace GolemioApi {
          */
         'gid'?: string;
         /**
+         * Display name of the building: `building.nazev`, then the Porsenna building name, then null. `building` is null for a substantial share of GIDs and the card still has to render a header, so the fallback is resolved here — the same chain the search endpoint uses — rather than in every client, where the versions would disagree.
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'name'?: string | null;
+        /**
+         * Main address of the building: the first described `addresses[]` entry (they are ordered main-address first), then the Porsenna address, then null.
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'address'?: string | null;
+        /**
          * 
          * @type {EnergeticsEnoBuildingDetailBuilding}
          * @memberof EnergeticsEnoBuildingDetail
@@ -2278,6 +2290,12 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoBuildingDetail
          */
         'energy_management'?: EnergeticsEnoBuildingDetailEnergyManagement | null;
+        /**
+         * 
+         * @type {EnergeticsEnoConsumptionHistory}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'consumption_history'?: EnergeticsEnoConsumptionHistory;
         /**
          * 
          * @type {Array<EnergeticsEnoConsumptionPoint>}
@@ -2313,7 +2331,7 @@ export namespace GolemioApi {
     }
     
         /**
-     * All available eno_budova attributes (Czech identifiers mirror the upstream ENO source). Null when the GID has no ENO building record and is known only through the consumption-point mapping.
+     * All available eno_budova attributes (Czech identifiers mirror the upstream ENO source). Null when the GID has no ENO building record and is known only through the consumption-point mapping. Every property below is always present when the object is; `additionalProperties` stays open so an upstream ENO addition is not breaking.
      * @export
      * @interface EnergeticsEnoBuildingDetailBuilding
      */
@@ -2321,7 +2339,7 @@ export namespace GolemioApi {
         [key: string]: any;
     
         /**
-         * 
+         * ENO source system the row was read from (mhmp / stat).
          * @type {string}
          * @memberof EnergeticsEnoBuildingDetailBuilding
          */
@@ -2339,7 +2357,7 @@ export namespace GolemioApi {
          */
         'oznaceni'?: string | null;
         /**
-         * 
+         * Heating type as recorded in ENO.
          * @type {string}
          * @memberof EnergeticsEnoBuildingDetailBuilding
          */
@@ -2362,6 +2380,126 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoBuildingDetailBuilding
          */
         'pripojka_kanalizace'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'budova_rozdelena_byt_nebyt'?: string | null;
+        /**
+         * Total floor area, m².
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'celkova_plocha_budova'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'celkova_plocha_byt_budova'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'celkova_plocha_nebyt_budova'?: number | null;
+        /**
+         * Built-up area, m².
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'zastavena_plocha'?: number | null;
+        /**
+         * Enclosed volume, m³.
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'obestaveny_prostor'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'pocet_byt'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'pocet_nebyt_budova'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'pocet_nadzem_podlazi'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'pocet_podzem_podlazi'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'pocet_podkrovi'?: number | null;
+        /**
+         * 
+         * @type {boolean}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'vytah'?: boolean | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'czcc'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'id_cuzk'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'id_objekt'?: number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'kod_vyuziti'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'nazev_vyuziti'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'kod_ochrana'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'nazev_ochrana'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailBuilding
+         */
+        'platnost_od'?: string | null;
     }
     
         /**
@@ -2400,6 +2538,12 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoBuildingDetailEnergyManagement
          */
         'devices_active'?: number;
+        /**
+         * Most recent date any of this building\'s Porsenna devices reported; null when none of them has consumption. Porsenna aggregates carry a covered-day count rather than a reading timestamp, so this is the period start plus its covered days, clamped to the end of the period. A meter count without an as-of date is a claim with no expiry.
+         * @type {string}
+         * @memberof EnergeticsEnoBuildingDetailEnergyManagement
+         */
+        'data_to'?: string | null;
     }
     
         /**
@@ -2519,6 +2663,130 @@ export namespace GolemioApi {
     }
     
         /**
+     * One period of one series. `value: null` means the source has no data for that period - missing periods are always null, never an error and never a zero.
+     * @export
+     * @interface EnergeticsEnoConsumptionEntry
+     */
+    export interface EnergeticsEnoConsumptionEntry {
+        /**
+         * `YYYY-MM` for monthly entries, `YYYY` for yearly ones.
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionEntry
+         */
+        'period'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoConsumptionEntry
+         */
+        'value'?: number | null;
+        /**
+         * Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing; `value` + `unit` stay authoritative. A yearly entry withholds it unless every contributing month has one, so it can never imply a conversion rate that did not exist.
+         * @type {number}
+         * @memberof EnergeticsEnoConsumptionEntry
+         */
+        'value_kwh'?: number | null;
+        /**
+         * Days of the period carrying data.
+         * @type {number}
+         * @memberof EnergeticsEnoConsumptionEntry
+         */
+        'coverage_count'?: number;
+        /**
+         * Days in the period, so a partial period is recognisable as one.
+         * @type {number}
+         * @memberof EnergeticsEnoConsumptionEntry
+         */
+        'expected_count'?: number;
+        /**
+         * True when the value was allocated pro rata from a billing period spanning more than one month, rather than read for the period itself.
+         * @type {boolean}
+         * @memberof EnergeticsEnoConsumptionEntry
+         */
+        'is_estimated'?: boolean;
+        /**
+         * Consumption points that contributed this period at all. `0` for a period no point reported — never null, so a gap is a number a client can compare.
+         * @type {number}
+         * @memberof EnergeticsEnoConsumptionEntry
+         */
+        'points_total'?: number;
+        /**
+         * Of those, how many carried a value. A shortfall against the series\' `points` is how a client learns a building summary is missing an OM for this period rather than being genuinely lower — at point grain the counts are 1/1 or 0/0.
+         * @type {number}
+         * @memberof EnergeticsEnoConsumptionEntry
+         */
+        'points_with_data'?: number;
+        /**
+         * Billing documents this period was allocated from, sorted. Empty for metered readings, for Porsenna and for periods with no value. An allocated month is a number the platform computed rather than one anyone read, so naming the invoice is what makes it auditable. At building level a period can be allocated from several invoices (one per point), and a yearly entry usually is; at point grain a month is normally one.
+         * @type {Array<string>}
+         * @memberof EnergeticsEnoConsumptionEntry
+         */
+        'invoice_ids'?: Array<string>;
+    }
+    
+        /**
+     * Consumption per commodity per source. An empty array for a commodity means no source knows this building at all, which is distinct from a series of nulls - that means the source knows the point but not those periods.
+     * @export
+     * @interface EnergeticsEnoConsumptionHistory
+     */
+    export interface EnergeticsEnoConsumptionHistory {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'period_from'?: string;
+        /**
+         * Always the last complete month.
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'period_to'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'months'?: number;
+        /**
+         * Earliest month (`YYYY-MM`) with data from a metered source; null when no metered source has monthly data. Explains the leading nulls - meter data starts in 2025 platform-wide. A yearly-only series does not count; its reach-back stays visible in the series\' own `data_from`.
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'measurement_data_from'?: string | null;
+        /**
+         * True when a contributing consumption point is also mapped to another building. The totals still count such a point in full - that is what its meters measured - so this flag is how a client learns the figure is not exclusive to this building. It is true for both sides of a shared point, primary or not; the points\' `shared_with` says which buildings those are.
+         * @type {boolean}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'has_shared_points'?: boolean;
+        /**
+         * 
+         * @type {Array<EnergeticsEnoConsumptionSeries>}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'electricity'?: Array<EnergeticsEnoConsumptionSeries>;
+        /**
+         * 
+         * @type {Array<EnergeticsEnoConsumptionSeries>}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'gas'?: Array<EnergeticsEnoConsumptionSeries>;
+        /**
+         * 
+         * @type {Array<EnergeticsEnoConsumptionSeries>}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'heat'?: Array<EnergeticsEnoConsumptionSeries>;
+        /**
+         * 
+         * @type {Array<EnergeticsEnoConsumptionSeries>}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'water'?: Array<EnergeticsEnoConsumptionSeries>;
+    }
+    
+        /**
      * 
      * @export
      * @interface EnergeticsEnoConsumptionPoint
@@ -2543,11 +2811,17 @@ export namespace GolemioApi {
          */
         'commodity'?: EnergeticsEnoConsumptionPointCommodityEnum;
         /**
-         * 
+         * Whether this building is the primary holder of the point in the mapping. It says nothing about the other side — see `shared_with`, which lists the buildings the point is shared with whether this one is primary or not.
          * @type {boolean}
          * @memberof EnergeticsEnoConsumptionPoint
          */
         'is_first_gid'?: boolean;
+        /**
+         * Other buildings the same consumption point is mapped to. Empty when the point belongs to this building alone, which is the common case. The totals still count the point in full — that is what its meters measured — so this is how a client learns the figure is not exclusive to this building, and which building it is shared with.
+         * @type {Array<EnergeticsEnoConsumptionPointSharedWithInner>}
+         * @memberof EnergeticsEnoConsumptionPoint
+         */
+        'shared_with'?: Array<EnergeticsEnoConsumptionPointSharedWithInner>;
         /**
          * Derived from valid_to (null or in the future means the mapping is active)
          * @type {boolean}
@@ -2628,17 +2902,23 @@ export namespace GolemioApi {
      */
     export interface EnergeticsEnoConsumptionPointElectricity {
         /**
-         * Latest available month of PRE metadata for the EAN
-         * @type {{ [key: string]: any; }}
+         * Latest available month of PRE metadata for the EAN; null when PRE has never reported it.
+         * @type {EnergeticsEnoElectricityMetadata}
          * @memberof EnergeticsEnoConsumptionPointElectricity
          */
-        'metadata'?: { [key: string]: any; } | null;
+        'metadata'?: EnergeticsEnoElectricityMetadata | null;
         /**
          * 
          * @type {EnergeticsEnoPorsennaBlock}
          * @memberof EnergeticsEnoConsumptionPointElectricity
          */
         'porsenna'?: EnergeticsEnoPorsennaBlock;
+        /**
+         * Per-source series for this point; empty when no source knows it.
+         * @type {Array<EnergeticsEnoConsumptionSeries>}
+         * @memberof EnergeticsEnoConsumptionPointElectricity
+         */
+        'consumption_history'?: Array<EnergeticsEnoConsumptionSeries>;
     }
     
         /**
@@ -2654,6 +2934,12 @@ export namespace GolemioApi {
          */
         'porsenna'?: EnergeticsEnoPorsennaBlock;
         /**
+         * Per-source series for this point; empty when no source knows it.
+         * @type {Array<EnergeticsEnoConsumptionSeries>}
+         * @memberof EnergeticsEnoConsumptionPointGas
+         */
+        'consumption_history'?: Array<EnergeticsEnoConsumptionSeries>;
+        /**
          * 
          * @type {EnergeticsEnoConsumptionPointGasDistribution}
          * @memberof EnergeticsEnoConsumptionPointGas
@@ -2668,67 +2954,67 @@ export namespace GolemioApi {
     }
     
         /**
-     * Latest non-canceled PPAS commercial invoice with its installation, devices and prices
+     * Latest non-canceled PPAS commercial invoice for this EIC, in the same shape as `distribution`. Null when no commercial invoice knows the point.
      * @export
      * @interface EnergeticsEnoConsumptionPointGasCommercial
      */
     export interface EnergeticsEnoConsumptionPointGasCommercial {
         /**
          * 
-         * @type {{ [key: string]: any; }}
+         * @type {EnergeticsEnoGasInvoice}
          * @memberof EnergeticsEnoConsumptionPointGasCommercial
          */
-        'invoice'?: { [key: string]: any; };
+        'invoice'?: EnergeticsEnoGasInvoice;
         /**
          * 
-         * @type {{ [key: string]: any; }}
+         * @type {EnergeticsEnoGasInstallation}
          * @memberof EnergeticsEnoConsumptionPointGasCommercial
          */
-        'installation'?: { [key: string]: any; };
+        'installation'?: EnergeticsEnoGasInstallation;
         /**
          * 
-         * @type {Array<{ [key: string]: any; }>}
+         * @type {Array<EnergeticsEnoGasInvoiceDevice>}
          * @memberof EnergeticsEnoConsumptionPointGasCommercial
          */
-        'devices'?: Array<{ [key: string]: any; }>;
+        'devices'?: Array<EnergeticsEnoGasInvoiceDevice>;
         /**
          * 
-         * @type {Array<{ [key: string]: any; }>}
+         * @type {Array<EnergeticsEnoGasInvoicePrice>}
          * @memberof EnergeticsEnoConsumptionPointGasCommercial
          */
-        'prices'?: Array<{ [key: string]: any; }>;
+        'prices'?: Array<EnergeticsEnoGasInvoicePrice>;
     }
     
         /**
-     * Latest non-canceled PPAS distribution invoice with its installation, devices and prices
+     * Latest non-canceled PPAS distribution invoice for this EIC with its installation, billed meter periods and priced lines. Devices and prices are scoped to this point\'s installation, so another installation on the same invoice does not leak in. Null when no distribution invoice knows the point.
      * @export
      * @interface EnergeticsEnoConsumptionPointGasDistribution
      */
     export interface EnergeticsEnoConsumptionPointGasDistribution {
         /**
          * 
-         * @type {{ [key: string]: any; }}
+         * @type {EnergeticsEnoGasInvoice}
          * @memberof EnergeticsEnoConsumptionPointGasDistribution
          */
-        'invoice'?: { [key: string]: any; };
+        'invoice'?: EnergeticsEnoGasInvoice;
         /**
          * 
-         * @type {{ [key: string]: any; }}
+         * @type {EnergeticsEnoGasInstallation}
          * @memberof EnergeticsEnoConsumptionPointGasDistribution
          */
-        'installation'?: { [key: string]: any; };
+        'installation'?: EnergeticsEnoGasInstallation;
         /**
          * 
-         * @type {Array<{ [key: string]: any; }>}
+         * @type {Array<EnergeticsEnoGasInvoiceDevice>}
          * @memberof EnergeticsEnoConsumptionPointGasDistribution
          */
-        'devices'?: Array<{ [key: string]: any; }>;
+        'devices'?: Array<EnergeticsEnoGasInvoiceDevice>;
         /**
          * 
-         * @type {Array<{ [key: string]: any; }>}
+         * @type {Array<EnergeticsEnoGasInvoicePrice>}
          * @memberof EnergeticsEnoConsumptionPointGasDistribution
          */
-        'prices'?: Array<{ [key: string]: any; }>;
+        'prices'?: Array<EnergeticsEnoGasInvoicePrice>;
     }
     
         /**
@@ -2743,6 +3029,32 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoConsumptionPointHeat
          */
         'porsenna'?: EnergeticsEnoPorsennaBlock;
+        /**
+         * Per-source series for this point; empty when no source knows it.
+         * @type {Array<EnergeticsEnoConsumptionSeries>}
+         * @memberof EnergeticsEnoConsumptionPointHeat
+         */
+        'consumption_history'?: Array<EnergeticsEnoConsumptionSeries>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EnergeticsEnoConsumptionPointSharedWithInner
+     */
+    export interface EnergeticsEnoConsumptionPointSharedWithInner {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionPointSharedWithInner
+         */
+        'gid': string;
+        /**
+         * Resolved as the detail\'s top-level `name` is; null when neither source names it.
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionPointSharedWithInner
+         */
+        'name': string | null;
     }
     
         /**
@@ -2757,10 +3069,601 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoConsumptionPointWater
          */
         'porsenna'?: EnergeticsEnoPorsennaBlock;
+        /**
+         * Per-source series for this point; empty when no source knows it.
+         * @type {Array<EnergeticsEnoConsumptionSeries>}
+         * @memberof EnergeticsEnoConsumptionPointWater
+         */
+        'consumption_history'?: Array<EnergeticsEnoConsumptionSeries>;
     }
     
         /**
-     * Porsenna (e-manazer) device detail with sub-meters and yearly consumption aggregates
+     * One source\'s view of one commodity, for one unit.
+     * @export
+     * @interface EnergeticsEnoConsumptionSeries
+     */
+    export interface EnergeticsEnoConsumptionSeries {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionSeries
+         */
+        'source'?: EnergeticsEnoConsumptionSeriesSourceEnum;
+        /**
+         * Electricity is kWh. Metered gas is m3 (from the PPAS operating difference) or Nm3 where only the converted difference exists - a point whose unit changes mid-window appears as two series with complementary gaps, which is why unit is part of the key. Porsenna carries its own lowercase unit.
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionSeries
+         */
+        'unit'?: string;
+        /**
+         * False for invoiced (billed and allocated) figures, true for meter readings.
+         * @type {boolean}
+         * @memberof EnergeticsEnoConsumptionSeries
+         */
+        'is_metered'?: boolean;
+        /**
+         * Consumption points contributing to this series.
+         * @type {Array<string>}
+         * @memberof EnergeticsEnoConsumptionSeries
+         */
+        'points'?: Array<string>;
+        /**
+         * Earliest period this series has any value for; null when it has none.
+         * @type {string}
+         * @memberof EnergeticsEnoConsumptionSeries
+         */
+        'data_from'?: string | null;
+        /**
+         * `months` entries, chronological, null-filled where the source has nothing. Empty when the source reports only yearly aggregates (Porsenna) - its data is in `yearly`.
+         * @type {Array<EnergeticsEnoConsumptionEntry>}
+         * @memberof EnergeticsEnoConsumptionSeries
+         */
+        'monthly'?: Array<EnergeticsEnoConsumptionEntry>;
+        /**
+         * One entry per calendar year the window touches, plus any earlier year that has data - Porsenna reaches back further than any monthly source and is not truncated to the months window.
+         * @type {Array<EnergeticsEnoConsumptionEntry>}
+         * @memberof EnergeticsEnoConsumptionSeries
+         */
+        'yearly'?: Array<EnergeticsEnoConsumptionEntry>;
+    }
+    
+    export const EnergeticsEnoConsumptionSeriesSourceEnum = {
+        PrediInput: 'predi_input',
+        PpasAveApi: 'ppas_ave_api',
+        PpasDistributionInvoice: 'ppas_distribution_invoice',
+        PpasCommercialInvoice: 'ppas_commercial_invoice',
+        Porsenna: 'porsenna'
+    } as const;
+    
+    export type EnergeticsEnoConsumptionSeriesSourceEnum = typeof EnergeticsEnoConsumptionSeriesSourceEnum[keyof typeof EnergeticsEnoConsumptionSeriesSourceEnum];
+    
+    
+        /**
+     * Latest available month of PRE metadata for the EAN, i.e. the technical parameters of the delivery point as PRE last reported them. Null when PRE has never reported it. Every property is always present; `additionalProperties` stays open so an upstream PRE addition is not breaking.
+     * @export
+     * @interface EnergeticsEnoElectricityMetadata
+     */
+    export interface EnergeticsEnoElectricityMetadata {
+        [key: string]: any;
+    
+        /**
+         * Year and month of the metadata row these values come from.
+         * @type {number}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'year'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'month'?: number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'month_name'?: string | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'days_in_stored_month'?: number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'consumption_point'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'address'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'location_type'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'company_name'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'company_id'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'tarif_type'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'tarif_1t2t'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'phases'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'circuit_breaker'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'type_b_meter'?: string | null;
+        /**
+         * Meter number, or a pipe-separated `date|old|new` triple for the month the meter was replaced. Free text as PRE supplies it, not a parsed structure.
+         * @type {string}
+         * @memberof EnergeticsEnoElectricityMetadata
+         */
+        'meter_replaced'?: string | null;
+    }
+    
+        /**
+     * The installation (odběrné místo) the invoice bills, as recorded on it. The PPAS-internal place id is deliberately not exposed; it only scopes `devices` and `prices` server-side.
+     * @export
+     * @interface EnergeticsEnoGasInstallation
+     */
+    export interface EnergeticsEnoGasInstallation {
+        [key: string]: any;
+    
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'billing_class'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'measurement_type'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'contract_contract_id'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'contract_move_in_date'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'contract_move_out_date'?: string | null;
+        /**
+         * Type-day-diagram class used for the allocation of unmetered consumption.
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'tdd_class'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'address_street'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'address_house_number'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'address_house_org_number'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'address_city'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'address_city_part'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'address_post_code'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'address_country'?: string | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInstallation
+         */
+        'address_ruian_id'?: number | null;
+    }
+    
+        /**
+     * PPAS invoice header. The distribution and commercial invoices carry the same properties; only their sources differ.
+     * @export
+     * @interface EnergeticsEnoGasInvoice
+     */
+    export interface EnergeticsEnoGasInvoice {
+        [key: string]: any;
+    
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'id'?: string;
+        /**
+         * The invoice this one supersedes, when the two are linked upstream.
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'preceding_id'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_id'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_company_id'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_name'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_contract_account_id'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_address_street'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_address_house_number'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_address_house_org_number'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_address_city'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_address_city_part'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_address_post_code'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_address_country'?: string | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'customer_address_ruian_id'?: number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'facts_doc_date'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'facts_net_date'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'facts_billing_transaction'?: string | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'facts_to_pay_amount'?: number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'facts_currency'?: string | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'facts_price_brutto'?: number | null;
+        /**
+         * Always false here — canceled invoices are not served.
+         * @type {boolean}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'is_canceled'?: boolean | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoice
+         */
+        'canceled_reason'?: string | null;
+    }
+    
+        /**
+     * One billed meter period of the invoice. `kind` is a SAP code and the same gas can appear under several of them in different dimensions, so these rows are the billing detail, not a series to sum — the summed and month-allocated figures are in `consumption_history`.
+     * @export
+     * @interface EnergeticsEnoGasInvoiceDevice
+     */
+    export interface EnergeticsEnoGasInvoiceDevice {
+        [key: string]: any;
+    
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'device_serial_number'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'date_from'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'date_to'?: string;
+        /**
+         * STANDARD or CORRECTION.
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'reading_type'?: string;
+        /**
+         * Meter type.
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'type'?: string;
+        /**
+         * SAP code of the billed quantity (ZIZWC, ZIABN3, …).
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'kind'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'reading_from'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'reading_to'?: number | null;
+        /**
+         * Denominated by `unit`, which is not always m³.
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'consumption'?: number | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'unit'?: string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'meter_reading_type'?: string | null;
+        /**
+         * 0 means \"not supplied\" rather than zero.
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'gas_consumption_kwh'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'volume_coefficient'?: number | null;
+        /**
+         * kWh/m³; 0 means \"not supplied\" rather than zero.
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'combustion_heat'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoiceDevice
+         */
+        'normometers_nm3'?: number | null;
+    }
+    
+        /**
+     * One priced line of the invoice for this installation.
+     * @export
+     * @interface EnergeticsEnoGasInvoicePrice
+     */
+    export interface EnergeticsEnoGasInvoicePrice {
+        [key: string]: any;
+    
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'date_from'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'date_to'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'kind'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'description'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'price_group'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'quantity'?: number;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'unit'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'unit_price'?: number;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'time_slot'?: number | null;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'price_netto'?: number;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'price_type'?: string;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'currency'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoGasInvoicePrice
+         */
+        'tax_rate'?: number;
+    }
+    
+        /**
+     * Porsenna (e-manazer) device detail with sub-meters. The device\'s consumption is in the point\'s `consumption_history` as the `porsenna` series.
      * @export
      * @interface EnergeticsEnoPorsennaBlock
      */
@@ -2777,48 +3680,10 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoPorsennaBlock
          */
         'sub_devices'?: Array<{ [key: string]: any; }>;
-        /**
-         * 
-         * @type {Array<EnergeticsEnoPorsennaBlockYearlyConsumptionInner>}
-         * @memberof EnergeticsEnoPorsennaBlock
-         */
-        'yearly_consumption'?: Array<EnergeticsEnoPorsennaBlockYearlyConsumptionInner>;
     }
     
         /**
-     * 
-     * @export
-     * @interface EnergeticsEnoPorsennaBlockYearlyConsumptionInner
-     */
-    export interface EnergeticsEnoPorsennaBlockYearlyConsumptionInner {
-        /**
-         * 
-         * @type {string}
-         * @memberof EnergeticsEnoPorsennaBlockYearlyConsumptionInner
-         */
-        'period'?: string;
-        /**
-         * 
-         * @type {number}
-         * @memberof EnergeticsEnoPorsennaBlockYearlyConsumptionInner
-         */
-        'value'?: number;
-        /**
-         * 
-         * @type {string}
-         * @memberof EnergeticsEnoPorsennaBlockYearlyConsumptionInner
-         */
-        'unit'?: string;
-        /**
-         * 
-         * @type {number}
-         * @memberof EnergeticsEnoPorsennaBlockYearlyConsumptionInner
-         */
-        'days_covered'?: number | null;
-    }
-    
-        /**
-     * Evidenční jednotka (eno_ciselnik_evidencni_jednotka) resolved through the building\'s eno_majetek record. The same shape is returned by the search and the detail endpoint.
+     * Evidenční jednotka (eno_ciselnik_evidencni_jednotka) resolved through the building\'s eno_majetek record. The same shape is returned by the search and the detail endpoint. Null when the building has no majetek record.
      * @export
      * @interface EnergeticsEnoRegistrationUnit
      */
@@ -11238,7 +12103,22 @@ export namespace GolemioApi {
             }
         
         
-                    
+                        
+        
+        /**
+         * Query parameters for v2EnergeticsDedBuildingsGidGet operation in EnergeticsDeDV2Api.
+         * @export
+         * @interface EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGidGetQueryParams
+         */
+        export interface EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGidGetQueryParams {
+            //months
+            /**
+             * Months of consumption history to return, counted back from the last **complete** month. The current, partial month is always excluded: it is mid-accumulation and on a trend chart reads as a collapse rather than as incomplete data. The maximum matches the window the underlying index is built over.
+             * @type     {number}    
+             * @memberof EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGidGet
+             */
+            months?: number
+            }
         
         
             
@@ -11308,24 +12188,26 @@ export namespace GolemioApi {
             }
         
                 /**
-             * Returns the ENO building (eno_budova) identified by GID together with its addresses and all consumption points mapped to it. Commodity-specific data is nested under the `electricity`/`gas`/`heat`/`water` keys of each consumption point; only the key matching the `commodity` field is present, the others are omitted entirely. Consumption points come from two independent sources: the energobroker mapping (EAN/EIC, enriched with PRE metadata and PPAS invoices) and Porsenna e-manazer devices (`link_source: porsenna`) — heat and water meters, plus any EAN/EIC the mapping lacks. An OM known to both sources is returned once, with the Porsenna data nested as a `porsenna` sub-block (device, sub-meters, yearly consumption) inside its commodity block. Buildings tracked in Porsenna also carry an `energy_management` summary. The endpoint returns whatever data exists for the GID: if there is any building record, address, or consumption point, the response is 200 with the missing parts as `null` or empty arrays (e.g. `building: null` when only consumption points or addresses are known). 404 is returned only when no source holds any data for the GID.
+             * Returns the ENO building (eno_budova) identified by GID together with its addresses and all consumption points mapped to it. Commodity-specific data is nested under the `electricity`/`gas`/`heat`/`water` keys of each consumption point; only the key matching the `commodity` field is present, the others are omitted entirely. Consumption points come from two independent sources: the energobroker mapping (EAN/EIC, enriched with PRE metadata and PPAS invoices) and Porsenna e-manazer devices (`link_source: porsenna`) — heat and water meters, plus any EAN/EIC the mapping lacks. An OM known to both sources is returned once, with the Porsenna data nested as a `porsenna` sub-block (device, sub-meters, yearly consumption) inside its commodity block. Buildings tracked in Porsenna also carry an `energy_management` summary. The endpoint returns whatever data exists for the GID: if there is any building record, address, or consumption point, the response is 200 with the missing parts as `null` or empty arrays (e.g. `building: null` when only consumption points or addresses are known). 404 is returned only when no source holds any data for the GID. `consumption_history` carries monthly and yearly consumption per commodity, at building level and again per consumption point. Sources are returned **in parallel** rather than merged into one canonical series: metered readings and invoiced amounts legitimately disagree, and which one a client wants depends on what it shows. `is_metered` distinguishes them. Coverage differs sharply by commodity and is a property of the data, not of the endpoint. Gas has roughly three years of invoice history for about three quarters of its points. Electricity is metered-only and starts in 2025, covering under a tenth of its points, so most months come back `null`. Heat and water exist only as Porsenna yearly figures. `measurement_data_from` and the per-series `data_from` say when data actually begins, so a run of leading `null`s is explicable rather than looking like a fault. Every aggregate carries its own provenance, so a client never has to present a summed figure as if it were exact: `points_total`/`points_with_data` say how many consumption points stand behind a period, `invoice_ids` names the billing documents an allocated period came from, `coverage_count`/`expected_count` mark a partial period, and a point\'s `shared_with` names the other buildings its meters also serve.
              * @summary ENO building detail with consumption points (OM) and technical parameters
         
              * @param     {string}     gid 
-                 * @param {AxiosRequestConfig} [options] Override http request option.
+                 * @param     {EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGidGetQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
              * @throws {RequiredError}
              * @memberof EnergeticsDeDV2Api
              */
             
             public async v2EnergeticsDedBuildingsGidGet(
                 gid: string,
+                queryParams: EnergeticsDeDV2ApiV2EnergeticsDedBuildingsGidGetQueryParams,
                 options: AxiosRequestConfig = {}
             ) {
         
                     // verify required parameter 'gid' is not null or undefined
                 assertParamExists('v2EnergeticsDedBuildingsGidGet', 'gid', gid)
                 
-                    const localVarPath = `/v2/energetics/ded/buildings/{gid}`
+                            const localVarPath = `/v2/energetics/ded/buildings/{gid}`
                     .replace(`{${"gid"}}`, encodeURIComponent(String(gid)));
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -11341,7 +12223,11 @@ export namespace GolemioApi {
                 // authentication ApiKeyAuth required
                     await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
                             
-                    
+                            if (queryParams.months !== undefined) {
+                                requestQueryParameter['months'] = queryParams.months;
+                    }
+        
+                
         
                 setSearchParams(requestUrlObj, requestQueryParameter);
                 let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};

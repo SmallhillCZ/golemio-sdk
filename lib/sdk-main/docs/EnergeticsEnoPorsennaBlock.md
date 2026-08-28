@@ -1,6 +1,6 @@
 # EnergeticsEnoPorsennaBlock
 
-Porsenna (e-manazer) device detail with sub-meters and yearly consumption aggregates
+Porsenna (e-manazer) device detail with sub-meters. The device\'s consumption is in the point\'s `consumption_history` as the `porsenna` series.
 
 ## Properties
 
@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **device** | **{ [key: string]: any; }** |  | [optional] [default to undefined]
 **sub_devices** | **Array&lt;{ [key: string]: any; }&gt;** |  | [optional] [default to undefined]
-**yearly_consumption** | [**Array&lt;EnergeticsEnoPorsennaBlockYearlyConsumptionInner&gt;**](EnergeticsEnoPorsennaBlockYearlyConsumptionInner.md) |  | [optional] [default to undefined]
 
 ## Example
 
@@ -18,7 +17,6 @@ import { EnergeticsEnoPorsennaBlock } from 'golemio-api';
 const instance: EnergeticsEnoPorsennaBlock = {
     device,
     sub_devices,
-    yearly_consumption,
 };
 ```
 

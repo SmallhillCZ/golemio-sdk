@@ -1,15 +1,15 @@
 # EnergeticsEnoConsumptionPointGasCommercial
 
-Latest non-canceled PPAS commercial invoice with its installation, devices and prices
+Latest non-canceled PPAS commercial invoice for this EIC, in the same shape as `distribution`. Null when no commercial invoice knows the point.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**invoice** | **{ [key: string]: any; }** |  | [optional] [default to undefined]
-**installation** | **{ [key: string]: any; }** |  | [optional] [default to undefined]
-**devices** | **Array&lt;{ [key: string]: any; }&gt;** |  | [optional] [default to undefined]
-**prices** | **Array&lt;{ [key: string]: any; }&gt;** |  | [optional] [default to undefined]
+**invoice** | [**EnergeticsEnoGasInvoice**](EnergeticsEnoGasInvoice.md) |  | [optional] [default to undefined]
+**installation** | [**EnergeticsEnoGasInstallation**](EnergeticsEnoGasInstallation.md) |  | [optional] [default to undefined]
+**devices** | [**Array&lt;EnergeticsEnoGasInvoiceDevice&gt;**](EnergeticsEnoGasInvoiceDevice.md) |  | [optional] [default to undefined]
+**prices** | [**Array&lt;EnergeticsEnoGasInvoicePrice&gt;**](EnergeticsEnoGasInvoicePrice.md) |  | [optional] [default to undefined]
 
 ## Example
 

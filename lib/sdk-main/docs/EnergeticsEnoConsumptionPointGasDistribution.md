@@ -1,15 +1,15 @@
 # EnergeticsEnoConsumptionPointGasDistribution
 
-Latest non-canceled PPAS distribution invoice with its installation, devices and prices
+Latest non-canceled PPAS distribution invoice for this EIC with its installation, billed meter periods and priced lines. Devices and prices are scoped to this point\'s installation, so another installation on the same invoice does not leak in. Null when no distribution invoice knows the point.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**invoice** | **{ [key: string]: any; }** |  | [optional] [default to undefined]
-**installation** | **{ [key: string]: any; }** |  | [optional] [default to undefined]
-**devices** | **Array&lt;{ [key: string]: any; }&gt;** |  | [optional] [default to undefined]
-**prices** | **Array&lt;{ [key: string]: any; }&gt;** |  | [optional] [default to undefined]
+**invoice** | [**EnergeticsEnoGasInvoice**](EnergeticsEnoGasInvoice.md) |  | [optional] [default to undefined]
+**installation** | [**EnergeticsEnoGasInstallation**](EnergeticsEnoGasInstallation.md) |  | [optional] [default to undefined]
+**devices** | [**Array&lt;EnergeticsEnoGasInvoiceDevice&gt;**](EnergeticsEnoGasInvoiceDevice.md) |  | [optional] [default to undefined]
+**prices** | [**Array&lt;EnergeticsEnoGasInvoicePrice&gt;**](EnergeticsEnoGasInvoicePrice.md) |  | [optional] [default to undefined]
 
 ## Example
 

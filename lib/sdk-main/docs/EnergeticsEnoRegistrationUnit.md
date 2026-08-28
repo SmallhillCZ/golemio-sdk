@@ -1,6 +1,6 @@
 # EnergeticsEnoRegistrationUnit
 
-Evidenční jednotka (eno_ciselnik_evidencni_jednotka) resolved through the building\'s eno_majetek record. The same shape is returned by the search and the detail endpoint.
+Evidenční jednotka (eno_ciselnik_evidencni_jednotka) resolved through the building\'s eno_majetek record. The same shape is returned by the search and the detail endpoint. Null when the building has no majetek record.
 
 ## Properties
 

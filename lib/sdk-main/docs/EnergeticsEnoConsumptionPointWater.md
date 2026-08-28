@@ -7,6 +7,7 @@ Water-specific data (present only for commodity = water, omitted otherwise; Pors
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **porsenna** | [**EnergeticsEnoPorsennaBlock**](EnergeticsEnoPorsennaBlock.md) |  | [optional] [default to undefined]
+**consumption_history** | [**Array&lt;EnergeticsEnoConsumptionSeries&gt;**](EnergeticsEnoConsumptionSeries.md) | Per-source series for this point; empty when no source knows it. | [optional] [default to undefined]
 
 ## Example
 
@@ -15,6 +16,7 @@ import { EnergeticsEnoConsumptionPointWater } from 'golemio-api';
 
 const instance: EnergeticsEnoConsumptionPointWater = {
     porsenna,
+    consumption_history,
 };
 ```
 

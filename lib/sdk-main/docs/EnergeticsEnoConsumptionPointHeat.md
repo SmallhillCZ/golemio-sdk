@@ -7,6 +7,7 @@ Heat-specific data (present only for commodity = heat, omitted otherwise; Porsen
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **porsenna** | [**EnergeticsEnoPorsennaBlock**](EnergeticsEnoPorsennaBlock.md) |  | [optional] [default to undefined]
+**consumption_history** | [**Array&lt;EnergeticsEnoConsumptionSeries&gt;**](EnergeticsEnoConsumptionSeries.md) | Per-source series for this point; empty when no source knows it. | [optional] [default to undefined]
 
 ## Example
 
@@ -15,6 +16,7 @@ import { EnergeticsEnoConsumptionPointHeat } from 'golemio-api';
 
 const instance: EnergeticsEnoConsumptionPointHeat = {
     porsenna,
+    consumption_history,
 };
 ```
 

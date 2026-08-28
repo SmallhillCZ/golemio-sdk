@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **address** | **string** |  | [optional] [default to undefined]
 **devices_total** | **number** |  | [optional] [default to undefined]
 **devices_active** | **number** |  | [optional] [default to undefined]
+**data_to** | **string** | Most recent date any of this building\&#39;s Porsenna devices reported; null when none of them has consumption. Porsenna aggregates carry a covered-day count rather than a reading timestamp, so this is the period start plus its covered days, clamped to the end of the period. A meter count without an as-of date is a claim with no expiry. | [optional] [default to undefined]
 
 ## Example
 
@@ -23,6 +24,7 @@ const instance: EnergeticsEnoBuildingDetailEnergyManagement = {
     address,
     devices_total,
     devices_active,
+    data_to,
 };
 ```
 

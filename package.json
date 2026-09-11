@@ -1,6 +1,6 @@
 {
 	"name": "golemio-sdk",
-	"version": "2.2.14",
+	"version": "2.2.15",
 	"exports": {
 		"import": "./dist/esm/index.js",
 		"require": "./dist/cjs/index.js",

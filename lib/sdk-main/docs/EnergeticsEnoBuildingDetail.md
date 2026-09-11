@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **energy_management** | [**EnergeticsEnoBuildingDetailEnergyManagement**](EnergeticsEnoBuildingDetailEnergyManagement.md) |  | [optional] [default to undefined]
 **consumption_history** | [**EnergeticsEnoConsumptionHistory**](EnergeticsEnoConsumptionHistory.md) |  | [optional] [default to undefined]
 **consumption_points** | [**Array&lt;EnergeticsEnoConsumptionPoint&gt;**](EnergeticsEnoConsumptionPoint.md) |  | [optional] [default to undefined]
+**heat_sources** | [**EnergeticsEnoHeatSources**](EnergeticsEnoHeatSources.md) |  | [optional] [default to undefined]
 
 ## Example
 
@@ -30,6 +31,7 @@ const instance: EnergeticsEnoBuildingDetail = {
     energy_management,
     consumption_history,
     consumption_points,
+    heat_sources,
 };
 ```
 

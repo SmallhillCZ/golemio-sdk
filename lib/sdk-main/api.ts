@@ -2302,6 +2302,12 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoBuildingDetail
          */
         'consumption_points'?: Array<EnergeticsEnoConsumptionPoint>;
+        /**
+         * 
+         * @type {EnergeticsEnoHeatSources}
+         * @memberof EnergeticsEnoBuildingDetail
+         */
+        'heat_sources'?: EnergeticsEnoHeatSources;
     }
     
         /**
@@ -2681,7 +2687,7 @@ export namespace GolemioApi {
          */
         'value'?: number | null;
         /**
-         * Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing; `value` + `unit` stay authoritative. A yearly entry withholds it unless every contributing month has one, so it can never imply a conversion rate that did not exist.
+         * Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing;
          * @type {number}
          * @memberof EnergeticsEnoConsumptionEntry
          */
@@ -3660,6 +3666,82 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoGasInvoicePrice
          */
         'tax_rate'?: number;
+    }
+    
+        /**
+     * Heat sources (boiler rooms) recorded for the building. 
+     * @export
+     * @interface EnergeticsEnoHeatSources
+     */
+    export interface EnergeticsEnoHeatSources {
+        /**
+         * Number of heat sources recorded for this building.
+         * @type {number}
+         * @memberof EnergeticsEnoHeatSources
+         */
+        'count'?: number;
+        /**
+         * Sum of `rated_output_kw` over the building\'s heat sources
+         * @type {number}
+         * @memberof EnergeticsEnoHeatSources
+         */
+        'total_rated_output_kw'?: number | null;
+        /**
+         * The individual appliances, strongest rated output first. .
+         * @type {Array<EnergeticsEnoHeatSourcesSourcesInner>}
+         * @memberof EnergeticsEnoHeatSources
+         */
+        'sources'?: Array<EnergeticsEnoHeatSourcesSourcesInner>;
+    }
+    
+        /**
+     * 
+     * @export
+     * @interface EnergeticsEnoHeatSourcesSourcesInner
+     */
+    export interface EnergeticsEnoHeatSourcesSourcesInner {
+        /**
+         * Free-text appliance name from the snapshot.
+         * @type {string}
+         * @memberof EnergeticsEnoHeatSourcesSourcesInner
+         */
+        'appliance_name'?: string | null;
+        /**
+         * Note from the snapshot, e.g. where the figure came from.
+         * @type {string}
+         * @memberof EnergeticsEnoHeatSourcesSourcesInner
+         */
+        'note'?: string | null;
+        /**
+         * Rated output in kW. `0` means the snapshot states no output
+         * @type {number}
+         * @memberof EnergeticsEnoHeatSourcesSourcesInner
+         */
+        'rated_output_kw'?: number | null;
+        /**
+         * Fuel/energy-source code
+         * @type {number}
+         * @memberof EnergeticsEnoHeatSourcesSourcesInner
+         */
+        'fuel_code'?: number | null;
+        /**
+         * Monitoring flag from the source system. Its exact meaning in the source is not documented in the snapshot.
+         * @type {boolean}
+         * @memberof EnergeticsEnoHeatSourcesSourcesInner
+         */
+        'is_monitored'?: boolean | null;
+        /**
+         * Appliance type from the source system. Every row of the current snapshot is `boiler`.
+         * @type {string}
+         * @memberof EnergeticsEnoHeatSourcesSourcesInner
+         */
+        'appliance_type'?: string | null;
+        /**
+         * Date the appliance has been in operation since.
+         * @type {string}
+         * @memberof EnergeticsEnoHeatSourcesSourcesInner
+         */
+        'operating_since'?: string | null;
     }
     
         /**
@@ -12188,7 +12270,7 @@ export namespace GolemioApi {
             }
         
                 /**
-             * Returns the ENO building (eno_budova) identified by GID together with its addresses and all consumption points mapped to it. Commodity-specific data is nested under the `electricity`/`gas`/`heat`/`water` keys of each consumption point; only the key matching the `commodity` field is present, the others are omitted entirely. Consumption points come from two independent sources: the energobroker mapping (EAN/EIC, enriched with PRE metadata and PPAS invoices) and Porsenna e-manazer devices (`link_source: porsenna`) — heat and water meters, plus any EAN/EIC the mapping lacks. An OM known to both sources is returned once, with the Porsenna data nested as a `porsenna` sub-block (device, sub-meters, yearly consumption) inside its commodity block. Buildings tracked in Porsenna also carry an `energy_management` summary. The endpoint returns whatever data exists for the GID: if there is any building record, address, or consumption point, the response is 200 with the missing parts as `null` or empty arrays (e.g. `building: null` when only consumption points or addresses are known). 404 is returned only when no source holds any data for the GID. `consumption_history` carries monthly and yearly consumption per commodity, at building level and again per consumption point. Sources are returned **in parallel** rather than merged into one canonical series: metered readings and invoiced amounts legitimately disagree, and which one a client wants depends on what it shows. `is_metered` distinguishes them. Coverage differs sharply by commodity and is a property of the data, not of the endpoint. Gas has roughly three years of invoice history for about three quarters of its points. Electricity is metered-only and starts in 2025, covering under a tenth of its points, so most months come back `null`. Heat and water exist only as Porsenna yearly figures. `measurement_data_from` and the per-series `data_from` say when data actually begins, so a run of leading `null`s is explicable rather than looking like a fault. Every aggregate carries its own provenance, so a client never has to present a summed figure as if it were exact: `points_total`/`points_with_data` say how many consumption points stand behind a period, `invoice_ids` names the billing documents an allocated period came from, `coverage_count`/`expected_count` mark a partial period, and a point\'s `shared_with` names the other buildings its meters also serve.
+             * Returns the ENO building (eno_budova) identified by GID together with its addresses and all consumption points mapped to it.
              * @summary ENO building detail with consumption points (OM) and technical parameters
         
              * @param     {string}     gid 

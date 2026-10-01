@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **origin_route_name** | **string** |  | [optional] [default to undefined]
 **run_number** | **number** |  | [optional] [default to undefined]
 **trip_headsign** | **string** |  | [optional] [default to undefined]
-**geometry** | [**GeometryPoint**](GeometryPoint.md) |  | [optional] [default to undefined]
+**geometry** | [**NullableGeometryPoint**](NullableGeometryPoint.md) |  | [optional] [default to undefined]
 **shape_dist_traveled** | **number** | Distance travelled from the first stop of the trip. | [optional] [default to undefined]
 **bearing** | **number** | Bearing of the vehicle in degrees (0-360). | [optional] [default to undefined]
 **delay** | **number** | Delay of the vehicle in seconds. | [optional] [default to undefined]

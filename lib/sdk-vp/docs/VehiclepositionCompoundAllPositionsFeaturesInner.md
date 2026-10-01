@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**geometry** | [**FeaturePointGeometry**](FeaturePointGeometry.md) |  | [default to undefined]
+**geometry** | [**NullableGeometryPoint**](NullableGeometryPoint.md) |  | [default to undefined]
 **properties** | [**VehiclepositionPosition**](VehiclepositionPosition.md) |  | [default to undefined]
 **type** | **string** |  | [default to undefined]
 

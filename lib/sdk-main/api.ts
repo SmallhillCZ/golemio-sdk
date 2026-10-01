@@ -1999,6 +1999,12 @@ export namespace GolemioApi {
          */
         'registration_unit': EnergeticsEnoRegistrationUnit | null;
         /**
+         * Odbor spravující budovu: hlavní evidenční jednotka registrační jednotky (kod_maj_evidencni_jednotka_hl), nebo registrační jednotka samotná, pokud žádnou hlavní jednotku nemá.
+         * @type {EnergeticsEnoRegistrationUnit}
+         * @memberof EnergeticsDedBuildingSearchResult
+         */
+        'department': EnergeticsEnoRegistrationUnit | null;
+        /**
          * Main address of the building.
          * @type {string}
          * @memberof EnergeticsDedBuildingSearchResult
@@ -2564,6 +2570,12 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoBuildingDetailProperty
          */
         'registration_unit'?: EnergeticsEnoRegistrationUnit | null;
+        /**
+         * Odbor spravující budovu: hlavní evidenční jednotka registrační jednotky (kod_maj_evidencni_jednotka_hl), nebo registrační jednotka samotná, pokud žádnou hlavní jednotku nemá (tedy pokud je sama odborem).
+         * @type {EnergeticsEnoRegistrationUnit}
+         * @memberof EnergeticsEnoBuildingDetailProperty
+         */
+        'department'?: EnergeticsEnoRegistrationUnit | null;
         /**
          * 
          * @type {EnergeticsEnoBuildingDetailPropertyManagers}

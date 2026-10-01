@@ -64,6 +64,8 @@ docs/ListFyprElementsKinds200Response.md
 docs/ListFyprElementsKinds200ResponseLinksInner.md
 docs/MVTMapsV2Api.md
 docs/ManagerEnum.md
+docs/NullableFeaturePoint.md
+docs/NullableGeometryPoint.md
 docs/Obelisk.md
 docs/ObeliskBase.md
 docs/OrderStateEnum.md

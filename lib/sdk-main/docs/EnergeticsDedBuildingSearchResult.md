@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **name** | **string** |  | [default to undefined]
 **designation** | **string** |  | [default to undefined]
 **registration_unit** | [**EnergeticsEnoRegistrationUnit**](EnergeticsEnoRegistrationUnit.md) | Evidenční jednotka (eno_ciselnik_evidencni_jednotka) resolved through eno_majetek; null when the building has no majetek record. Its name is part of the search vector. | [default to undefined]
+**department** | [**EnergeticsEnoRegistrationUnit**](EnergeticsEnoRegistrationUnit.md) | Odbor spravující budovu: hlavní evidenční jednotka registrační jednotky (kod_maj_evidencni_jednotka_hl), nebo registrační jednotka samotná, pokud žádnou hlavní jednotku nemá. | [default to undefined]
 **address** | **string** | Main address of the building. | [default to undefined]
 **addresses** | **Array&lt;string&gt;** | Every distinct address of the building, the main one first. | [default to undefined]
 **matched_by** | **string** |  | [default to undefined]
@@ -32,6 +33,7 @@ const instance: EnergeticsDedBuildingSearchResult = {
     name,
     designation,
     registration_unit,
+    department,
     address,
     addresses,
     matched_by,

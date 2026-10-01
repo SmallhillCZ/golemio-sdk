@@ -1205,19 +1205,19 @@ export namespace GolemioPublicTransportApi {
          * @type {FeaturePointGeometry}
          * @memberof FeaturePoint
          */
-        'geometry': FeaturePointGeometry;
+        'geometry'?: FeaturePointGeometry;
         /**
          * 
          * @type {object}
          * @memberof FeaturePoint
          */
-        'properties': object;
+        'properties'?: object;
         /**
          * 
          * @type {string}
          * @memberof FeaturePoint
          */
-        'type': string;
+        'type'?: string;
     }
     
         /**
@@ -3423,6 +3423,59 @@ export namespace GolemioPublicTransportApi {
     export type ManagerEnum = typeof ManagerEnum[keyof typeof ManagerEnum];
     
         /**
+     * A GeoJSON Feature whose coordinates may be [null, null] when the vehicle\'s exact position is not yet known (e.g. a not-yet-tracked connecting trip)
+     * @export
+     * @interface NullableFeaturePoint
+     */
+    export interface NullableFeaturePoint {
+        /**
+         * 
+         * @type {NullableGeometryPoint}
+         * @memberof NullableFeaturePoint
+         */
+        'geometry': NullableGeometryPoint;
+        /**
+         * 
+         * @type {object}
+         * @memberof NullableFeaturePoint
+         */
+        'properties': object;
+        /**
+         * 
+         * @type {string}
+         * @memberof NullableFeaturePoint
+         */
+        'type': string;
+    }
+    
+        /**
+     * GeoJson point whose coordinates may be [null, null] when the vehicle\'s exact position is not yet known (e.g. a not-yet-tracked connecting trip)
+     * @export
+     * @interface NullableGeometryPoint
+     */
+    export interface NullableGeometryPoint {
+        /**
+         * Point
+         * @type {Array<number | null>}
+         * @memberof NullableGeometryPoint
+         */
+        'coordinates'?: Array<number | null>;
+        /**
+         * 
+         * @type {string}
+         * @memberof NullableGeometryPoint
+         */
+        'type'?: NullableGeometryPointTypeEnum;
+    }
+    
+    export const NullableGeometryPointTypeEnum = {
+        Point: 'Point'
+    } as const;
+    
+    export type NullableGeometryPointTypeEnum = typeof NullableGeometryPointTypeEnum[keyof typeof NullableGeometryPointTypeEnum];
+    
+    
+        /**
      * Fully composed obelisk schema for list responses. Combines all writable obelisk-specific fields (ObeliskBase, which itself includes ElementBase) with server-set read-only fields (ElementReadOnly). The id and source_updated_at fields are required on every record returned by the API.
      * @export
      * @interface Obelisk
@@ -4947,10 +5000,10 @@ export namespace GolemioPublicTransportApi {
         'trip_headsign'?: string | null;
         /**
          * 
-         * @type {GeometryPoint}
+         * @type {NullableGeometryPoint}
          * @memberof ScopeInfo
          */
-        'geometry'?: GeometryPoint;
+        'geometry'?: NullableGeometryPoint;
         /**
          * Distance travelled from the first stop of the trip.
          * @type {number}
@@ -6733,19 +6786,19 @@ export namespace GolemioPublicTransportApi {
          * @type {FeaturePointGeometry}
          * @memberof V2GtfsStopsGet200ResponseFeaturesInner
          */
-        'geometry': FeaturePointGeometry;
+        'geometry'?: FeaturePointGeometry;
         /**
          * 
          * @type {GTFSStop}
          * @memberof V2GtfsStopsGet200ResponseFeaturesInner
          */
-        'properties': GTFSStop;
+        'properties'?: GTFSStop;
         /**
          * 
          * @type {string}
          * @memberof V2GtfsStopsGet200ResponseFeaturesInner
          */
-        'type': string;
+        'type'?: string;
     }
     
         /**
@@ -6857,19 +6910,19 @@ export namespace GolemioPublicTransportApi {
          * @type {FeaturePointGeometry}
          * @memberof V2GtfsTripsIdGet200ResponseAllOfShapesInner
          */
-        'geometry': FeaturePointGeometry;
+        'geometry'?: FeaturePointGeometry;
         /**
          * 
          * @type {GTFSShape}
          * @memberof V2GtfsTripsIdGet200ResponseAllOfShapesInner
          */
-        'properties': GTFSShape;
+        'properties'?: GTFSShape;
         /**
          * 
          * @type {string}
          * @memberof V2GtfsTripsIdGet200ResponseAllOfShapesInner
          */
-        'type': string;
+        'type'?: string;
     }
     
         /**
@@ -7072,10 +7125,10 @@ export namespace GolemioPublicTransportApi {
         'trip_headsign'?: string | null;
         /**
          * 
-         * @type {GeometryPoint}
+         * @type {NullableGeometryPoint}
          * @memberof V2PublicVehiclepositionsVehicleIdGet200Response
          */
-        'geometry'?: GeometryPoint;
+        'geometry'?: NullableGeometryPoint;
         /**
          * Distance travelled from the first stop of the trip.
          * @type {number}
@@ -7174,10 +7227,10 @@ export namespace GolemioPublicTransportApi {
     export interface V2VehiclepositionsGet200ResponseFeaturesInner {
         /**
          * 
-         * @type {FeaturePointGeometry}
+         * @type {NullableGeometryPoint}
          * @memberof V2VehiclepositionsGet200ResponseFeaturesInner
          */
-        'geometry': FeaturePointGeometry;
+        'geometry': NullableGeometryPoint;
         /**
          * 
          * @type {VehiclepositionCompound}
@@ -7830,10 +7883,10 @@ export namespace GolemioPublicTransportApi {
     export interface VehiclepositionCompoundAllPositionsFeaturesInner {
         /**
          * 
-         * @type {FeaturePointGeometry}
+         * @type {NullableGeometryPoint}
          * @memberof VehiclepositionCompoundAllPositionsFeaturesInner
          */
-        'geometry': FeaturePointGeometry;
+        'geometry': NullableGeometryPoint;
         /**
          * 
          * @type {VehiclepositionPosition}

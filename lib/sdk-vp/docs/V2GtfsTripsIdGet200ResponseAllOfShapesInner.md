@@ -5,9 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**geometry** | [**FeaturePointGeometry**](FeaturePointGeometry.md) |  | [default to undefined]
-**properties** | [**GTFSShape**](GTFSShape.md) |  | [default to undefined]
-**type** | **string** |  | [default to undefined]
+**geometry** | [**FeaturePointGeometry**](FeaturePointGeometry.md) |  | [optional] [default to undefined]
+**properties** | [**GTFSShape**](GTFSShape.md) |  | [optional] [default to undefined]
+**type** | **string** |  | [optional] [default to undefined]
 
 ## Example
 

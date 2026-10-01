@@ -1,20 +1,21 @@
-# V2VehiclepositionsGet200ResponseFeaturesInner
+# NullableFeaturePoint
 
+A GeoJSON Feature whose coordinates may be [null, null] when the vehicle\'s exact position is not yet known (e.g. a not-yet-tracked connecting trip)
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **geometry** | [**NullableGeometryPoint**](NullableGeometryPoint.md) |  | [default to undefined]
-**properties** | [**VehiclepositionCompound**](VehiclepositionCompound.md) |  | [default to undefined]
+**properties** | **object** |  | [default to undefined]
 **type** | **string** |  | [default to undefined]
 
 ## Example
 
 ```typescript
-import { V2VehiclepositionsGet200ResponseFeaturesInner } from 'golemio-public-transport-api';
+import { NullableFeaturePoint } from 'golemio-public-transport-api';
 
-const instance: V2VehiclepositionsGet200ResponseFeaturesInner = {
+const instance: NullableFeaturePoint = {
     geometry,
     properties,
     type,

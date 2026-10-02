@@ -10421,7 +10421,7 @@ export namespace GolemioPublicTransportApi {
             }
         
         
-                                                                            /**
+                                                                                /**
          * @export
          */
         export const V2PidDepartureboardsGetSkipEnum = {
@@ -10510,6 +10510,14 @@ export namespace GolemioPublicTransportApi {
              * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsGet
              */
             airCondition?: boolean
+        
+                //wheelchairAccessible
+            /**
+             * Controls the wheelchair accessibility indication in the &#x60;X-Golemio-Preset-Metadata&#x60; header on the JSON departure boards endpoint. Setting to &#x60;false&#x60; reports &#x60;wheelchairAccessiblePossible&#x3D;0&#x60;. It does not filter departures yet.
+             * @type     {boolean}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsGet
+             */
+            wheelchairAccessible?: boolean
         
                 //preferredTimezone
             /**
@@ -10611,7 +10619,7 @@ export namespace GolemioPublicTransportApi {
             }
         
         
-                                                                            /**
+                                                                                /**
          * @export
          */
         export const V2PidDepartureboardsXmlGetSkipEnum = {
@@ -10700,6 +10708,14 @@ export namespace GolemioPublicTransportApi {
              * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
              */
             airCondition?: boolean
+        
+                //wheelchairAccessible
+            /**
+             * Controls the wheelchair accessibility indication in the &#x60;X-Golemio-Preset-Metadata&#x60; header on the JSON departure boards endpoint. Setting to &#x60;false&#x60; reports &#x60;wheelchairAccessiblePossible&#x3D;0&#x60;. It does not filter departures yet.
+             * @type     {boolean}    
+             * @memberof PIDDepartureBoardsV2ApiV2PidDepartureboardsXmlGet
+             */
+            wheelchairAccessible?: boolean
         
                 //preferredTimezone
             /**
@@ -10811,7 +10827,7 @@ export namespace GolemioPublicTransportApi {
                 options: AxiosRequestConfig = {}
             ) {
         
-                                                                                                                                                                        const localVarPath = `/v2/pid/departureboards`;
+                                                                                                                                                                                const localVarPath = `/v2/pid/departureboards`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;
@@ -10860,6 +10876,10 @@ export namespace GolemioPublicTransportApi {
         
                         if (queryParams.airCondition !== undefined) {
                                 requestQueryParameter['airCondition'] = queryParams.airCondition;
+                    }
+        
+                        if (queryParams.wheelchairAccessible !== undefined) {
+                                requestQueryParameter['wheelchairAccessible'] = queryParams.wheelchairAccessible;
                     }
         
                         if (queryParams.preferredTimezone !== undefined) {
@@ -10977,7 +10997,7 @@ export namespace GolemioPublicTransportApi {
                 options: AxiosRequestConfig = {}
             ) {
         
-                                                                                                                                                                        const localVarPath = `/v2/pid/departureboards/xml`;
+                                                                                                                                                                                const localVarPath = `/v2/pid/departureboards/xml`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;
@@ -11026,6 +11046,10 @@ export namespace GolemioPublicTransportApi {
         
                         if (queryParams.airCondition !== undefined) {
                                 requestQueryParameter['airCondition'] = queryParams.airCondition;
+                    }
+        
+                        if (queryParams.wheelchairAccessible !== undefined) {
+                                requestQueryParameter['wheelchairAccessible'] = queryParams.wheelchairAccessible;
                     }
         
                         if (queryParams.preferredTimezone !== undefined) {

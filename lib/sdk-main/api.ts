@@ -2681,6 +2681,112 @@ export namespace GolemioApi {
     }
     
         /**
+     * 
+     * @export
+     * @interface EnergeticsEnoCombinedConsumptionEntry
+     */
+    export interface EnergeticsEnoCombinedConsumptionEntry {
+        /**
+         * `YYYY-MM` for monthly entries, `YYYY` for yearly ones.
+         * @type {string}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'period'?: string;
+        /**
+         * 
+         * @type {number}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'value'?: number | null;
+        /**
+         * Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing;
+         * @type {number}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'value_kwh'?: number | null;
+        /**
+         * Days of the period carrying data.
+         * @type {number}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'coverage_count'?: number;
+        /**
+         * Days in the period, so a partial period is recognisable as one.
+         * @type {number}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'expected_count'?: number;
+        /**
+         * True when the value was allocated pro rata from a billing period spanning more than one month, rather than read for the period itself.
+         * @type {boolean}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'is_estimated'?: boolean;
+        /**
+         * Consumption points that contributed this period at all. `0` for a period no point reported — never null, so a gap is a number a client can compare.
+         * @type {number}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'points_total'?: number;
+        /**
+         * Of those, how many carried a value. A shortfall against the series\' `points` is how a client learns a building summary is missing an OM for this period rather than being genuinely lower — at point grain the counts are 1/1 or 0/0.
+         * @type {number}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'points_with_data'?: number;
+        /**
+         * Billing documents this period was allocated from, sorted. Empty for metered readings, for Porsenna and for periods with no value. An allocated month is a number the platform computed rather than one anyone read, so naming the invoice is what makes it auditable. At building level a period can be allocated from several invoices (one per point), and a yearly entry usually is; at point grain a month is normally one.
+         * @type {Array<string>}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'invoice_ids'?: Array<string>;
+        /**
+         * Sources the period\'s value was picked from (one per point), sorted and deduplicated. `points_total` counts every point of the series.
+         * @type {Array<string>}
+         * @memberof EnergeticsEnoCombinedConsumptionEntry
+         */
+        'sources'?: Array<string>;
+    }
+    
+        /**
+     * Per point and month one kWh source - a whole-month live source, else Energy Broker, else a partial or pro-rata figure - summed across points. Null when no source has kWh.
+     * @export
+     * @interface EnergeticsEnoCombinedConsumptionSeries
+     */
+    export interface EnergeticsEnoCombinedConsumptionSeries {
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoCombinedConsumptionSeries
+         */
+        'unit'?: string;
+        /**
+         * 
+         * @type {Array<string>}
+         * @memberof EnergeticsEnoCombinedConsumptionSeries
+         */
+        'points'?: Array<string>;
+        /**
+         * 
+         * @type {string}
+         * @memberof EnergeticsEnoCombinedConsumptionSeries
+         */
+        'data_from'?: string | null;
+        /**
+         * 
+         * @type {Array<EnergeticsEnoCombinedConsumptionEntry>}
+         * @memberof EnergeticsEnoCombinedConsumptionSeries
+         */
+        'monthly'?: Array<EnergeticsEnoCombinedConsumptionEntry>;
+        /**
+         * Sum of the picked months inside the window.
+         * @type {Array<EnergeticsEnoCombinedConsumptionEntry>}
+         * @memberof EnergeticsEnoCombinedConsumptionSeries
+         */
+        'yearly'?: Array<EnergeticsEnoCombinedConsumptionEntry>;
+    }
+    
+        /**
      * One period of one series. `value: null` means the source has no data for that period - missing periods are always null, never an error and never a zero.
      * @export
      * @interface EnergeticsEnoConsumptionEntry
@@ -2802,6 +2908,32 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoConsumptionHistory
          */
         'water'?: Array<EnergeticsEnoConsumptionSeries>;
+        /**
+         * 
+         * @type {EnergeticsEnoConsumptionHistoryCombined}
+         * @memberof EnergeticsEnoConsumptionHistory
+         */
+        'combined'?: EnergeticsEnoConsumptionHistoryCombined;
+    }
+    
+        /**
+     * One continuous kWh series per commodity across all sources. Heat and water are out of scope.
+     * @export
+     * @interface EnergeticsEnoConsumptionHistoryCombined
+     */
+    export interface EnergeticsEnoConsumptionHistoryCombined {
+        /**
+         * 
+         * @type {EnergeticsEnoCombinedConsumptionSeries}
+         * @memberof EnergeticsEnoConsumptionHistoryCombined
+         */
+        'electricity'?: EnergeticsEnoCombinedConsumptionSeries | null;
+        /**
+         * 
+         * @type {EnergeticsEnoCombinedConsumptionSeries}
+         * @memberof EnergeticsEnoConsumptionHistoryCombined
+         */
+        'gas'?: EnergeticsEnoCombinedConsumptionSeries | null;
     }
     
         /**
@@ -2937,6 +3069,12 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoConsumptionPointElectricity
          */
         'consumption_history'?: Array<EnergeticsEnoConsumptionSeries>;
+        /**
+         * 
+         * @type {EnergeticsEnoCombinedConsumptionSeries}
+         * @memberof EnergeticsEnoConsumptionPointElectricity
+         */
+        'combined_history'?: EnergeticsEnoCombinedConsumptionSeries | null;
     }
     
         /**
@@ -2957,6 +3095,12 @@ export namespace GolemioApi {
          * @memberof EnergeticsEnoConsumptionPointGas
          */
         'consumption_history'?: Array<EnergeticsEnoConsumptionSeries>;
+        /**
+         * 
+         * @type {EnergeticsEnoCombinedConsumptionSeries}
+         * @memberof EnergeticsEnoConsumptionPointGas
+         */
+        'combined_history'?: EnergeticsEnoCombinedConsumptionSeries | null;
         /**
          * 
          * @type {EnergeticsEnoConsumptionPointGasDistribution}
@@ -3108,7 +3252,7 @@ export namespace GolemioApi {
          */
         'source'?: EnergeticsEnoConsumptionSeriesSourceEnum;
         /**
-         * Electricity is kWh. Metered gas is m3 (from the PPAS operating difference) or Nm3 where only the converted difference exists - a point whose unit changes mid-window appears as two series with complementary gaps, which is why unit is part of the key. Porsenna carries its own lowercase unit.
+         * Electricity is kWh. Metered gas is m3 (from the PPAS operating difference) or Nm3 where only the converted difference exists - a point whose unit changes mid-window appears as two series with complementary gaps, which is why unit is part of the key. Porsenna carries its own lowercase unit. Energy Broker is kWh only, full calendar months only, and left out where a live source read the whole month in kWh.
          * @type {string}
          * @memberof EnergeticsEnoConsumptionSeries
          */
@@ -3150,7 +3294,8 @@ export namespace GolemioApi {
         PpasAveApi: 'ppas_ave_api',
         PpasDistributionInvoice: 'ppas_distribution_invoice',
         PpasCommercialInvoice: 'ppas_commercial_invoice',
-        Porsenna: 'porsenna'
+        Porsenna: 'porsenna',
+        EnergyBroker: 'energy_broker'
     } as const;
     
     export type EnergeticsEnoConsumptionSeriesSourceEnum = typeof EnergeticsEnoConsumptionSeriesSourceEnum[keyof typeof EnergeticsEnoConsumptionSeriesSourceEnum];

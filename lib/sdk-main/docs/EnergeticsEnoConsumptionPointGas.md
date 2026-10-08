@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **porsenna** | [**EnergeticsEnoPorsennaBlock**](EnergeticsEnoPorsennaBlock.md) |  | [optional] [default to undefined]
 **consumption_history** | [**Array&lt;EnergeticsEnoConsumptionSeries&gt;**](EnergeticsEnoConsumptionSeries.md) | Per-source series for this point; empty when no source knows it. | [optional] [default to undefined]
+**combined_history** | [**EnergeticsEnoCombinedConsumptionSeries**](EnergeticsEnoCombinedConsumptionSeries.md) |  | [optional] [default to undefined]
 **distribution** | [**EnergeticsEnoConsumptionPointGasDistribution**](EnergeticsEnoConsumptionPointGasDistribution.md) |  | [optional] [default to undefined]
 **commercial** | [**EnergeticsEnoConsumptionPointGasCommercial**](EnergeticsEnoConsumptionPointGasCommercial.md) |  | [optional] [default to undefined]
 
@@ -19,6 +20,7 @@ import { EnergeticsEnoConsumptionPointGas } from 'golemio-api';
 const instance: EnergeticsEnoConsumptionPointGas = {
     porsenna,
     consumption_history,
+    combined_history,
     distribution,
     commercial,
 };

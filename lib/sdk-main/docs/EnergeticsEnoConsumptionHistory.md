@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **gas** | [**Array&lt;EnergeticsEnoConsumptionSeries&gt;**](EnergeticsEnoConsumptionSeries.md) |  | [optional] [default to undefined]
 **heat** | [**Array&lt;EnergeticsEnoConsumptionSeries&gt;**](EnergeticsEnoConsumptionSeries.md) |  | [optional] [default to undefined]
 **water** | [**Array&lt;EnergeticsEnoConsumptionSeries&gt;**](EnergeticsEnoConsumptionSeries.md) |  | [optional] [default to undefined]
+**combined** | [**EnergeticsEnoConsumptionHistoryCombined**](EnergeticsEnoConsumptionHistoryCombined.md) |  | [optional] [default to undefined]
 
 ## Example
 
@@ -31,6 +32,7 @@ const instance: EnergeticsEnoConsumptionHistory = {
     gas,
     heat,
     water,
+    combined,
 };
 ```
 

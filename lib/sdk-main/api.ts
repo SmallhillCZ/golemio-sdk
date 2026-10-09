@@ -5724,7 +5724,11 @@ export namespace GolemioApi {
         Human: 'human',
         ElectricAssist: 'electric_assist',
         Electric: 'electric',
-        Combustion: 'combustion'
+        Combustion: 'combustion',
+        CombustionDiesel: 'combustion_diesel',
+        Hybrid: 'hybrid',
+        PlugInHybrid: 'plug_in_hybrid',
+        HydrogenFuelCell: 'hydrogen_fuel_cell'
     } as const;
     
     export type GBFSVehicleTypesJsonVehicleTypesInnerPropulsionTypeEnum = typeof GBFSVehicleTypesJsonVehicleTypesInnerPropulsionTypeEnum[keyof typeof GBFSVehicleTypesJsonVehicleTypesInnerPropulsionTypeEnum];

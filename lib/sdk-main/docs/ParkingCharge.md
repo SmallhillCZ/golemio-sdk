@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **string** | The UUID identifier for the charge. | [default to undefined]
 **charge** | **string** | Charge amount. | [default to undefined]
-**charge_type** | **string** | Type of charge. | [default to undefined]
+**charge_type** | **string** | Type of charge. Null when the source data does not provide it. | [optional] [default to undefined]
 **charge_order_index** | **number** | Order index for charges. | [default to undefined]
 **charge_interval** | **number** | Charge interval (in seconds). | [default to undefined]
 **max_iterations_of_charge** | **number** | Maximum iterations of charge. | [optional] [default to undefined]

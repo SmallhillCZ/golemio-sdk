@@ -7385,11 +7385,11 @@ export namespace GolemioApi {
          */
         'charge': string;
         /**
-         * Type of charge.
+         * Type of charge. Null when the source data does not provide it.
          * @type {string}
          * @memberof ParkingCharge
          */
-        'charge_type': ParkingChargeChargeTypeEnum;
+        'charge_type'?: ParkingChargeChargeTypeEnum | null;
         /**
          * Order index for charges.
          * @type {number}

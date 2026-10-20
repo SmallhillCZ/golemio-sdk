@@ -35,6 +35,8 @@ docs/FyprMetadataKindEntry.md
 docs/FyprMetadataKindLinksInner.md
 docs/FyprMetadataKindTranslation.md
 docs/FyprMetadataKindTranslations.md
+docs/GTFSLevel.md
+docs/GTFSPathway.md
 docs/GTFSRealtimeV2Api.md
 docs/GTFSRealtimeV2InternalApi.md
 docs/GTFSRoute.md
@@ -43,6 +45,7 @@ docs/GTFSShape.md
 docs/GTFSStaticV2Api.md
 docs/GTFSStop.md
 docs/GTFSStopTime.md
+docs/GTFSTransfer.md
 docs/GTFSTrip.md
 docs/GeometryPoint.md
 docs/GetFyprElementDetail200Response.md

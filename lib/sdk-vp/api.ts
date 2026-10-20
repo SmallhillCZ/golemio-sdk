@@ -957,7 +957,8 @@ export namespace GolemioPublicTransportApi {
     export const EventCustomFormatTypeEnum = {
         Incident: 'INCIDENT',
         Disruption: 'DISRUPTION',
-        ServiceChange: 'SERVICE_CHANGE'
+        ServiceChange: 'SERVICE_CHANGE',
+        Internal: 'INTERNAL'
     } as const;
     
     export type EventCustomFormatTypeEnum = typeof EventCustomFormatTypeEnum[keyof typeof EventCustomFormatTypeEnum];
@@ -1347,6 +1348,143 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
+     * See GTFS Schedule Reference for [levels.txt](https://gtfs.org/documentation/schedule/reference/#levelstxt).
+     * @export
+     * @interface GTFSLevel
+     */
+    export interface GTFSLevel {
+        /**
+         * 
+         * @type {string}
+         * @memberof GTFSLevel
+         */
+        'level_id': string;
+        /**
+         * Numeric index of the level that indicates its relative position. Ground level is 0.
+         * @type {number}
+         * @memberof GTFSLevel
+         */
+        'level_index': number;
+        /**
+         * 
+         * @type {string}
+         * @memberof GTFSLevel
+         */
+        'level_name': string | null;
+    }
+    
+        /**
+     * See GTFS Schedule Reference for [pathways.txt](https://gtfs.org/documentation/schedule/reference/#pathwaystxt).
+     * @export
+     * @interface GTFSPathway
+     */
+    export interface GTFSPathway {
+        /**
+         * 
+         * @type {string}
+         * @memberof GTFSPathway
+         */
+        'pathway_id': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof GTFSPathway
+         */
+        'from_stop_id': string;
+        /**
+         * 
+         * @type {string}
+         * @memberof GTFSPathway
+         */
+        'to_stop_id': string;
+        /**
+         * 1 = walkway, 2 = stairs, 3 = moving sidewalk/travelator, 4 = escalator, 5 = elevator, 6 = fare gate, 7 = exit gate
+         * @type {number}
+         * @memberof GTFSPathway
+         */
+        'pathway_mode': GTFSPathwayPathwayModeEnum;
+        /**
+         * 0 = unidirectional (from `from_stop_id` to `to_stop_id` only), 1 = bidirectional
+         * @type {number}
+         * @memberof GTFSPathway
+         */
+        'is_bidirectional': GTFSPathwayIsBidirectionalEnum;
+        /**
+         * Horizontal length in meters.
+         * @type {number}
+         * @memberof GTFSPathway
+         */
+        'length': number | null;
+        /**
+         * Average time in seconds needed to walk through the pathway.
+         * @type {number}
+         * @memberof GTFSPathway
+         */
+        'traversal_time': number | null;
+        /**
+         * Number of stairs, positive when going up from `from_stop_id` to `to_stop_id`, negative when going down.
+         * @type {number}
+         * @memberof GTFSPathway
+         */
+        'stair_count': number | null;
+        /**
+         * Maximum slope ratio of the pathway.
+         * @type {number}
+         * @memberof GTFSPathway
+         */
+        'max_slope': number | null;
+        /**
+         * Minimum width of the pathway in meters.
+         * @type {number}
+         * @memberof GTFSPathway
+         */
+        'min_width': number | null;
+        /**
+         * Public facing text from physical signage visible to riders.
+         * @type {string}
+         * @memberof GTFSPathway
+         */
+        'signposted_as': string | null;
+        /**
+         * Same as `signposted_as`, but when the pathway is used from `to_stop_id` to `from_stop_id`.
+         * @type {string}
+         * @memberof GTFSPathway
+         */
+        'reversed_signposted_as': string | null;
+        /**
+         * 0 = bicycles allowed, 1 = bicycles prohibited. A PID extension of GTFS.
+         * @type {number}
+         * @memberof GTFSPathway
+         */
+        'bikes_prohibited': GTFSPathwayBikesProhibitedEnum | null;
+    }
+    
+    export const GTFSPathwayPathwayModeEnum = {
+        NUMBER_1: 1,
+        NUMBER_2: 2,
+        NUMBER_3: 3,
+        NUMBER_4: 4,
+        NUMBER_5: 5,
+        NUMBER_6: 6,
+        NUMBER_7: 7
+    } as const;
+    
+    export type GTFSPathwayPathwayModeEnum = typeof GTFSPathwayPathwayModeEnum[keyof typeof GTFSPathwayPathwayModeEnum];
+    export const GTFSPathwayIsBidirectionalEnum = {
+        NUMBER_0: 0,
+        NUMBER_1: 1
+    } as const;
+    
+    export type GTFSPathwayIsBidirectionalEnum = typeof GTFSPathwayIsBidirectionalEnum[keyof typeof GTFSPathwayIsBidirectionalEnum];
+    export const GTFSPathwayBikesProhibitedEnum = {
+        NUMBER_0: 0,
+        NUMBER_1: 1
+    } as const;
+    
+    export type GTFSPathwayBikesProhibitedEnum = typeof GTFSPathwayBikesProhibitedEnum[keyof typeof GTFSPathwayBikesProhibitedEnum];
+    
+    
+        /**
      * 
      * @export
      * @interface GTFSRoute
@@ -1655,6 +1793,68 @@ export namespace GolemioPublicTransportApi {
          */
         'trip_id': string;
     }
+    
+        /**
+     * See GTFS Schedule Reference for [transfers.txt](https://gtfs.org/documentation/schedule/reference/#transferstxt).
+     * @export
+     * @interface GTFSTransfer
+     */
+    export interface GTFSTransfer {
+        /**
+         * 
+         * @type {string}
+         * @memberof GTFSTransfer
+         */
+        'from_stop_id': string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof GTFSTransfer
+         */
+        'to_stop_id': string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof GTFSTransfer
+         */
+        'from_trip_id': string | null;
+        /**
+         * 
+         * @type {string}
+         * @memberof GTFSTransfer
+         */
+        'to_trip_id': string | null;
+        /**
+         * 0 = recommended transfer point, 1 = timed transfer point, 2 = transfer requires `min_transfer_time`, 3 = transfer not possible, 4 = in-seat transfer, 5 = in-seat transfer not allowed
+         * @type {number}
+         * @memberof GTFSTransfer
+         */
+        'transfer_type': GTFSTransferTransferTypeEnum;
+        /**
+         * Minimum time in seconds needed for the transfer.
+         * @type {number}
+         * @memberof GTFSTransfer
+         */
+        'min_transfer_time': number | null;
+        /**
+         * Maximum time in seconds the connecting vehicle waits. A PID extension of GTFS.
+         * @type {number}
+         * @memberof GTFSTransfer
+         */
+        'max_waiting_time': number | null;
+    }
+    
+    export const GTFSTransferTransferTypeEnum = {
+        NUMBER_0: 0,
+        NUMBER_1: 1,
+        NUMBER_2: 2,
+        NUMBER_3: 3,
+        NUMBER_4: 4,
+        NUMBER_5: 5
+    } as const;
+    
+    export type GTFSTransferTransferTypeEnum = typeof GTFSTransferTransferTypeEnum[keyof typeof GTFSTransferTransferTypeEnum];
+    
     
         /**
      * 
@@ -9124,6 +9324,58 @@ export namespace GolemioPublicTransportApi {
                         
         
         /**
+         * Query parameters for v2GtfsLevelsGet operation in GTFSStaticV2Api.
+         * @export
+         * @interface GTFSStaticV2ApiV2GtfsLevelsGetQueryParams
+         */
+        export interface GTFSStaticV2ApiV2GtfsLevelsGetQueryParams {
+            //limit
+            /**
+             * Limits number of retrieved items. The maximum is 10000 (default value).
+             * @type     {number}    
+             * @memberof GTFSStaticV2ApiV2GtfsLevelsGet
+             */
+            limit?: number
+        
+                //offset
+            /**
+             * Number of the first items that are skipped.
+             * @type     {number}    
+             * @memberof GTFSStaticV2ApiV2GtfsLevelsGet
+             */
+            offset?: number
+            }
+        
+        
+                        
+        
+        /**
+         * Query parameters for v2GtfsPathwaysGet operation in GTFSStaticV2Api.
+         * @export
+         * @interface GTFSStaticV2ApiV2GtfsPathwaysGetQueryParams
+         */
+        export interface GTFSStaticV2ApiV2GtfsPathwaysGetQueryParams {
+            //limit
+            /**
+             * Limits number of retrieved items. The maximum is 10000 (default value).
+             * @type     {number}    
+             * @memberof GTFSStaticV2ApiV2GtfsPathwaysGet
+             */
+            limit?: number
+        
+                //offset
+            /**
+             * Number of the first items that are skipped.
+             * @type     {number}    
+             * @memberof GTFSStaticV2ApiV2GtfsPathwaysGet
+             */
+            offset?: number
+            }
+        
+        
+                        
+        
+        /**
          * Query parameters for v2GtfsRoutesGet operation in GTFSStaticV2Api.
          * @export
          * @interface GTFSStaticV2ApiV2GtfsRoutesGetQueryParams
@@ -9187,7 +9439,18 @@ export namespace GolemioPublicTransportApi {
                     
         
         
-                                        
+                                /**
+         * @export
+         */
+        export const V2GtfsStopsGetLocationTypesEnum = {
+                NUMBER_0: 0,
+            NUMBER_1: 1,
+            NUMBER_2: 2,
+            NUMBER_3: 3,
+            NUMBER_4: 4
+            } as const;
+        export type V2GtfsStopsGetLocationTypesEnum = typeof V2GtfsStopsGetLocationTypesEnum[keyof typeof V2GtfsStopsGetLocationTypesEnum];
+                                
         
         /**
          * Query parameters for v2GtfsStopsGet operation in GTFSStaticV2Api.
@@ -9210,6 +9473,14 @@ export namespace GolemioPublicTransportApi {
              * @memberof GTFSStaticV2ApiV2GtfsStopsGet
              */
             ids?: string
+        
+                //locationTypesisEnumLocationTypesEnum
+            /**
+             * Get stops by GTFS &#x60;location_type&#x60; (0 &#x3D; stop/platform, 1 &#x3D; station, 2 &#x3D; entrance/exit, 3 &#x3D; generic node, 4 &#x3D; boarding area). Preferably use with square brackets &#x60;locationTypes[]&#x3D;1&amp;locationTypes[]&#x3D;2&#x60; (though repeating the parameter without brackets is also accepted).
+             * @type     {Array<0 | 1 | 2 | 3 | 4>}    
+             * @memberof GTFSStaticV2ApiV2GtfsStopsGet
+             */
+            locationTypes?: Array<V2GtfsStopsGetLocationTypesEnum>
         
                 //aswIds
             /**
@@ -9301,6 +9572,32 @@ export namespace GolemioPublicTransportApi {
              * Number of the first items that are skipped.
              * @type     {number}    
              * @memberof GTFSStaticV2ApiV2GtfsStoptimesIdGet
+             */
+            offset?: number
+            }
+        
+        
+                        
+        
+        /**
+         * Query parameters for v2GtfsTransfersGet operation in GTFSStaticV2Api.
+         * @export
+         * @interface GTFSStaticV2ApiV2GtfsTransfersGetQueryParams
+         */
+        export interface GTFSStaticV2ApiV2GtfsTransfersGetQueryParams {
+            //limit
+            /**
+             * Limits number of retrieved items. The maximum is 10000 (default value).
+             * @type     {number}    
+             * @memberof GTFSStaticV2ApiV2GtfsTransfersGet
+             */
+            limit?: number
+        
+                //offset
+            /**
+             * Number of the first items that are skipped.
+             * @type     {number}    
+             * @memberof GTFSStaticV2ApiV2GtfsTransfersGet
              */
             offset?: number
             }
@@ -9420,6 +9717,106 @@ export namespace GolemioPublicTransportApi {
             }
         
             /**
+             * Levels within stations from GTFS `levels.txt`, ordered by `level_id` ascending.
+             * @summary GET All GTFS Levels
+        
+                 * @param     {GTFSStaticV2ApiV2GtfsLevelsGetQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof GTFSStaticV2Api
+             */
+            
+            public async v2GtfsLevelsGet(
+                queryParams: GTFSStaticV2ApiV2GtfsLevelsGetQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                                const localVarPath = `/v2/gtfs/levels`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                        if (queryParams.offset !== undefined) {
+                                requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<Array<GTFSLevel>>(axiosRequestConfig);
+            }
+        
+                /**
+             * Pathways linking locations within stations from GTFS `pathways.txt`, ordered by `pathway_id` ascending.
+             * @summary GET All GTFS Pathways
+        
+                 * @param     {GTFSStaticV2ApiV2GtfsPathwaysGetQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof GTFSStaticV2Api
+             */
+            
+            public async v2GtfsPathwaysGet(
+                queryParams: GTFSStaticV2ApiV2GtfsPathwaysGetQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                                const localVarPath = `/v2/gtfs/pathways`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                        if (queryParams.offset !== undefined) {
+                                requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<Array<GTFSPathway>>(axiosRequestConfig);
+            }
+        
+                /**
              * 
              * @summary GET All GTFS Routes
         
@@ -9630,7 +10027,7 @@ export namespace GolemioPublicTransportApi {
                 options: AxiosRequestConfig = {}
             ) {
         
-                                                                const localVarPath = `/v2/gtfs/stops`;
+                                                                        const localVarPath = `/v2/gtfs/stops`;
                 // use dummy base URL string because the URL constructor only accepts absolute URLs.
                 const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
                 let baseOptions;
@@ -9653,6 +10050,10 @@ export namespace GolemioPublicTransportApi {
                                 requestQueryParameter['ids'] = queryParams.ids;
                     }
         
+                    if (queryParams.locationTypes) {
+                            requestQueryParameter['locationTypes'] = queryParams.locationTypes;
+                        }
+            
                         if (queryParams.aswIds !== undefined) {
                                 requestQueryParameter['aswIds'] = queryParams.aswIds;
                     }
@@ -9800,6 +10201,56 @@ export namespace GolemioPublicTransportApi {
             }
         
                 /**
+             * Transfer rules from GTFS `transfers.txt`, ordered by `from_stop_id`, `to_stop_id`, `from_trip_id` and `to_trip_id`, all ascending with empty values last.
+             * @summary GET All GTFS Transfers
+        
+                 * @param     {GTFSStaticV2ApiV2GtfsTransfersGetQueryParams}     queryParams Query parameters.
+             * @param {AxiosRequestConfig} [options] Override http request option.
+             * @throws {RequiredError}
+             * @memberof GTFSStaticV2Api
+             */
+            
+            public async v2GtfsTransfersGet(
+                queryParams: GTFSStaticV2ApiV2GtfsTransfersGetQueryParams = {},
+                options: AxiosRequestConfig = {}
+            ) {
+        
+                                const localVarPath = `/v2/gtfs/transfers`;
+                // use dummy base URL string because the URL constructor only accepts absolute URLs.
+                const requestUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+                let baseOptions;
+                if (this.configuration) {
+                    baseOptions = this.configuration.baseOptions;
+                }
+        
+                const axiosRequestConfig: AxiosRequestConfig = { method: 'GET', ...baseOptions, ...options};
+                const requestHeaderParameter = {} as any;
+                const requestQueryParameter = {} as any;
+        
+                // authentication ApiKeyAuth required
+                    await setApiKeyToObject(requestHeaderParameter, "X-Access-Token", this.configuration)
+                            
+                            if (queryParams.limit !== undefined) {
+                                requestQueryParameter['limit'] = queryParams.limit;
+                    }
+        
+                        if (queryParams.offset !== undefined) {
+                                requestQueryParameter['offset'] = queryParams.offset;
+                    }
+        
+                
+        
+                setSearchParams(requestUrlObj, requestQueryParameter);
+                let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                axiosRequestConfig.headers = {...requestHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            
+                axiosRequestConfig["url"] = toPathString(requestUrlObj);
+                axiosRequestConfig["baseURL"] = this.configuration.basePath;
+                
+                return this.axios.request<Array<GTFSTransfer>>(axiosRequestConfig);
+            }
+        
+                /**
              * 
              * @summary GET All GTFS Trips
         
@@ -9937,7 +10388,8 @@ export namespace GolemioPublicTransportApi {
         export const V1JisEventsCustomFormatGetTypeEnum = {
                 Incident: 'INCIDENT',
             Disruption: 'DISRUPTION',
-            ServiceChange: 'SERVICE_CHANGE'
+            ServiceChange: 'SERVICE_CHANGE',
+            Internal: 'INTERNAL'
             } as const;
         export type V1JisEventsCustomFormatGetTypeEnum = typeof V1JisEventsCustomFormatGetTypeEnum[keyof typeof V1JisEventsCustomFormatGetTypeEnum];
                 
@@ -9975,7 +10427,7 @@ export namespace GolemioPublicTransportApi {
                 //typeisEnumTypeEnum
             /**
              * 
-             * @type     {'INCIDENT' | 'DISRUPTION' | 'SERVICE_CHANGE'}    
+             * @type     {'INCIDENT' | 'DISRUPTION' | 'SERVICE_CHANGE' | 'INTERNAL'}    
              * @memberof JISV1InternalApiV1JisEventsCustomFormatGet
              */
             type?: V1JisEventsCustomFormatGetTypeEnum

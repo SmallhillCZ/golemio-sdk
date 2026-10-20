@@ -4,6 +4,8 @@ All URIs are relative to *https://api.golemio.cz*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
+|[**v2GtfsLevelsGet**](#v2gtfslevelsget) | **GET** /v2/gtfs/levels | GET All GTFS Levels|
+|[**v2GtfsPathwaysGet**](#v2gtfspathwaysget) | **GET** /v2/gtfs/pathways | GET All GTFS Pathways|
 |[**v2GtfsRoutesGet**](#v2gtfsroutesget) | **GET** /v2/gtfs/routes | GET All GTFS Routes|
 |[**v2GtfsRoutesIdGet**](#v2gtfsroutesidget) | **GET** /v2/gtfs/routes/{id} | GET GTFS Route|
 |[**v2GtfsServicesGet**](#v2gtfsservicesget) | **GET** /v2/gtfs/services | GET GTFS Services|
@@ -11,8 +13,119 @@ All URIs are relative to *https://api.golemio.cz*
 |[**v2GtfsStopsGet**](#v2gtfsstopsget) | **GET** /v2/gtfs/stops | GET All GTFS Stops|
 |[**v2GtfsStopsIdGet**](#v2gtfsstopsidget) | **GET** /v2/gtfs/stops/{id} | GET GTFS Stop|
 |[**v2GtfsStoptimesIdGet**](#v2gtfsstoptimesidget) | **GET** /v2/gtfs/stoptimes/{id} | GET GTFS Stop times|
+|[**v2GtfsTransfersGet**](#v2gtfstransfersget) | **GET** /v2/gtfs/transfers | GET All GTFS Transfers|
 |[**v2GtfsTripsGet**](#v2gtfstripsget) | **GET** /v2/gtfs/trips | GET All GTFS Trips|
 |[**v2GtfsTripsIdGet**](#v2gtfstripsidget) | **GET** /v2/gtfs/trips/{id} | GET GTFS Trip|
+
+# **v2GtfsLevelsGet**
+> Array<GTFSLevel> v2GtfsLevelsGet()
+
+Levels within stations from GTFS `levels.txt`, ordered by `level_id` ascending.
+
+### Example
+
+```typescript
+import {
+    GTFSStaticV2Api,
+    Configuration
+} from 'golemio-public-transport-api';
+
+const configuration = new Configuration();
+const apiInstance = new GTFSStaticV2Api(configuration);
+
+let limit: number; //Limits number of retrieved items. The maximum is 10000 (default value). (optional) (default to undefined)
+let offset: number; //Number of the first items that are skipped. (optional) (default to undefined)
+
+const { status, data } = await apiInstance.v2GtfsLevelsGet(
+    limit,
+    offset
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **limit** | [**number**] | Limits number of retrieved items. The maximum is 10000 (default value). | (optional) defaults to undefined|
+| **offset** | [**number**] | Number of the first items that are skipped. | (optional) defaults to undefined|
+
+
+### Return type
+
+**Array<GTFSLevel>**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | successful operation |  * Cache-Control - Cache control directive for caching proxies <br>  |
+|**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **v2GtfsPathwaysGet**
+> Array<GTFSPathway> v2GtfsPathwaysGet()
+
+Pathways linking locations within stations from GTFS `pathways.txt`, ordered by `pathway_id` ascending.
+
+### Example
+
+```typescript
+import {
+    GTFSStaticV2Api,
+    Configuration
+} from 'golemio-public-transport-api';
+
+const configuration = new Configuration();
+const apiInstance = new GTFSStaticV2Api(configuration);
+
+let limit: number; //Limits number of retrieved items. The maximum is 10000 (default value). (optional) (default to undefined)
+let offset: number; //Number of the first items that are skipped. (optional) (default to undefined)
+
+const { status, data } = await apiInstance.v2GtfsPathwaysGet(
+    limit,
+    offset
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **limit** | [**number**] | Limits number of retrieved items. The maximum is 10000 (default value). | (optional) defaults to undefined|
+| **offset** | [**number**] | Number of the first items that are skipped. | (optional) defaults to undefined|
+
+
+### Return type
+
+**Array<GTFSPathway>**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | successful operation |  * Cache-Control - Cache control directive for caching proxies <br>  |
+|**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **v2GtfsRoutesGet**
 > Array<GTFSRoute> v2GtfsRoutesGet()
@@ -253,6 +366,7 @@ const apiInstance = new GTFSStaticV2Api(configuration);
 
 let names: string; //Name of station. Use with square brackets `names[]=NAME1&names[]=NAME2`. (optional) (default to undefined)
 let ids: string; //Get stops by stop_id. Use with square brackets `ids[]`. (optional) (default to undefined)
+let locationTypes: Array<0 | 1 | 2 | 3 | 4>; //Get stops by GTFS `location_type` (0 = stop/platform, 1 = station, 2 = entrance/exit, 3 = generic node, 4 = boarding area). Preferably use with square brackets `locationTypes[]=1&locationTypes[]=2` (though repeating the parameter without brackets is also accepted). (optional) (default to undefined)
 let aswIds: string; //Get stops by ASW, use `_` instead of `/` or encode the slash sign with `%2F`. Use with square brackets `aswId[]`. (optional) (default to undefined)
 let cisIds: number; //Limits number of retrieved items. The maximum is 10000 (default value). (optional) (default to undefined)
 let limit: number; //Limits number of retrieved items. The maximum is 10000 (default value). (optional) (default to undefined)
@@ -261,6 +375,7 @@ let offset: number; //Number of the first items that are skipped. (optional) (de
 const { status, data } = await apiInstance.v2GtfsStopsGet(
     names,
     ids,
+    locationTypes,
     aswIds,
     cisIds,
     limit,
@@ -274,6 +389,7 @@ const { status, data } = await apiInstance.v2GtfsStopsGet(
 |------------- | ------------- | ------------- | -------------|
 | **names** | [**string**] | Name of station. Use with square brackets &#x60;names[]&#x3D;NAME1&amp;names[]&#x3D;NAME2&#x60;. | (optional) defaults to undefined|
 | **ids** | [**string**] | Get stops by stop_id. Use with square brackets &#x60;ids[]&#x60;. | (optional) defaults to undefined|
+| **locationTypes** | **Array<0 &#124; 1 &#124; 2 &#124; 3 &#124; 4>** | Get stops by GTFS &#x60;location_type&#x60; (0 &#x3D; stop/platform, 1 &#x3D; station, 2 &#x3D; entrance/exit, 3 &#x3D; generic node, 4 &#x3D; boarding area). Preferably use with square brackets &#x60;locationTypes[]&#x3D;1&amp;locationTypes[]&#x3D;2&#x60; (though repeating the parameter without brackets is also accepted). | (optional) defaults to undefined|
 | **aswIds** | [**string**] | Get stops by ASW, use &#x60;_&#x60; instead of &#x60;/&#x60; or encode the slash sign with &#x60;%2F&#x60;. Use with square brackets &#x60;aswId[]&#x60;. | (optional) defaults to undefined|
 | **cisIds** | [**number**] | Limits number of retrieved items. The maximum is 10000 (default value). | (optional) defaults to undefined|
 | **limit** | [**number**] | Limits number of retrieved items. The maximum is 10000 (default value). | (optional) defaults to undefined|
@@ -424,6 +540,61 @@ const { status, data } = await apiInstance.v2GtfsStoptimesIdGet(
 |**200** | successful operation |  * Cache-Control - Cache control directive for caching proxies <br>  |
 |**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
 |**404** | Not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **v2GtfsTransfersGet**
+> Array<GTFSTransfer> v2GtfsTransfersGet()
+
+Transfer rules from GTFS `transfers.txt`, ordered by `from_stop_id`, `to_stop_id`, `from_trip_id` and `to_trip_id`, all ascending with empty values last.
+
+### Example
+
+```typescript
+import {
+    GTFSStaticV2Api,
+    Configuration
+} from 'golemio-public-transport-api';
+
+const configuration = new Configuration();
+const apiInstance = new GTFSStaticV2Api(configuration);
+
+let limit: number; //Limits number of retrieved items. The maximum is 10000 (default value). (optional) (default to undefined)
+let offset: number; //Number of the first items that are skipped. (optional) (default to undefined)
+
+const { status, data } = await apiInstance.v2GtfsTransfersGet(
+    limit,
+    offset
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **limit** | [**number**] | Limits number of retrieved items. The maximum is 10000 (default value). | (optional) defaults to undefined|
+| **offset** | [**number**] | Number of the first items that are skipped. | (optional) defaults to undefined|
+
+
+### Return type
+
+**Array<GTFSTransfer>**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | successful operation |  * Cache-Control - Cache control directive for caching proxies <br>  |
+|**401** | API key is missing or invalid |  * WWW_Authenticate -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -835,7 +835,7 @@ export namespace GolemioPublicTransportApi {
     }
     
         /**
-     * State of the element (stav prvku). Common across all element kinds.
+     * State of the element (stav prvku). Common across all element kinds; \"V provozu\" is used only by information panels, \"Odstraňováno\" by information panels and display cases.
      * @export
      * @enum {string}
      */
@@ -843,7 +843,9 @@ export namespace GolemioPublicTransportApi {
     export const ElementStateEnum = {
         Plnovno: 'Plánováno',
         VPprav: 'V přípravě',
+        VProvozu: 'V provozu',
         Hotovo: 'Hotovo',
+        Odstraovno: 'Odstraňováno',
         Zrueno: 'Zrušeno',
         Neplnovno: 'Neplánováno'
     } as const;
@@ -8520,7 +8522,9 @@ export namespace GolemioPublicTransportApi {
         export const ListInformationPanelsStateEnum = {
                 Plnovno: 'Plánováno',
             VPprav: 'V přípravě',
+            VProvozu: 'V provozu',
             Hotovo: 'Hotovo',
+            Odstraovno: 'Odstraňováno',
             Zrueno: 'Zrušeno',
             Neplnovno: 'Neplánováno'
             } as const;
@@ -8568,7 +8572,7 @@ export namespace GolemioPublicTransportApi {
                 //stateisEnumStateEnum
             /**
              * Filter by element state. Repeat the parameter to match any of several states (e.g. state&#x3D;Hotovo&amp;state&#x3D;Plánováno). Only valid for information-panels.
-             * @type     {Array<'Plánováno' | 'V přípravě' | 'Hotovo' | 'Zrušeno' | 'Neplánováno'>}    
+             * @type     {Array<'Plánováno' | 'V přípravě' | 'V provozu' | 'Hotovo' | 'Odstraňováno' | 'Zrušeno' | 'Neplánováno'>}    
              * @memberof FYPRV1ApiListInformationPanels
              */
             state?: Array<ListInformationPanelsStateEnum>

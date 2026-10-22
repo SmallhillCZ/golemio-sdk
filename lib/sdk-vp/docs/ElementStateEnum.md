@@ -1,6 +1,6 @@
 # ElementStateEnum
 
-State of the element (stav prvku). Common across all element kinds.
+State of the element (stav prvku). Common across all element kinds; \"V provozu\" is used only by information panels, \"Odstraňováno\" by information panels and display cases.
 
 ## Enum
 
@@ -8,7 +8,11 @@ State of the element (stav prvku). Common across all element kinds.
 
 * `VPprav` (value: `'V přípravě'`)
 
+* `VProvozu` (value: `'V provozu'`)
+
 * `Hotovo` (value: `'Hotovo'`)
+
+* `Odstraovno` (value: `'Odstraňováno'`)
 
 * `Zrueno` (value: `'Zrušeno'`)
 

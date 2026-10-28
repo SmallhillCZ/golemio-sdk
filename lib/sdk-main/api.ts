@@ -2699,7 +2699,7 @@ export namespace GolemioApi {
          */
         'value'?: number | null;
         /**
-         * Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing;
+         * Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing. Zero consumption is 0 regardless of the conversion inputs, so metered gas (m3 only) reports 0 for a month without consumption and null otherwise.
          * @type {number}
          * @memberof EnergeticsEnoCombinedConsumptionEntry
          */
@@ -2805,7 +2805,7 @@ export namespace GolemioApi {
          */
         'value'?: number | null;
         /**
-         * Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing;
+         * Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing. Zero consumption is 0 regardless of the conversion inputs, so metered gas (m3 only) reports 0 for a month without consumption and null otherwise.
          * @type {number}
          * @memberof EnergeticsEnoConsumptionEntry
          */

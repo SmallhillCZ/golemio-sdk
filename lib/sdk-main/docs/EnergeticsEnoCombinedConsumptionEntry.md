@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **period** | **string** | &#x60;YYYY-MM&#x60; for monthly entries, &#x60;YYYY&#x60; for yearly ones. | [optional] [default to undefined]
 **value** | **number** |  | [optional] [default to undefined]
-**value_kwh** | **number** | Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing; | [optional] [default to undefined]
+**value_kwh** | **number** | Comparable energy. For gas this is derived (normometers_nm3 * combustion_heat) and is null whenever the conversion inputs are missing. Zero consumption is 0 regardless of the conversion inputs, so metered gas (m3 only) reports 0 for a month without consumption and null otherwise. | [optional] [default to undefined]
 **coverage_count** | **number** | Days of the period carrying data. | [optional] [default to undefined]
 **expected_count** | **number** | Days in the period, so a partial period is recognisable as one. | [optional] [default to undefined]
 **is_estimated** | **boolean** | True when the value was allocated pro rata from a billing period spanning more than one month, rather than read for the period itself. | [optional] [default to undefined]
